@@ -10,9 +10,7 @@ type Metadata = {
 
 async function getPosts() {
     // Iterate the markdown directory and extraact all metadata from the files
-    const dirs = (await readdir("./markdown/", { withFileTypes: true }))
-        .filter((entry) => entry.isDirectory())
-        .map((entry) => entry.name);
+    const dirs = await readdir("./markdown/");
     console.log(dirs);
     // Get the metadata from each file and add the link property as the dir name
     const metadata: Metadata[] = await Promise.all(

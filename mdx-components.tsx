@@ -24,7 +24,18 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                 {...(props as ImageProps)}
             />
         ),
-        code: ({ children }) => <code className={`${mono.className}`}>{children}</code>,
+        pre: ({ children }) => (
+            <pre
+                className={`${mono.className}`}
+                style={{
+                    backgroundColor: "#2e3440",
+                    borderRadius: "0.5rem",
+                    padding: "1.5rem 1rem",
+                    margin: "1rem 0",
+                }}>
+                {children}
+            </pre>
+        ),
         ...components,
     };
 }
