@@ -11,6 +11,7 @@ type Metadata = {
 async function getPosts() {
     // Iterate the public directory and extraact all metadata from the files
     const dirs = await readdir("./public/");
+    console.log("dirs", dirs);
     // Get the metadata from each file and add the link property as the dir name
     const metadata: Metadata[] = await Promise.all(
         dirs.map(async (dir) => {
