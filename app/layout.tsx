@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { mono, serif, korean } from "@/app/fonts";
 import "./globals.css";
+import Link from "next/link";
 
 export const metadata: Metadata = {
     title: "BuK Blog",
@@ -17,10 +18,10 @@ export default function RootLayout({
             <body
                 className={`mx-auto max-w-4xl py-12 px-5 ${mono.className} ${serif.className} ${korean.className} antialiased`}>
                 <header className="flex justify-between mb-16 items-baseline">
-                    <a href="/" className={`text-3xl font-bold ${mono.className}`}>
+                    <Link href="/" className={`text-3xl font-bold ${mono.className}`}>
                         buk_blog
-                    </a>
-                    <a href="https://geonho.de">Geonho Yun</a>
+                    </Link>
+                    <Link href="https://geonho.de">Geonho Yun</Link>
                 </header>
                 {children}
             </body>
