@@ -14,7 +14,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en, kr">
+        <html lang="en">
             <body
                 className={`mx-auto max-w-4xl py-12 px-5 ${mono.className} ${serif.className} ${korean.className} antialiased`}>
                 <header className="flex justify-between mb-16 items-baseline">
