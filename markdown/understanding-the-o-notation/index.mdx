@@ -3,23 +3,70 @@ export const metadata = {
     description: "Understanding the O-Notation",
     date: "2024-07-11",
 }
-
-# Understanding the O-Notation 
-
-###### {metadata.date}
-
-<br/>
-<br/>
  
-Hello Olha
+> During the lectures, O-notations appear everywhere, but I never got the hang of it.
 
-안녕하세요
+It seems like you didn't review your *Data Structures and Algorithms* lecture.
 
-```js
+> Yeah, but I wouldn't be asking you if I wanted to, would I?
+
+...Fair enough.
+
+Imagine you wrote a piece of code:
+
+```ts
 function hello() {
-  console.log('Hello, World!');
+    console.log("Hello World!");
 }
 ```
 
- $$\sqrt{a^2 + b^2}$$, when $$a=3$$ and $$b=4$$ is equal to 5.
+ and you want to see how fast it is. You could let it run multiple times and measure the average time it took in miliseconds, but would your piece of code take the same amount of time in another computer?
+
+> Well, that depends. If it has a much better processor, then it'd probably take much less time to run it.
+
+Exactly. We therefore need a unit independent from seconds in order to measure the runtime.
+
+Another issue occurs when the function has an input:
+
+```ts
+function hello(n: number) {
+    for (let i = 0; i < n; i++) {
+        console.log("Hello World!");
+    }
+}
+```
+
+Unlike the first example, the runtime of this function depends on the input number. If we assume the `console.log("Hello World!")` part takes a constant time of $$c$$, then the runtime of the function would be around $$c * n$$. In this case, we say the function above has a *linear* runtime.
+
+> Okay, but I still don't get why we need the O-notation. 
+
+Well, the O-notation helps us to formally group programs with similar runtime behavior into the same box, known as the *complexity class*. Suppose we want to group all programs with a linear runtime in the same group. How would you describe the runtime of the function below?
+
+```ts
+function hello3(n: number) {
+    console.log("Hello World!");
+    console.log("Hello World!");
+    for (let i = 0; i < n; i++) {
+        console.log("Hello World!");
+        console.log("Hello World!");
+    }
+}
+```
+> Using the same assumptions as above, it'd be something like $$2nc + 2c$$, right?
+
+Exactly. Both $$2nc + 2c$$ and $$c * n$$ are linear functions, identical apart from the principal coefficient and a constant term. The O-notation helps us to ignore these factors focus on the most significant part of the runtime.
+
+> And how does that work?
+
+Let's look at the definiiton of the O-notation together.
+
+Let $$f, g \colon \mathbb{N} \rightarrow \mathbb{N}$$ two functions defined in the set of natural numbers. We say $$f(n) = O(g(n))$$, if there are natural numbers $$c, n_0 \in \mathbb{N}$$ so that $$f(N) \leq c * g(N)$$ for all $$N \geq n_0$$.
+
+
+
+
+
+
+
+
 

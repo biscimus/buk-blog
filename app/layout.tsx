@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { mono, serif, korean } from "@/app/fonts";
+import { mono, serif } from "@/app/fonts";
 import "../globals.css";
 import Link from "next/link";
 
@@ -23,8 +23,7 @@ export default function RootLayout({
                     crossOrigin="anonymous"
                 />
             </head>
-            <body
-                className={`mx-auto max-w-4xl py-12 px-5 ${mono.className} ${serif.className} ${korean.className} antialiased`}>
+            <body className={`mx-auto max-w-4xl py-12 px-12 ${serif.className} antialiased`}>
                 <header className="flex justify-between mb-16 items-baseline">
                     <Link href="/" className={`text-3xl font-bold ${mono.className}`}>
                         buk_blog

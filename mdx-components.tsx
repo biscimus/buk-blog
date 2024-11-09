@@ -9,20 +9,27 @@ import { mono } from "@/app/fonts";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
     return {
-        h1: ({ children }) => (
-            <h1 style={{ fontSize: "48px", fontWeight: "bolder", color: "orange" }}>{children}</h1>
-        ),
         h2: ({ children }) => (
             <h2 style={{ fontSize: "40px", fontWeight: "bolder" }}>{children}</h2>
         ),
         h3: ({ children }) => <h3 style={{ fontSize: "24px", fontWeight: "bold" }}>{children}</h3>,
-        h6: ({ children }) => <h6 style={{ fontSize: "16px", color: "gray" }}>{children}</h6>,
         img: (props) => (
             <Image
                 sizes="100vw"
                 style={{ width: "100%", height: "auto" }}
                 {...(props as ImageProps)}
             />
+        ),
+        blockquote: ({ children }) => (
+            <blockquote
+                style={{
+                    fontStyle: "italic",
+                    borderLeft: "4px solid #4c566a",
+                    paddingLeft: "1rem",
+                    margin: "1rem 0",
+                }}>
+                {children}
+            </blockquote>
         ),
         pre: ({ children }) => (
             <pre
@@ -32,6 +39,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                     borderRadius: "0.5rem",
                     padding: "1.5rem 1rem",
                     margin: "1rem 0",
+                    overflow: "scroll",
                 }}>
                 {children}
             </pre>
