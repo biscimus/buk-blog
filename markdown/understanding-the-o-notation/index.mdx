@@ -1,3 +1,5 @@
+import FunctionPlot from "./FunctionPlot"
+
 export const metadata = {
     title: "Understanding the O-Notation",
     description: "Understanding the O-Notation",
@@ -15,7 +17,7 @@ It seems like you didn't review your *Data Structures and Algorithms* lecture.
 Imagine you wrote a piece of code:
 
 ```ts
-function hello() {
+function hellO() {
     console.log("Hello World!");
 }
 ```
@@ -29,18 +31,18 @@ Exactly. We therefore need a unit independent from seconds in order to measure t
 Another issue occurs when the function has an input:
 
 ```ts
-function hello(n: number) {
+function hellO(n: number) {
     for (let i = 0; i < n; i++) {
         console.log("Hello World!");
     }
 }
 ```
 
-Unlike the first example, the runtime of this function depends on the input number. If we assume the `console.log("Hello World!")` part takes a constant time of $$c$$, then the runtime of the function would be around $$c * n$$. In this case, we say the function above has a *linear* runtime.
+Unlike the first example, the runtime of this function depends on the input number. If we assume the `console.log("Hello World!")` part takes a constant time of $$c$$, then the runtime of the function would be around $$c \cdot n$$. In this case, we say the function above has a *linear* runtime.
 
 > Okay, but I still don't get why we need the O-notation. 
 
-Well, the O-notation helps us to formally group programs with similar runtime behavior into the same box, known as the *complexity class*. Suppose we want to group all programs with a linear runtime in the same group. How would you describe the runtime of the function below?
+Well, the O-notation helps us to formally group programs with similar runtime behavior into the same box, known as *complexity classes*. Suppose we want to group all programs with a linear runtime in the same group. How would you describe the runtime of the function below?
 
 ```ts
 function hello3(n: number) {
@@ -52,21 +54,53 @@ function hello3(n: number) {
     }
 }
 ```
-> Using the same assumptions as above, it'd be something like $$2nc + 2c$$, right?
+> Using the same assumptions as above, it'd be something like $$2cn + 2c$$, right?
 
-Exactly. Both $$2nc + 2c$$ and $$c * n$$ are linear functions, identical apart from the principal coefficient and a constant term. The O-notation helps us to ignore these factors focus on the most significant part of the runtime.
+Exactly. Both $$2cn + 2c$$ and $$cn$$ are linear functions, identical apart from the principal coefficient and a constant term. The O-notation helps us to ignore these factors focus on the most significant part of the runtime.
 
 > And how does that work?
 
 Let's look at the definiiton of the O-notation together.
 
-Let $$f, g \colon \mathbb{N} \rightarrow \mathbb{N}$$ two functions defined in the set of natural numbers. We say $$f(n) = O(g(n))$$, if there are natural numbers $$c, n_0 \in \mathbb{N}$$ so that $$f(N) \leq c * g(N)$$ for all $$N \geq n_0$$.
+###### Let $$f, g \colon \mathbb{N} \rightarrow \mathbb{N}$$ be two functions defined over the set of natural numbers. We say $$f(n) = O(g(n))$$, if there are natural numbers $$\textcolor{green}{k}, \textcolor{red}{n_0} \in \mathbb{N}$$ so that $$f(N) \leq \textcolor{green}{k} \cdot g(N)$$ for all $$N \geq \textcolor{red}{n_0}$$.
 
+Don't worry if definitions scare you. Let's break it down.
 
+The central idea of the O-notation is to express that from a <span style={{color: "red"}}>certain point</span> on, the function $$f(n)$$ does not grow faster than another function $$g(n)$$ apart from a <span style={{color: "green"}}>constant factor</span>.
 
+We can say here that $$cn = O(2cn+2c)$$ by setting e.g. both $$\textcolor{green}{k}$$ and $$\textcolor{red}{n_0}$$ to $$1$$, resulting in $$c \cdot N \leq 2c \cdot N + 2c$$ for all $$N \geq 1$$.
 
+Similarly, the expression $$2cn+2c = O(cn)$$ also holds. Do you see why?
 
+> Uhh, Calculus was a long time ago... We can use the inequality $$2cn+2c \leq 2cn+2cn = 4cn$$ for $$n \geq 1$$, right? So we can set $$\textcolor{green}{k} = 4$$ and $$\textcolor{red}{n_0} = 1$$?
 
+Exactly! And we can do this for all functions with a linear runtime.
 
+> In lectures, I've only seen expressions like $$O(n)$$ or $$O(n^2)$$, but I never saw something like $$O(2cn+2c)$$ or $$O(cn)$$. I didn't even know we could do that.
 
+We could surely notate the class of all linear functions as $$O(2cn+2c)$$ or even $$O(cn)$$, but remember that the O-notation makes the constant factor irrelevant? That's why we usually use the simplest form such as $$O(n)$$.
+
+> Ohh, so the O-notation is just a way to classify functions while ignoring the constant factors, I see. But what do we need the $$\textcolor{red}{n_0}$$ for?
+
+If we get rid of $$\textcolor{red}{n_0}$$ from the definition, we would need to show that the equality holds for the all natural numbers. Here's a trivial example why that can be a problem.
+
+{/* <FunctionPlot/> */}
+
+Since it's clear that $$\textcolor{turquoise}{f(n) = (n-1)^2}$$ grows much faster than $$\textcolor{plum}{g(n)=x+2}$$, we should be able to say $$g(n) = O(f(n))$$. However, there are still points where $$\textcolor{turquoise}{f(n)}$$ is smaller than $$\textcolor{plum}{g(n)}$$, e.g. $$n=1$$! Multiplying by a <span style={{color: "green"}}>constant factor</span> doesn't help much here, so we need to provide a <span style={{ color: "red"}}>starting line</span> from which the inequality holds, so to speak. That's what $$\textcolor{red}{n_0}$$ is for.
+
+> Oh, I've also seen expressions like $$f(n) = \Theta(n)$$. What does that mean?
+
+If we can use the O-notation bidirectionally, we use the Greek alphabet $$\Theta$$ instead of $$O$$.
+
+> So saying $$f(n) = \Theta(g(n))$$ means that both $$f(n) = O(g(n))$$ and $$g(n) = O(f(n))$$?
+
+That's correct.
+
+> And this doesn't apply in the normal O-notation?
+
+No, it doesn't. The O-notation only tells us: "This function definitely doesn't grow faster than that function", but it doesn't tell us anything about the other way around. You can say that $$n = O(n^2)$$, but $$n^2 = O(n)$$ is wrong.
+
+> The notation is so confusing! Like, if you write $$n = O(n^2)$$, is $$O(n^2)$$ also some kind of function?
+
+I honestly don't like the use of equality in the O-notation either. 
 

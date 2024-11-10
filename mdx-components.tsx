@@ -13,6 +13,18 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             <h2 style={{ fontSize: "40px", fontWeight: "bolder" }}>{children}</h2>
         ),
         h3: ({ children }) => <h3 style={{ fontSize: "24px", fontWeight: "bold" }}>{children}</h3>,
+        // h6 for definitions
+        h6: ({ children }) => (
+            <h6
+                style={{
+                    backgroundColor: "#2e3440",
+                    borderRadius: "0.5rem",
+                    padding: "0.5rem 1rem",
+                    margin: "1rem 0",
+                }}>
+                {children}
+            </h6>
+        ),
         img: (props) => (
             <Image
                 sizes="100vw"
@@ -44,6 +56,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                 {children}
             </pre>
         ),
+        p: ({ children }) => <p style={{ margin: "1rem 0" }}>{children}</p>,
         ...components,
     };
 }
