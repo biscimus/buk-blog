@@ -8,7 +8,7 @@ export const metadata = {
  
 > During the lectures, O-notations appear everywhere, but I never got the hang of it.
 
-It seems like you didn't review your *Data Structures and Algorithms* lecture.
+It sounds like you didn't review your *Data Structures and Algorithms* lecture.
 
 > Yeah, but I wouldn't be asking you if I wanted to, would I?
 
@@ -84,7 +84,7 @@ We could surely notate the class of all linear functions as $$O(2cn+2c)$$ or eve
 
 If we get rid of $$\textcolor{red}{n_0}$$ from the definition, we would need to show that the equality holds for the all natural numbers. Here's a trivial example why that can be a problem.
 
-{/* <FunctionPlot/> */}
+<FunctionPlot/>
 
 Since it's clear that $$\textcolor{turquoise}{f(n) = (n-1)^2}$$ grows much faster than $$\textcolor{plum}{g(n)=x+2}$$, we should be able to say $$g(n) = O(f(n))$$. However, there are still points where $$\textcolor{turquoise}{f(n)}$$ is smaller than $$\textcolor{plum}{g(n)}$$, e.g. $$n=1$$! Multiplying by a <span style={{color: "green"}}>constant factor</span> doesn't help much here, so we need to provide a <span style={{ color: "red"}}>starting line</span> from which the inequality holds, so to speak. That's what $$\textcolor{red}{n_0}$$ is for.
 
@@ -102,5 +102,5 @@ No, it doesn't. The O-notation only tells us: "This function definitely doesn't 
 
 > The notation is so confusing! Like, if you write $$n = O(n^2)$$, is $$O(n^2)$$ also some kind of function?
 
-I honestly don't like the use of equality in the O-notation either. 
+It's, uh, complicated. Using the example you brought up, $$O(n^2)$$ is a set of functions that grow at most as fast as $$n^2$$. Some argue for using the set membership symbol $$f(n) \in O(g(n))$$ instead of the equality symbol $$f(n) = O(g(n))$$ to avoid this confusion. In some cases, $$O(n^2)$$ is in the meaning of "an arbitrary function that grows at most as fast as $$n^2$$", used to simplify smaller function terms like $$n^3 + 7n^2 + 14n - 12 = n^3 + O(n^2)$$.
 
