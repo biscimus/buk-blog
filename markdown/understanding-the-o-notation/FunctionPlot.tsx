@@ -54,13 +54,12 @@ export default function FunctionPlot() {
             <div className="flex flex-col items-center gap-4">
                 <input
                     type="range"
-                    orient="vertical"
                     min="1"
                     max="10"
                     value={k}
                     onChange={onCChange}
                     placeholder="Set value of k"
-                    style={{ height: "100%", width: "4rem" }}
+                    style={{ height: "100%", width: "4rem", writingMode: "vertical-lr" }}
                 />
                 <span style={{ color: "green" }}>k = {k}</span>
             </div>
