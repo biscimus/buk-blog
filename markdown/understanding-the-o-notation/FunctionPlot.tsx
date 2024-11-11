@@ -49,7 +49,7 @@ export default function FunctionPlot() {
     };
 
     return (
-        <div className="flex justify-center items-stretch gap-8 h-22 my-4">
+        <div className="flex justify-center items-stretch gap-8 my-4">
             <div id="multiple" />
             <div className="flex flex-col items-center gap-4">
                 <input
@@ -59,7 +59,12 @@ export default function FunctionPlot() {
                     value={k}
                     onChange={onCChange}
                     placeholder="Set value of k"
-                    style={{ height: "100%", width: "4rem", writingMode: "vertical-lr" }}
+                    style={{
+                        width: "4rem",
+                        flexGrow: "1",
+                        writingMode: "vertical-lr",
+                        direction: "rtl",
+                    }}
                 />
                 <span style={{ color: "green" }}>k = {k}</span>
             </div>
