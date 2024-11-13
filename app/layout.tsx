@@ -25,7 +25,7 @@ export default function RootLayout({
                 />
             </head>
             <body className={`mx-auto max-w-4xl py-12 px-12 ${serif.className} antialiased`}>
-                <header className="flex justify-between mb-16 items-baseline">
+                <header className="flex justify-between mb-16 items-center">
                     <Link href="/" className={`text-3xl font-bold ${mono.className}`}>
                         buk_blog
                     </Link>
