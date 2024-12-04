@@ -100,7 +100,21 @@ That's correct.
 
 No, it doesn't. The O-notation only tells us: "This function definitely doesn't grow faster than that function", but it doesn't tell us anything about the other way around. You can say that $$n = O(n^2)$$, but $$n^2 = O(n)$$ is wrong.
 
+> So just to be clear, $$n = O(n)$$ and $$n = O(n^2)$$? And this goes for all following $$n^k$$ with a natural number $$k$$?
+
+Exactly.
+
 > The notation is so confusing! Like, if you write $$n = O(n^2)$$, is $$O(n^2)$$ also some kind of function?
 
 It's, uh, complicated. Using the example you brought up, $$O(n^2)$$ is a set of functions that grow at most as fast as $$n^2$$. Some argue for using the set membership symbol $$f(n) \in O(g(n))$$ instead of the equality symbol $$f(n) = O(g(n))$$ to avoid this confusion. In some cases, $$O(n^2)$$ is in the meaning of "an arbitrary function that grows at most as fast as $$n^2$$", used to simplify smaller function terms like $$n^3 + 7n^2 + 14n - 12 = n^3 + O(n^2)$$.
+
+> There's one more thing. You told me earlier that we need a measure independent from time, like, in a physical sense. You never introduced the unit though and went straight to the O-notation. So if I say "My function has a runtime of $$O(n)$$", I now get that it means something like "With the input length of $$n$$, my function takes no more than $$c \cdot n$$ to execute with some constant $$c$$", but $$c \cdot n$$ in what, apples? Bananas?
+
+The unit of our choice is steps of a Turing Machine.
+
+> What's a Turing Machine?
+
+That's an excellent question! Let's discuss that in the next section.
+
+> Something's telling me I shouldn't have asked that question.
 

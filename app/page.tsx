@@ -20,7 +20,7 @@ async function getPosts() {
     );
 
     // sort the metadata by date
-    return metadata.sort((a, b) => (a.date > b.date ? -1 : 1));
+    return metadata.sort((a, b) => (a.date > b.date ? 1 : -1));
 }
 
 function Post({ post }: { post: Metadata }) {

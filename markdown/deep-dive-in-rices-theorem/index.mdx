@@ -3,3 +3,72 @@ export const metadata = {
     description: "What the fuck is a semantic property?",
     date: "2024-11-11",
 }
+
+Let us first look at two functions. How are they different?
+
+<div style={{display: "flex", gap: "1rem"}}>
+    <div style={{width: "50%"}}>
+        ```ts
+        function foo1(input: number): number {
+            console.log("Input: ", input)
+            const bar = input * 2;
+            return 1;
+        }
+        ```
+    </div>
+    <div style={{width: "50%"}}>
+        ```ts
+        function foo2(input: number): number {
+            return 1;
+        }
+        ```
+    </div>
+</div>
+
+> Well, both functions ignore their input and return 1, but the first one logs the input and initializes a new variable based on the input value. Other than that, the two are basically identical.
+
+Right. What we want to focus on is the following: Even though the two functions may be structured differently *inside*, if you observe the two functions from the outside by treating them as a *black box*, where you can only observe the inputs and outputs of each function, the two functions are identical. For all inputs, the functions simply return the number 1. For this, we say that although the two functions differ from each other ***syntactically***, they are ***semantically*** identical.
+
+In order to formalize this, we take a look at what kind of mathematical function each of these functions would represent. Be careful that mathematical functions are different from the functions in the programming sense. What would this function look like for our example functions?
+
+> It would be something like $$f: x \mapsto 1 \forall x$$, depending on which domain we define our function on.
+
+Great. Now, if we would want to map the set of all functions (in the programming sense) to the set of all mathematical functions, do you see that every function (in the programming sense) will have a corresponding mathematical function, and that some functions (in the programming sense) would map to the same mathematical function?
+
+> Yep, I think that's pretty clear. So the function is well-defined since all domain elements will be mapped to some function in the mathematical sense. The function is clearly not injective, as you pointed out with the example above. And the function is not surjective either!
+
+How did you guess that?
+
+> We already learned in the lectures about the existence of incomputable functions, so that was pretty easy to guess. Since there are functions unabled to be computed by any Turing Machine, there can't be any function in the programming sense mapping to an incomputable function. If so, there would be an equivalent Turing Machine according to the Church-Turing Thesis and the function would be computable.
+
+Very well! I actually just wanted to move on to Turing Machines.
+
+For Turing Machines, the output for an input string in $$\{0, 1\}^*$$ is either also a string in $$\{0, 1\}^*$$, or it doesn't exist at all, in case the Turing Machine is stuck in an infinite loop. This behavior makes it a little bit tricky to represent the behavior of a Turing Machine (i.e. the input-output relation) in a function $$f \colon \{0, 1\}^* \longrightarrow \{0, 1\}^*$$. Instead, we say a Turing Machine computes a partial function $$f \colon \{0, 1\}^* \longrightarrow \{0, 1\}^* \cup \bottom$$.
+
+> What the heck is a partial function?
+
+In a partial function, not every domain element needs to be mapped; We denote $$f(w) = \bottom$$ if the input $$w$$ doesn't have a corresponding mapping. In the context of Turing Machines, $$f(w) = \bottom$$ means that the Turing Machine does not halt on the input $$w$$. Note that partial functions are a superset of total functions and that all total function is partial.
+
+Anyways, we have Turing Machines and partial functions computed by Turing Machines. Now take any non-empty real subset $$\mathcal{S}$$ of computable partial functions. Then, there has to be a set of Turing Machines, all computing a function in $$\mathcal{S}$$. Rice's Theorem states that this set of Turing Machines is undecidable.
+
+Take our previous functions as an example, which were all functions returing 1 for every input. Since the set $$\{ \langle M \rangle \mid M \text{ returns 1 for every input} \}$$ is undecidable according to Rice's Theorem, it is impossible to program a function which looks like this:
+
+```ts
+function oneDecider(func): boolean {
+    // 1. Check if func returns 1 for every input
+    // 2. If yes return true, otherwise return false
+}
+```
+
+Likewise, the following program is also impossible to construct:
+
+```ts
+function oneDecider2(func): boolean {
+    // 1. Check if func returns 1 for input 1
+    // 2. If yes return true, otherwise false
+    return func(1) === 1;
+}
+```
+
+Do you see why? We're checking whether an input program `func` returns 1 on input 1, therefore effectively checking whether the partial function computed by `func` is in $$\mathcal{S} = \{ f \mid f(1) = 1 \}$$.
+
