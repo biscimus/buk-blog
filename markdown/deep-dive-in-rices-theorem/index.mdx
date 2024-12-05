@@ -70,5 +70,5 @@ function oneDecider2(func): boolean {
 }
 ```
 
-Do you see why? We're checking whether an input program `func` returns 1 on input 1, therefore effectively checking whether the partial function computed by `func` is in $$\mathcal{S} = \{ f \mid f(1) = 1 \}$$.
+Do you see why? We're checking whether an input program `func` returns 1 on input 1, therefore effectively checking whether the partial function computed by `func` is in $$\mathcal{S} = \{ f \mid f(1) = 1 \}$$. While the program may work for certain input functions, we can certainly argue that there will be an input function where `oneDecider2` will crash. 
 
