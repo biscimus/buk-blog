@@ -27,8 +27,8 @@ function Post({ post }: { post: Metadata }) {
     return (
         <Link href={post.link}>
             <article className="flex flex-col gap-2 border-2 p-6">
-                <h2 className="text-2xl font-bold">{post.title}</h2>
                 <p className="text-sm text-gray-500">{post.date}</p>
+                <h2 className="text-2xl font-bold">{post.title}</h2>
                 <p>{post.description}</p>
             </article>
         </Link>
@@ -39,7 +39,7 @@ export default async function Page() {
     const posts = await getPosts();
 
     return (
-        <div className="grid grid-rows-[20px_1fr_20px] min-h-screen pb-20 gap-16">
+        <div className="grid grid-rows-[20px_1fr_20px] min-h-screen pb-16 gap-12">
             <main className="flex flex-col gap-8 row-start-2">
                 {posts.map((post, index) => (
                     <Post key={index} post={post} />

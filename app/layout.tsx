@@ -26,13 +26,23 @@ export default function RootLayout({
             </head>
             <body className={`mx-auto max-w-4xl py-12 px-12 ${serif.className} antialiased`}>
                 <header className="flex justify-between mb-16 items-center">
-                    <Link href="/" className={`text-3xl font-bold ${mono.className}`}>
-                        buk_blog
-                    </Link>
-                    <Link href="https://geonho.de">Geonho Yun</Link>
+                    <Logo />
+                    <Link href="https://geonho.com">Geonho Yun</Link>
                 </header>
                 {children}
             </body>
         </html>
+    );
+}
+
+function Logo() {
+    return (
+        <Link href="/" className={`text-3xl font-bold ${mono.className} group flex items-center`}>
+            <span className="animate-bounceSlow group-hover:animate-none">b</span>
+            <span className="transition-all ease-in-out w-0 group-hover:animate-slideIn animate-slideOut overflow-hidden">uk</span>
+            <span>_</span>
+            <span className="animate-bounceSlow group-hover:animate-none">b</span>
+            <span className="transition-all ease-in-out w-0 group-hover:animate-slideIn animate-slideOut overflow-hidden group-hover:pr-1">log</span>
+        </Link>
     );
 }
