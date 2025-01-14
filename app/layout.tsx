@@ -3,6 +3,9 @@ import { mono, serif } from "@/app/fonts";
 import "../globals.css";
 import Link from "next/link";
 
+// TODO: Make Logo component a client component for dynamic width calculation
+// import Logo from "./components/Logo";
+
 export const metadata: Metadata = {
     title: "BuK Blog",
     description: "A blog about the infamous BuK by Geonho Yun",
@@ -37,12 +40,16 @@ export default function RootLayout({
 
 function Logo() {
     return (
-        <Link href="/" className={`text-3xl font-bold ${mono.className} group flex items-center`}>
+        <Link href="/" className={`text-3xl font-bold ${mono.className} group flex`}>
             <span className="animate-bounceSlow group-hover:animate-none">b</span>
-            <span className="transition-all ease-in-out w-0 group-hover:animate-slideIn animate-slideOut overflow-hidden">uk</span>
+            <span className="animate-slideOut group-hover:animate-slideIn overflow-clip">uk</span>
             <span>_</span>
             <span className="animate-bounceSlow group-hover:animate-none">b</span>
-            <span className="transition-all ease-in-out w-0 group-hover:animate-slideIn animate-slideOut overflow-hidden group-hover:pr-1">log</span>
+            <span className="animate-slideOut group-hover:animate-slideIn overflow-clip">log</span>
         </Link>
     );
 }
+
+
+
+
