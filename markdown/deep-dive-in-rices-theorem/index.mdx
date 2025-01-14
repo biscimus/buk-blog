@@ -43,11 +43,11 @@ How did you guess that?
 
 Very well! I actually just wanted to move on to Turing Machines.
 
-For Turing Machines, the output for an input string in $$\{0, 1\}^*$$ is either also a string in $$\{0, 1\}^*$$, or it doesn't exist at all, in case the Turing Machine is stuck in an infinite loop. This behavior makes it a little bit tricky to represent the behavior of a Turing Machine (i.e. the input-output relation) in a function $$f \colon \{0, 1\}^* \longrightarrow \{0, 1\}^*$$. Instead, we say a Turing Machine computes a partial function $$f \colon \{0, 1\}^* \longrightarrow \{0, 1\}^* \cup \bottom$$.
+For Turing Machines, the output for an input string in $$\{0, 1\}^*$$ is either also a string in $$\{0, 1\}^*$$, or it doesn't exist at all, in case the Turing Machine is stuck in an infinite loop. This behavior makes it a little bit tricky to represent the behavior of a Turing Machine (i.e. the input-output relation) in a function $$f \colon \{0, 1\}^* \longrightarrow \{0, 1\}^*$$. Instead, we say a Turing Machine computes a partial function $$f \colon \{0, 1\}^* \longrightarrow \{0, 1\}^* \cup \bot$$.
 
 > What the heck is a partial function?
 
-In a partial function, not every domain element needs to be mapped; We denote $$f(w) = \bottom$$ if the input $$w$$ doesn't have a corresponding mapping. In the context of Turing Machines, $$f(w) = \bottom$$ means that the Turing Machine does not halt on the input $$w$$. Note that partial functions are a superset of total functions and that all total function is partial.
+In a partial function, not every domain element needs to be mapped; We denote $$f(w) = \bot$$ if the input $$w$$ doesn't have a corresponding mapping. In the context of Turing Machines, $$f(w) = \bot$$ means that the Turing Machine does not halt on the input $$w$$. Note that partial functions are a superset of total functions and that all total function is partial.
 
 Anyways, we have Turing Machines and partial functions computed by Turing Machines. Now take any non-empty real subset $$\mathcal{S}$$ of computable partial functions. Then, there has to be a set of Turing Machines, all computing a function in $$\mathcal{S}$$. Rice's Theorem states that this set of Turing Machines is undecidable.
 

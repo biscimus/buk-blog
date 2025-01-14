@@ -10,7 +10,7 @@ import { mono } from "@/app/fonts";
 export function useMDXComponents(components: MDXComponents): MDXComponents {
     return {
         h2: ({ children }) => (
-            <h2 style={{ fontSize: "40px", fontWeight: "bolder" }}>{children}</h2>
+            <h2 style={{ fontSize: "32px", fontWeight: "bolder" }}>{children}</h2>
         ),
         h3: ({ children }) => <h3 style={{ fontSize: "24px", fontWeight: "bold" }}>{children}</h3>,
         // h6 for definitions

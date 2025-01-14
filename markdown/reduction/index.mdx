@@ -1,0 +1,21 @@
+import ReductionAnimation from "./ReductionAnimation"
+
+export const metadata = {
+    title: "On Reductions",
+    description: "Not the sauce.",
+    date: "2025-01-14",
+}
+
+A theoretical computer scientist wanted to join the local volunteer fire department. During his try-out, the senior officer hands him an extinguisher and a burning paper bin. He then asks to solve the problem, and the fire is skillfully put out by the computer scientist. Impressed, the officer compliments him for solving the task, then asks him what he will do with the remaining bin. After thinking for a while, he gathers fresh paper, lights up the bin and proudly tells the officer: "I have now reduced the current problem to the previous one; I'll leave the rest as an exercise."
+
+This opening anecdote from the professor used to be the source of last bursts of laughter during the lecture on reductions.
+
+Now, the main idea is quite simple. When facing a new Problem A, reductions are attempts to prove the "new" problem is, in fact, not new, but instead just a variant of an old, preivously known Problem B. By applying a reduction, we're proving that the entire Problem A is "actually" just a subset of B.
+
+<ReductionAnimation/>
+
+Reducing A to B has a couple implications for the _relative difficulty_ of A and B. Intuitively, it is clear that if we can solve B, we can surely solve A as well. Furthermore, if we know that if we can't solve A, we can say that B is impossible to solve as well. Likewise, if B is easy to solve, A is easy to solve. If A is really difficult, we surely know B won't be easier than A. Note that being able to reduce A to B doesn't mean B is necessarily harder than A since you can reduce a problem to an idential problem and still call it a reduction (burning bin reduced to a burning bin is still a burning bin).
+
+All we have to know is what a "problem" means and how we can prove the "actually..." part.
+
+## A Problem
