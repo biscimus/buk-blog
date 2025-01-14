@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+// import { useRef, useState } from "react";
 
 export default function Logo() {
     // const [widths, setWidths] = useState({ uk: 0, log: 0 }); // Track current widths
