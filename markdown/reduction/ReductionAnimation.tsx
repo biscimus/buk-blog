@@ -31,30 +31,50 @@ export default function ReductionAnimation() {
                 {/* First yellow shape with animation */}
                 <path
                     d="M50 150 
-                C 30 100, 70 50, 100 70 
-                C 130 90, 150 30, 170 70 
-                C 190 110, 120 180, 170 200
-                C 120 250, 80 220, 50 250
-                Z"
+                    C 30 100, 70 50, 100 70 
+                    C 130 90, 150 30, 170 70 
+                    C 190 110, 120 180, 170 200
+                    C 120 250, 80 220, 50 250
+                    Z"
                     fill="yellow"
                     stroke="black"
-                    strokeWidth="2">
+                    strokeWidth="2"
+                >
                     <animate
                         attributeName="d"
-                        dur="4s"
+                        dur="6s"
+                        repeatCount="indefinite"
                         fill="freeze"
-                        to="M70 170 
-                C 70 165, 90 165, 90 170 
-                C 90 175, 70 175, 70 170 
-                C 70 165, 90 165, 90 170 
-                C 90 175, 70 175, 70 170 
-                Z"
+                        keyTimes="0; 0.5; 1"
+                        values="
+                        M50 150 
+                        C 30 100, 70 50, 100 70 
+                        C 130 90, 150 30, 170 70 
+                        C 190 110, 120 180, 170 200
+                        C 120 250, 80 220, 50 250
+                        Z;
+                        
+                        M70 170 
+                        C 70 165, 90 165, 90 170 
+                        C 90 175, 70 175, 70 170 
+                        C 70 165, 90 165, 90 170 
+                        C 90 175, 70 175, 70 170 
+                        Z;
+                        
+                        M70 170 
+                        C 70 165, 90 165, 90 170 
+                        C 90 175, 70 175, 70 170 
+                        C 70 165, 90 165, 90 170 
+                        C 90 175, 70 175, 70 170 
+                        Z"
                     />
                     <animate
                         attributeName="fill"
-                        dur="4s"
+                        dur="6s"
+                        repeatCount="indefinite"
                         fill="freeze"
-                        to="orange"
+                        keyTimes="0; 0.5; 1"
+                        values="yellow; orange; orange"
                     />
                 </path>
 

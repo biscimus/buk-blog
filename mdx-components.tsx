@@ -57,6 +57,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             </pre>
         ),
         p: ({ children }) => <p style={{ margin: "1rem 0" }}>{children}</p>,
+        li: ({ children }) => (
+            <li style={{ margin: "1rem 0" }}>
+                <span>•  </span>{children}
+            </li>
+        ),
         ...components,
     };
 }
