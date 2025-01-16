@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
     title: "BuK Blog",
-    description: "A blog about the infamous BuK by Geonho Yun",
+    description: "A collection of my tiny attempts to salvage RWTH students from depression & exmatriculation.",
 };
 
 export default function RootLayout({

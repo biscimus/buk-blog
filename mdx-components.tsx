@@ -12,7 +12,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         h2: ({ children }) => (
             <h2 style={{ fontSize: "32px", fontWeight: "bolder" }}>{children}</h2>
         ),
-        h3: ({ children }) => <h3 style={{ fontSize: "24px", fontWeight: "bold" }}>{children}</h3>,
+        h3: ({ children }) => <h3 style={{ fontSize: "24px", fontWeight: "bold", marginTop: "4rem" }}>{children}</h3>,
         // h6 for definitions
         h6: ({ children }) => (
             <h6
@@ -37,8 +37,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                 style={{
                     fontStyle: "italic",
                     borderLeft: "4px solid #4c566a",
-                    paddingLeft: "1rem",
-                    margin: "1rem 0",
+                    padding: "0.5rem 1rem",
+                    margin: "2rem 0",
                 }}>
                 {children}
             </blockquote>
@@ -62,6 +62,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
                 <span>•  </span>{children}
             </li>
         ),
+        a: ({ href, children }) => <a href={href} target="_blank" style={{ textDecoration: "underline dashed #f6ad55" }}>{children}</a>,
         ...components,
+        strong: ({ children }) => <strong style={{ fontWeight: "bold" }}>{children}</strong>
     };
 }

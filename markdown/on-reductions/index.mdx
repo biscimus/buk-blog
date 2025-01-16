@@ -1,0 +1,59 @@
+import ReductionAnimation from "./ReductionAnimation"
+
+export const metadata = {
+    title: "On Reductions",
+    description: "Not the sauce.",
+    date: "2025-01-14",
+}
+
+A theoretical computer scientist wanted to join the local volunteer fire department. During his try-out, the senior officer hands him an extinguisher and a burning paper bin. He then asks to solve the problem, and the fire is skillfully put out by the computer scientist. Impressed, the officer compliments him for solving the task, then asks him what he will do with the remaining bin. After thinking for a while, he gathers fresh paper, lights up the bin and proudly tells the officer: "I have now reduced the current problem to the previous one; I'll leave the rest as an exercise."
+
+This opening anecdote from the professor used to be the source of very last bursts of laughter before the hour of sole confusion during the lecture on reductions.
+
+Now, the main idea is quite simple. When facing a new Problem A, reductions are attempts to prove the "new" problem is, in fact, not new, but instead just a variant of an old, preivously known Problem B. By applying a reduction, we're proving that the entire Problem A is "actually" just a subset of B.
+
+<ReductionAnimation/>
+
+Reducing A to B has a couple implications for the _relative difficulty_ of A and B. The following points should be intuitively clear:
+
+- If we can solve B, we can surely solve A as well.
+- If we know that we can't solve A, we can say that B is impossible to solve too.
+- If B is easy to solve, A is easy to solve.
+- If A is really difficult, we surely know B won't be easier than A.
+
+Note that being able to reduce A to B doesn't mean B is necessarily harder than A since you can reduce a problem to an identical problem and still call it a reduction (burning bin reduced to a burning bin is still a burning bin).
+
+All we have to know is what a "problem" means and how we can prove the "actually..." part.
+
+### Entscheidungsproblem
+
+A problem in the computer science sense means a set of formally structured problem instances and their corresponding answers. In the problem of e.g. multiplication of two numbers, $$(7 \cdot 6, 42)$$ would be in the problem, while $$(7 \cdot 6, 41)$$ wouldn't. They all have some form of uniform mathematical structure, encoded with some kind of an [alphabet](https://en.wikipedia.org/wiki/Alphabet_(formal_languages)) $$\Sigma$$.
+
+We now focus on a special variant called an _Entscheidungsproblem_ (Entscheidung: decision). In an entscheidungsproblem, the problem instances' answers can only be true or false. In other words, they're all yes-and-no questions!
+
+Note that we can convert any problem into an entscheidungsproblem by concatenating the problem instances & answers in the relation in order to make a new set of positive instances as below:
+
+$$(7 \cdot 6, 42) \rightarrow (7 \cdot 6 = 42, 1)$$.
+
+{/* Note that every problem can be re-formulated in a function, since for every relation $$R$$, we can simply construct a function $$f: R \rightarrow \{0, 1\}$$:
+
+<div className="flex justify-center">
+$$f(r) = \left \{ \begin{array}{ll} 1 & r \in R \\ 0 & \, \textrm{otherwise} \\ \end{array} \right. $$
+</div>
+
+and vice versa. */}
+
+The conventional way to define a problem for the case of entscheidungsproblems is to gather all problem instances whose answer is "yes". We call this the [__language__](https://en.wikipedia.org/wiki/Formal_language) of the entscheidungsproblem, denoted as $$L$$. If a word over a chosen alphabet $$\Sigma$$ $$w \in \Sigma^*$$ is a positive instance, $$w$$ lies in $$L$$; if $$w$$ is a negative instance or pure sequence of nonsense, i.e. not an encoding of a problem at all, $$w$$ is in $$\overline{L}$$ (complement of $$L$$). In our case, encoded over the alphabet 
+
+<div className="flex justify-center">$$\Sigma = \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, \cdot, = \}$$,</div>
+
+$$7\cdot6=42 \in L$$, while $$7 \cdot 6 = 41, 7 \cdot 5 = 42 \in \overline{L}$$ and $$9 == \cdot 12 \cdot \in \overline{L}$$.
+
+### The "actually" part
+
+A reduction is formally defined as follows:
+
+
+> Let $$A, B$$ be two languages over an alphabet $$\Sigma$$. $$A$$ is reducible to $$B$$  $$(A \leq B)$$, if there exists a computable function $$f: \Sigma^* \rightarrow \Sigma^*$$ so that $$x \in A \Leftrightarrow f(x) \in B$$ for all $$x \in \Sigma^*$$.
+
+Another way to look at this is depicted in the animated diagram above.

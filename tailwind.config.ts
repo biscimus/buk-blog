@@ -22,6 +22,10 @@ const config: Config = {
                     from: { width: "100%" },
                     to: { width: "0%" },
                 },
+                "bounce": {
+                    "0%, 100%": { transform: "translateY(0)" },
+                    "50%": { transform: "translateY(-25%)" }
+                }
             },
             animation: {
                 "slideIn": "slideIn 1s ease-in forwards",
