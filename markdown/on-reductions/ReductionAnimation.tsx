@@ -19,10 +19,10 @@ export default function ReductionAnimation() {
             >
                 {/* Frame */}
                 <rect
-                    x="10"
-                    y="10"
-                    width="380"
-                    height="280"
+                    x="20"
+                    y="45"
+                    width="360"
+                    height="240"
                     fill="none"
                     stroke="black"
                     strokeWidth="2"
@@ -61,8 +61,15 @@ export default function ReductionAnimation() {
                         dur="6s"
                         repeatCount="indefinite"
                         fill="freeze"
-                        keyTimes="0; 0.5; 1"
+                        keyTimes="0; 0.2; 0.5; 1"
                         values="
+                        M50 150 
+                        C 30 100, 70 50, 100 70 
+                        C 130 90, 150 30, 170 70 
+                        C 190 110, 120 180, 170 200
+                        C 120 250, 80 220, 50 250
+                        Z;
+
                         M50 150 
                         C 30 100, 70 50, 100 70 
                         C 130 90, 150 30, 170 70 
@@ -89,14 +96,17 @@ export default function ReductionAnimation() {
                         dur="6s"
                         repeatCount="indefinite"
                         fill="freeze"
-                        keyTimes="0; 0.5; 1"
-                        values="yellow; orange; orange"
+                        keyTimes="0; 0.2; 0.5; 1"
+                        values="yellow; yellow; orange; orange"
                     />
                 </path>
 
-                <text x="170" y="30" fontFamily="Arial" fontSize="20" fill="black">{`{0,1}*`}</text>
-                <text x="90" y="140" fontFamily="Arial" fontSize="20" fill="black">A</text>
-                <text x="270" y="140" fontFamily="Arial" fontSize="20" fill="black">B</text>
+                <text x="200" y="30" fontFamily="IBM Plex Serif" fontSize="20">{"Σ*"}</text>
+                <text x="90" y="140" fontFamily="IBM Plex Serif" fontSize="20">A
+                    <animate attributeName="x" dur="6s" keyTimes="0; 0.2; 0.5; 1" values="90; 90; 295; 295" fill="freeze" repeatCount="indefinite" />
+                    <animate attributeName="y" dur="6s" keyTimes="0; 0.2; 0.5; 1" values="140; 140; 180; 180" fill="freeze" repeatCount="indefinite" />
+                </text>
+                <text x="270" y="140" fontFamily="IBM Plex Serif" fontSize="20">B</text>
             </svg>
             <button onClick={onReduce}>Reduce!</button>
         </div>
