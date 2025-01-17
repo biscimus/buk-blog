@@ -12,17 +12,6 @@ This opening anecdote from the professor used to be the source of very last burs
 
 Now, the main idea is quite simple. When facing a new Problem A, reductions are attempts to prove the "new" problem is, in fact, not new, but instead just a variant of an old, preivously known Problem B. By applying a reduction, we're proving that the entire Problem A is "actually" just a subset of B.
 
-<ReductionAnimation/>
-
-Reducing A to B has a couple implications for the _relative difficulty_ of A and B. The following points should be intuitively clear:
-
-- If we can solve B, we can surely solve A as well.
-- If we know that we can't solve A, we can say that B is impossible to solve too.
-- If B is easy to solve, A is easy to solve.
-- If A is really difficult, we surely know B won't be easier than A.
-
-Note that being able to reduce A to B doesn't mean B is necessarily harder than A since you can reduce a problem to an identical problem and still call it a reduction (burning bin reduced to a burning bin is still a burning bin).
-
 All we have to know is what a "problem" means and how we can prove the "actually..." part.
 
 ### Entscheidungsproblem
@@ -56,4 +45,20 @@ A reduction is formally defined as follows:
 
 > Let $$A, B$$ be two languages over an alphabet $$\Sigma$$. $$A$$ is reducible to $$B$$  $$(A \leq B)$$, if there exists a computable function $$f: \Sigma^* \rightarrow \Sigma^*$$ so that $$x \in A \Leftrightarrow f(x) \in B$$ for all $$x \in \Sigma^*$$.
 
-Another way to look at this is depicted in the animated diagram above.
+One way to visualize this is to imagine our $$\Sigma^*$$ is some kind of discrete metric space with languages $$A, B$$ corresponding to shapes defined in $$\Sigma$$. The reduction $$f$$ as a [transformation](https://en.wikipedia.org/wiki/Transformation_(function)), warping the entire space so that $$A$$ fits inside $$B$$ and $$\overline{A}$$ inside $$\overline{B}$$. The following animation might help.
+
+<ReductionAnimation/>
+
+What confuses many while proving a reduction is that the transformation isn't necessarily surjective, meaning we don't need to ask "But what is the preimage of xyz in this case?" for every word xyz. We solely need to insure that every positive instance is mapped to a positive instance and every negative instance is mapped to a negative instance.
+
+Also, being able to reduce A to B doesn't mean B is necessarily harder than A, since you can reduce a problem to an identical problem and still call it a reduction; If faced with a second burning bin, the computer scientist can calmly walk away, knowing that this can be reduced to the previous burning bin problem. This, however, doesn't mean that the previous burning bin was a harder problem to solve.
+
+Reducing A to B has a couple implications for the _relative difficulty_ of A and B. The following points should be intuitively clear:
+
+1. If we can solve B, we can surely solve A as well.
+2. If we know that we can't solve A, we can say that B is impossible to solve too.
+3. If B is easy to solve, A is easy to solve.
+4. If A is really difficult, we surely know B won't be easier than A.
+
+Points 1 and 2 refer to the relative difficulty of the two problems regarding their __computability__ or __decidability__. You can swap the word "solve" to words like "compute" or "decide" and the statement still holds. Points 3 and 4 are statements about their __complexity__. "Easy to solve" in the complexity context normally means that the problem can be solved in [polynomial time](https://en.wikipedia.org/wiki/Time_complexity#Polynomial_time), whereas "really difficult" means that the problem is [NP-hard](https://en.wikipedia.org/wiki/NP-hardness).
+

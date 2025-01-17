@@ -57,13 +57,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             </pre>
         ),
         p: ({ children }) => <p style={{ margin: "1rem 0" }}>{children}</p>,
-        li: ({ children }) => (
-            <li style={{ margin: "1rem 0" }}>
-                <span>•  </span>{children}
-            </li>
-        ),
+        li: ({ children }) => <li style={{ margin: "1rem 0" }}>{children}</li>,
+        ol: ({ children }) => <ol style={{ listStyleType: "decimal", margin: "1rem" }}>{children}</ol>,
         a: ({ href, children }) => <a href={href} target="_blank" style={{ textDecoration: "underline dashed #f6ad55" }}>{children}</a>,
+        strong: ({ children }) => <strong style={{ fontWeight: "bold" }}>{children}</strong>,
         ...components,
-        strong: ({ children }) => <strong style={{ fontWeight: "bold" }}>{children}</strong>
     };
 }
