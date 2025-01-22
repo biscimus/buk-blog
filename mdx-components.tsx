@@ -10,57 +10,39 @@ import { mono } from "@/app/fonts";
 export function useMDXComponents(components: MDXComponents): MDXComponents {
     return {
         h2: ({ children }) => (
-            <h2 style={{ fontSize: "32px", fontWeight: "bolder" }}>{children}</h2>
+            <h2 className="text-3xl font-bold">{children}</h2>
         ),
-        h3: ({ children }) => <h3 style={{ fontSize: "24px", fontWeight: "bold", marginTop: "4rem" }}>{children}</h3>,
+        h3: ({ children }) => <h3 className="text-2xl mt-16">{children}</h3>,
         // h6 for definitions
         h6: ({ children }) => (
-            <h6
-                style={{
-                    backgroundColor: "#2e3440",
-                    borderRadius: "0.5rem",
-                    padding: "0.5rem 1rem",
-                    margin: "1rem 0",
-                }}>
+            <h6 className="bg-[#2e3440] rounded-sm p-6 my-4">
                 {children}
             </h6>
         ),
         img: (props) => (
             <Image
                 sizes="100vw"
-                style={{ width: "100%", height: "auto" }}
+                className="w-full h-auto"
                 {...(props as ImageProps)}
             />
         ),
         blockquote: ({ children }) => (
             <blockquote
-                style={{
-                    fontStyle: "italic",
-                    borderLeft: "4px solid #4c566a",
-                    padding: "0.5rem 1rem",
-                    margin: "2rem 0",
-                }}>
+                className="italic border-l-4 border-l-gray-600 px-8 py-2">
                 {children}
             </blockquote>
         ),
         pre: ({ children }) => (
             <pre
-                className={`${mono.className}`}
-                style={{
-                    backgroundColor: "#2e3440",
-                    borderRadius: "0.5rem",
-                    padding: "1.5rem 1rem",
-                    margin: "1rem 0",
-                    overflow: "scroll",
-                }}>
+                className={`${mono.className} bg-[#2e3440] rounded-lg p-6 overflow-scroll`}>
                 {children}
             </pre>
         ),
-        p: ({ children }) => <p style={{ margin: "1rem 0" }}>{children}</p>,
-        li: ({ children }) => <li style={{ margin: "1rem 0" }}>{children}</li>,
-        ol: ({ children }) => <ol style={{ listStyleType: "decimal", margin: "1rem" }}>{children}</ol>,
-        a: ({ href, children }) => <a href={href} target="_blank" style={{ textDecoration: "underline dashed #f6ad55" }}>{children}</a>,
-        strong: ({ children }) => <strong style={{ fontWeight: "bold" }}>{children}</strong>,
+        p: ({ children }) => <p className="my-4">{children}</p>,
+        li: ({ children }) => <li className="my-4">{children}</li>,
+        ol: ({ children }) => <ol className="list-decimal m-4">{children}</ol>,
+        a: ({ href, children }) => <a href={href} target="_blank" className="underline decoration-dashed decoration-[#f6ad55]">{children}</a>,
+        strong: ({ children }) => <strong className="font-bold">{children}</strong>,
         ...components,
     };
 }

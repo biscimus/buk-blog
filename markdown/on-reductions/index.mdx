@@ -6,9 +6,9 @@ export const metadata = {
     date: "2025-01-14",
 }
 
-A theoretical computer scientist wanted to join the local volunteer fire department. During his try-out, the senior officer hands him an extinguisher and a burning paper bin. He then asks to solve the problem, and the fire is skillfully put out by the computer scientist. Impressed, the officer compliments him for solving the task, then asks him what he will do with the remaining bin. After thinking for a while, he gathers fresh paper, lights up the bin and proudly tells the officer: "I have now reduced the current problem to the previous one; I'll leave the rest as an exercise."
+> A theoretical computer scientist wanted to join the local volunteer fire department. During his try-out, the senior officer hands him an extinguisher and a burning paper bin. He then asks to solve the problem, and the fire is skillfully put out by the computer scientist. Impressed, the officer compliments him for solving the task, then asks him what he will do with the remaining bin. After thinking for a while, he gathers fresh paper, lights up the bin and proudly tells the officer: "I have now reduced the current problem to the previous one; I'll leave the rest as an exercise."
 
-This opening anecdote from the professor used to be the source of very last bursts of laughter before the hour of sole confusion during the lecture on reductions.
+This opening anecdote from the professor used to be the source of very last bursts of laughter before the hour of sole confusion during the lecture on [reductions](https://en.wikipedia.org/wiki/Reduction_(complexity)).
 
 Now, the main idea is quite simple. When facing a new Problem A, reductions are attempts to prove the "new" problem is, in fact, not new, but instead just a variant of an old, preivously known Problem B. By applying a reduction, we're proving that the entire Problem A is "actually" just a subset of B.
 
@@ -18,7 +18,7 @@ All we have to know is what a "problem" means and how we can prove the "actually
 
 A problem in the computer science sense means a set of formally structured problem instances and their corresponding answers. In the problem of e.g. multiplication of two numbers, $$(7 \cdot 6, 42)$$ would be in the problem, while $$(7 \cdot 6, 41)$$ wouldn't. They all have some form of uniform mathematical structure, encoded with some kind of an [alphabet](https://en.wikipedia.org/wiki/Alphabet_(formal_languages)) $$\Sigma$$.
 
-We now focus on a special variant called an _Entscheidungsproblem_ (Entscheidung: decision). In an entscheidungsproblem, the problem instances' answers can only be true or false. In other words, they're all yes-and-no questions!
+We now focus on a special variant called an _[Entscheidungsproblem](https://en.wikipedia.org/wiki/Decision_problem)_ (Entscheidung: decision). In an entscheidungsproblem, the problem instances' answers can only be true or false. In other words, they're all yes-and-no questions!
 
 Note that we can convert any problem into an entscheidungsproblem by concatenating the problem instances & answers in the relation in order to make a new set of positive instances as below:
 
@@ -42,10 +42,9 @@ $$7\cdot6=42 \in L$$, while $$7 \cdot 6 = 41, 7 \cdot 5 = 42 \in \overline{L}$$ 
 
 A reduction is formally defined as follows:
 
+###### __Definition (Reduction).__ <br/><br/> Let $$A, B$$ be two languages over an alphabet $$\Sigma$$. $$A$$ is reducible to $$B$$  $$(A \leq B)$$, if there exists a computable function $$f: \Sigma^* \rightarrow \Sigma^*$$ so that $$x \in A \Leftrightarrow f(x) \in B$$ for all $$x \in \Sigma^*$$.
 
-> Let $$A, B$$ be two languages over an alphabet $$\Sigma$$. $$A$$ is reducible to $$B$$  $$(A \leq B)$$, if there exists a computable function $$f: \Sigma^* \rightarrow \Sigma^*$$ so that $$x \in A \Leftrightarrow f(x) \in B$$ for all $$x \in \Sigma^*$$.
-
-One way to visualize this is to imagine our $$\Sigma^*$$ is some kind of discrete metric space with languages $$A, B$$ corresponding to shapes defined in $$\Sigma$$. The reduction $$f$$ as a [transformation](https://en.wikipedia.org/wiki/Transformation_(function)), warping the entire space so that $$A$$ fits inside $$B$$ and $$\overline{A}$$ inside $$\overline{B}$$. The following animation might help.
+One way to visualize this is to imagine our $$\Sigma^*$$ is some kind of discrete metric space with languages $$A, B$$ corresponding to shapes defined in $$\Sigma$$. The reduction $$f$$ is a [transformation](https://en.wikipedia.org/wiki/Transformation_(function)), warping the entire space so that $$A$$ fits inside $$B$$ and $$\overline{A}$$ inside $$\overline{B}$$. The following animation might help.
 
 <ReductionAnimation/>
 
@@ -61,4 +60,17 @@ Reducing A to B has a couple implications for the _relative difficulty_ of A and
 4. If A is really difficult, we surely know B won't be easier than A.
 
 Points 1 and 2 refer to the relative difficulty of the two problems regarding their __computability__ or __decidability__. You can swap the word "solve" to words like "compute" or "decide" and the statement still holds. Points 3 and 4 are statements about their __complexity__. "Easy to solve" in the complexity context normally means that the problem can be solved in [polynomial time](https://en.wikipedia.org/wiki/Time_complexity#Polynomial_time), whereas "really difficult" means that the problem is [NP-hard](https://en.wikipedia.org/wiki/NP-hardness).
+
+If you are applying a reduction in the complexity context, you further need to show that your reduction function is computable is polynomial runtime. The reduction then bears the name of __polynomial reduction__ with the notation $$A \leq_p B$$    .
+
+### Moment of Poof
+
+Looking at how it actually works would help you understand it a bit better.
+
+###### __Definition (Dominating Set).__ <br/><br/> Let $$G = (V, E)$$ be an undirected graph. $$D \subseteq V$$ is a _Dominating Set_ of $$G$$, if for every node $$v \in V$$: $$v \in D \lor \exists u \in D: \{u, v\} \in E$$. <br/> <br/> Given $$G = (V, E)$$ and $$k \in \mathbb{N}$$, does $$G$$ contain a Dominating Set of size $$\leq k$$?
+
+###### __Definition (Hitting Set).__ <br/><br/> Given a set $$S$$, $$\mathcal{C} \subseteq \text{Pot}(S)$$, and $$k \in \mathbb{N}$$, is there a $$S' \subseteq S$$ with $$\lvert S' \rvert \leq k$$ so that $$S' \cap C \neq \varnothing$$ for all $$C \in \mathcal{C}$$?
+
+We will show that __Dominating Set__ $$\leq$$ __Hitting Set__ step by step.
+
 
