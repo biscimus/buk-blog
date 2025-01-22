@@ -1,38 +1,23 @@
+import TuringMachine from "./TuringMachine.tsx"
+
 export const metadata = {
-    title: "What Is a Turing Machine?",
+    title: "What Is a Turing machine?",
     description: "What these fuckers have to do with your computer science degree.",
     date: "2024-11-10",
 }
 
+The concept of Turing machines might be hard to grasp at first. Without fully understanding them, you typically lag behind, especially because they are logical foundations for lectures on undecidability, Turing reductions (🇩🇪: _Unterprogrammtechnik_), many-one reductions (🇩🇪: _Reduktion_), etc.
 
-I found it pretty helpful to simply think of Turing Machines as functions in the programming world. They take an input, do some calculations, and return an output. The only difference is that unlike in the real world, your function has now unlimited memory space and time to compute the output.
+Simply put, a Turing machine is a conceptional abstraction of an algorithm. Every algorithm, every program, every procedure, every function — call it however you want — can be rewritten as a Turing machine. Your Operating System. Every browser extension. Every Python function you have, and will have, written. Everything is just a Turing machine with limited memory. Every "intuitively computable" algorithm, i.e., every problem-solving procedure whose individual, finite steps can be explained by a human being (the word "finite" is a bit redundant here; if the steps weren't finite, it couldn't be explained by a human, could it?), can be solved using a Turing machine. [That's what we presume, at least.](https://en.wikipedia.org/wiki/Church%E2%80%93Turing_thesis)
 
-> I heard somewhere that a Turing Machine represents a single algorithm.
+> Alright, so why does this matter?
 
-Don't algorithms take an input, so some calculations, and return an output?
+This has several implications. Pretty huge implications.
 
-> Yeah?
+If we succeed to prove that a problem cannot be solved by a Turing machine, it would mean that no matter how hard we try and how rapidly our computers improve, we will never be able to construct an algorithm solving it! The proof would set a _limit for computability_, dictating regardless of how many instances of an uncomputable problem any program is able to solve, there will be always at least one problem instance the program will fail to compute the correct answer. Take the problem of adding two decimal numbers as an instance. If this problem were uncomputable, even if the algorithm correctly computes almost all inputs, there will be at least one input the algorithm will fail to compute.
 
-So aren't all algorithms just functions?
+Thankfully, addition of two numbers is computable, so there's no need to doubt your faithful calculator. Other problems in the world, however, are not. In fact, mathmatically, computable problems make a teeny tiny fraction of the problems of the universe.
 
-> I... need a moment to process that.
+<TuringMachine/>
 
-Take your time. This is true for entire programs as well. After all, they're all just a collection of functions, which means you could construct a huge function containing everything inside of it. The same thing goes for your computer. So your program, application, computer, or whatever you want to call it, is just a function. 
-
-> It's all just... a function?
-
-Always has been.
-
-> And if Turing Machines are just functions with endless memory...
-
-Everything is just a Turing Machine with limited memory. [That's what we presume, at least.](https://en.wikipedia.org/wiki/Church%E2%80%93Turing_thesis)
-
-> Whoaa.
-
-Then you can start connecting the dots. 
-
-> What if the entire world is just a big function?
-
-That's not what I meant.
-
-> But what if it is?
+While visualizing helps to understand how Turing machines internally work, I found it pretty helpful to simply think of Turing machines as functions in the programming world. They take an input, do some calculations, and return an output. The only difference is that unlike in the real world, your function has now unlimited memory space and time to compute the output. In other words, the notation of algorithms can stay the same, as long as you assume that your function might never end. I, for example, will use the TypeScript syntax throughtout all articles, but you can take your own favorite.
