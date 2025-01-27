@@ -6,9 +6,43 @@ export const metadata = {
     date: "2024-11-10",
 }
 
+Around a century ago, when World Wars did not yet bear the necessity of enumeration and where the discipline of computer science was yet to be conceived, a great question known as the _Entscheidungsproblem_ in the realm of mathematics was whether every mathematically formulated problem could be answered using a system of formally defined steps. In other words: ___Is there a problem impossible to solve with any algorithm?___
+
+During his attempt to prove the _Entscheidungsproblem_, Alan Turing designed a rather peculiar machine. Not a machine in the physical sense, but a mathmatical machine - an automaton named a _Turing Machine_ in the present day. It is defined as follows:
+
+<div className="flex justify-center">
+    Turing Machine $$M = (Q, \Sigma, \Gamma, B, q_0, \overline{q}, \delta)$$, where
+</div>
+
+<div className="flex justify-center">
+- $$Q$$ the state space,
+    - $$\Sigma$$ the input alphabet,
+    - $$\Gamma$$ the band alphabet,
+    - $$B$$ the blank sign,
+    - $$q_0$$ the start state,
+    - $$\overline{q}$$ the end state,
+    - $$\delta : (Q \setminus \{ \overline{q} \}) \times \Gamma \rightarrow Q \times \Gamma \times \{L, N, R \}$$ the state transition function.
+</div>
+
+> What the fuck? What is this supposed to represent?
+
+I'll show you.
+
+<TuringMachine/>
+
+Imagine a person trying to solve (compute) a mathematical problem. Equipped with a pencil and paper, he additionaly keeps a book of instructions at his side. Every page except the very last page contains a row of instructions, which always ends with "Go to page XXX". When handed with a problem, he opens his book of instructions, reads the very first page, and follows the written instructions rigorously, writing down his results whenever necessary. Occasionally, he might as well erase some of his previous writings and even rewrite them. Once he reaches the last page, he closes the book and hands over the paper. Whatever written on the paper is interpreted as the result of our computation. 
+
+Here, the "head" of the Turing machine is the abstracted form of our _computing person_. When faced with a page (state $$q_i \in Q$$) of the book of instructions (state transition function), he executes an instruction written in the page: "Write down an alphabet ($$\gamma \in \Gamma$$), move your hand position($$\{L, N, R \}$$), and go to page XXX (next state $$q_j \in Q$$)". You might as well interpret the state transition function as the brain of the _computing person_, or whatever suits your understanding best.
+
 The concept of Turing machines might be hard to grasp at first. Without fully understanding them, you typically lag behind, especially because they are logical foundations for lectures on undecidability, Turing reductions (🇩🇪: _Unterprogrammtechnik_), many-one reductions (🇩🇪: _Reduktion_), etc.
 
-Simply put, a Turing machine is a conceptional abstraction of an algorithm. Every algorithm, every program, every procedure, every function — call it however you want — can be rewritten as a Turing machine. Your Operating System. Every browser extension. Every Python function you have, and will have, written. Everything is just a Turing machine with limited memory. Every "intuitively computable" algorithm, i.e., every problem-solving procedure whose individual, finite steps can be explained by a human being (the word "finite" is a bit redundant here; if the steps weren't finite, it couldn't be explained by a human, could it?), can be solved using a Turing machine. [That's what we presume, at least.](https://en.wikipedia.org/wiki/Church%E2%80%93Turing_thesis)
+> You've been explaining _what_ a Turing machine is. I want to know _why_ we're learning about them though.
+
+Simply put, a Turing machine is a conceptional abstraction of an algorithm. The entire field of computer science is built on the belief that every algorithm, every program, every procedure, every function — call it however you want — can be rewritten as a Turing machine. Your Operating System. Every browser extension. Every Python function you have, and will have, written. Everything is just a Turing machine with limited memory. Every "intuitively computable" algorithm, i.e., every problem-solving procedure whose individual, finite steps can be explained by a human being (the word "finite" is a bit redundant here; if the steps weren't finite, it couldn't be explained by a human, could it?), can be solved using a Turing machine.
+
+> Is there a proof for that?
+
+No. [That's what we presume, at least.](https://en.wikipedia.org/wiki/Church%E2%80%93Turing_thesis)
 
 > Alright, so why does this matter?
 
@@ -18,6 +52,4 @@ If we succeed to prove that a problem cannot be solved by a Turing machine, it w
 
 Thankfully, addition of two numbers is computable, so there's no need to doubt your faithful calculator. Other problems in the world, however, are not. In fact, mathmatically, computable problems make a teeny tiny fraction of the problems of the universe.
 
-<TuringMachine/>
-
-While visualizing helps to understand how Turing machines internally work, I found it pretty helpful to simply think of Turing machines as functions in the programming world. They take an input, do some calculations, and return an output. The only difference is that unlike in the real world, your function has now unlimited memory space and time to compute the output. In other words, the notation of algorithms can stay the same, as long as you assume that your function might never end. I, for example, will use the TypeScript syntax throughtout all articles, but you can take your own favorite.
+While visualizing helps to understand how Turing machines internally work, I found it pretty helpful to simply think of Turing machines as functions in the programming world. They take an input, do some calculations, and return an output. The only difference is that unlike in the real world, your function has now unlimited memory space and time to compute the output. In other words, the notation of algorithms can stay the same, as long as you assume that your function might never end. I will use the TypeScript syntax throughtout my articles, but you can take your own favorite.
