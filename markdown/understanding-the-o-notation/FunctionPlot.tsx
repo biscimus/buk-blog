@@ -49,7 +49,7 @@ export default function FunctionPlot() {
     };
 
     return (
-        <div className="flex justify-center items-stretch gap-8 my-4">
+        <div className="flex justify-center w-full items-stretch gap-8 my-4">
             <div id="multiple" />
             <div className="flex flex-col items-center gap-4">
                 <input

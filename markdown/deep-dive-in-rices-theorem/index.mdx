@@ -6,8 +6,8 @@ export const metadata = {
 
 Let us first look at two functions. How are they different?
 
-<div style={{display: "flex", gap: "1rem"}}>
-    <div style={{width: "50%"}}>
+<div className="flex flex-col gap-8 sm:flex-row justify-between">
+    <div>
         ```ts
         function foo1(input: number): number {
             console.log("Input: ", input)
@@ -16,7 +16,7 @@ Let us first look at two functions. How are they different?
         }
         ```
     </div>
-    <div style={{width: "50%"}}>
+    <div>
         ```ts
         function foo2(input: number): number {
             return 1;

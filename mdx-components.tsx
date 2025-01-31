@@ -34,7 +34,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         ),
         pre: ({ children }) => (
             <pre
-                className={`${mono.className} bg - [#2e3440] rounded - lg p - 6 overflow - scroll`}>
+                className={`${mono.className} bg-[#2e3440] rounded-lg p-6 overflow-scroll`}>
                 {children}
             </pre>
         ),
