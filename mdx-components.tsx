@@ -39,7 +39,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             </pre>
         ),
         p: ({ children }) => <p className="my-4">{children}</p>,
-        li: ({ children }) => <li className="my-4">{children}</li>,
+        ul: ({ children }) => <ul className="list-disc [&>li]:py-2"> {children}</ul >,
         ol: ({ children }) => <ol className="list-decimal m-4">{children}</ol>,
         a: ({ href, children }) => <a href={href} target="_blank" className="underline decoration-dashed decoration-[#f6ad55]">{children}</a>,
         strong: ({ children }) => <strong className="font-bold">{children}</strong>,
