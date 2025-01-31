@@ -7,15 +7,12 @@ const alphabet = ["0", "1", "B"] as const;
 
 type Direction = typeof directions[number];
 type Alphabet = typeof alphabet[number];
-// type Transition = { state: number, alphabet: Alphabet, direction: Direction };
-
 type Transition = {
     [alphabet: string]: {
         state: number;
         alphabet: Alphabet;
-        direction: Direction; // You can adjust the possible directions
+        direction: Direction;
     };
-
 };
 
 export default function TuringMachine() {
@@ -65,7 +62,10 @@ export default function TuringMachine() {
         if (head === 0 || head === states.length - 1) return;
         const input = band[head];
         const { state, alphabet, direction } = transitions[currentState][input];
-        if (state === states.length - 1) return;
+        if (state === states.length - 1) {
+            alert("Computation terminated. Output: " + band.reduce((prev, curr) => prev += curr, "").replaceAll('B', ''));
+            return;
+        }
 
 
         setBand(prevBand => prevBand.map((element, index) => (index !== head) ? element : alphabet));
@@ -103,44 +103,49 @@ export default function TuringMachine() {
     }
 
     return (
-        <div className="flex gap-4 justify-center">
-            <div className="flex flex-col justify-center items-center border-2 rounded-md border-slate-300 p-4 gap-4">
-                <div className="flex">
-                    {visibleBand.map((element, index) => (
-                        <div key={index} className="flex flex-col">
-                            <div className="text-xs text-center pb-1">{index + leftLimit}</div>
-                            <div
-                                className={`w-12 h-12 bg-slate-300 p-2 text-center text-black ${index + leftLimit === head ? 'border-4 border-green-500' : 'border-4 border-black'}`}
-                                key={index}
-                            >
-                                {element}
+        <div className="flex flex-col gap-4 justify-center sm:flex-row">
+            <div className="flex flex-col border-2 rounded-md border-slate-300 overflow-hidden">
+                <div className="flex flex-col px-4 pt-8 pb-4 justify-center items-center gap-4">
+                    <div>Current state: q{currentState}</div>
+                    <div className="flex ">
+                        {visibleBand.map((element, index) => (
+                            <div key={index} className="flex flex-col">
+                                <div className="text-xs text-center pb-1">{index + leftLimit}</div>
+                                <div
+                                    className={`w-12 h-12 bg-slate-300 p-2 text-center text-black ${index + leftLimit === head ? 'border-4 border-green-500' : 'border-4 border-black'}`}
+                                    key={index}
+                                >
+                                    {element === "B" ? "" : element}
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
-                <div className="flex gap-2 items-center">
-                    <input className="rounded-sm bg-black border-[1px] border-slate-200 text-center" placeholder="Input 0-1-string" value={input} onChange={e => {
-                        const newInput = e.target.value;
-                        if (/^[01]*$/.test(newInput)) {
-                            setInput(newInput);
-                        } else {
-                            alert("Invalid input: Only 0 and 1 are allowed.");
-                        }
-                    }}></input>
-                    <button onClick={onSetInput}>OK</button>
-                </div>
+                <div className="flex flex-col justify-center items-center px-4 py-6 gap-4">
+                    <div className="flex gap-2 items-center border-[1px] border-slate-200 rounded-sm">
+                        <input className="rounded-sm bg-black text-center" placeholder="Input 0-1-string" value={input} onChange={e => {
+                            const newInput = e.target.value;
+                            if (/^[01]*$/.test(newInput)) {
+                                setInput(newInput);
+                            } else {
+                                alert("Invalid input: Only 0 and 1 are allowed.");
+                            }
+                        }}></input>
+                        <button className="border-l-[1px] border-l-slate-200 px-2" onClick={onSetInput}>Set</button>
+                    </div>
 
-                <div className="flex gap-2">
-                    <button className="text-black bg-green-600 px-2 py-1 rounded-sm" onClick={onPlayOneStep}>Play one step</button>
-                    <button
-                        onClick={() => setIsPlaying(prev => !prev)}
-                        className={`px-2 py-1 rounded-sm text-black ${isPlaying ? 'bg-red-500' : 'bg-green-600'}`}
-                    >
-                        {isPlaying ? 'Stop' : 'Start'}
-                    </button>
+                    <div className="flex gap-2 ">
+                        <button className="text-black bg-green-600 px-2 py-1 rounded-sm" onClick={onPlayOneStep}>Play one step</button>
+                        <button
+                            onClick={() => setIsPlaying(prev => !prev)}
+                            className={`px-2 py-1 rounded-sm text-black ${isPlaying ? 'bg-red-500' : 'bg-green-600'}`}
+                        >
+                            {isPlaying ? 'Stop' : 'Start'}
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div className="flex flex-col items-center p-4 border-2 rounded-md border-slate-300 gap-4">
+            <div className="flex flex-col items-center p-4 border-2 rounded-md border-slate-300 gap-4 overflow-auto">
                 <div className="flex flex-col gap-2">
                     <div className="text-center">States</div>
                     <div className="flex flex-wrap justify-center gap-1">
@@ -182,7 +187,7 @@ function TransitionTable({
                 <div className="flex-1 text-center">B</div>
             </div>
             <hr />
-            <div className="flex flex-col max-h-48 gap-1 mt-1 overflow-y-scroll">
+            <div className="flex flex-col max-h-48 gap-1 mt-1 overflow-auto">
                 {transitions.map((transition, state) => (
                     <div key={state} className="flex gap-1 items-center">
                         <div className="flex-1 text-center">q{state}</div>

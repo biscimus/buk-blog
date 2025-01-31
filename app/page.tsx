@@ -26,7 +26,7 @@ async function getPosts() {
 function Post({ post }: { post: Metadata }) {
     return (
         <Link href={post.link}>
-            <article className="flex flex-col gap-2 border-2 p-6">
+            <article className="flex flex-col gap-2 border-2 rounded-md p-6">
                 <p className="text-sm text-gray-500">{post.date}</p>
                 <h2 className="text-2xl font-bold">{post.title}</h2>
                 <p>{post.description}</p>
