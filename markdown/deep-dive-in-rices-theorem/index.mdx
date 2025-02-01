@@ -51,7 +51,7 @@ In a partial function, not every domain element needs to be mapped; We denote $$
 
 Anyways, we have Turing Machines and partial functions computed by Turing Machines. Now take any non-empty real subset $$\mathcal{S}$$ of computable partial functions. Then, there has to be a set of Turing Machines, all computing a function in $$\mathcal{S}$$. Rice's Theorem states that this set of Turing Machines is undecidable.
 
-Take our previous functions as an example, which were all functions returing 1 for every input. Since the set $$\{ \langle M \rangle \mid M \text{ returns 1 for every input} \}$$ is undecidable according to Rice's Theorem, it is impossible to program a function which looks like this:
+Take our previous functions as an example, which were all functions returing 1 for every input. Since the set $$\{ \langle M \rangle \mid M \text{returns 1 for every input} \}$$ is undecidable according to Rice's Theorem, it is impossible to program a function which looks like this:
 
 ```ts
 function oneDecider(func): boolean {
