@@ -1,0 +1,102 @@
+export const metadata = {
+    title: "Calling Imaginary Functions",
+    description: "Unterprogrammtechnik 101.",
+    date: "2025-02-01",
+}
+
+The concept of [__Turing Reductions__](https://en.wikipedia.org/wiki/Turing_reduction) _(Unterprogrammtechnik)_ make up a huge part of the lecture's chapter on computability. In the lectures, it is used to prove that a certain language is undecidable by creating a Turing machine deciding an undecidable problem while using the Turing machine of our target language as a subprocedure. Let's look at a couple examples now to get a feeling.
+
+> Waitwaitwait, what do you mean a Turing machine deciding an undecidable problem? How can an undecidable problem can be decided?
+
+It's a classic form of [_proof by contradiction_](https://en.wikipedia.org/wiki/Proof_by_contradiction). To show that a certain proposition is wrong, you first assume that the proposition is correct. Then, you deduce another proposition from your previous proposition which evidently leads to a contradiction.
+
+There are lots of real-life examples of proofs by contradiction. An example would be a criminal suspect providing an alibi. Given the prosecutor's accusation, the suspect is essentially telling the judge: _"Let's just assume that I did it. Then, I must've been at the crime scene when the crime actually happened. But I wasn't, which must mean I didn't do it!"_
+
+> ...Aand what did an undecidable language mean again?
+
+### 1. Undecidable Languages
+
+A language is a set of words. A word is a finite sequence of symbols from a finite set, also known as an [alphabet](https://en.wikipedia.org/wiki/Alphabet_(formal_languages)). Using the English alphabet, $$\texttt{power}$$ would be an element of the English language, whereas words like $$\texttt{Macht}$$ or $$\texttt{asifj}$$ would not.
+
+Now, think of a program which takes any word over the English alphabet and returns a truth value whether the input is part of the English language. If the language contains the input, the program returns `true`; otherwise it returns `false`. Do you think you can implement it?
+
+> Yeah, if we have access to the set of all English words, it should be something like this:
+
+```ts
+function isWordInEnglishLanguage(word: string): boolean {
+    const englishDictionary = new Set<string>([...]); // All possible English words
+    return englishDictionary.has(word);
+}
+```
+
+Right. Genereally speaking, if there is a program $$M$$ able to give a yes-or-no answer whether the word is in a certain language $$L$$ or not for every word in $$L$$, we say the program $$M$$ __decides__ $$L$$ or $$M$$ is a __decider__ of $$L$$. Furthermore, we say that the language $$L$$ is __decidable__. In the computer science context, we typically work with the binary alphabet $$\{0, 1\}$$.
+
+The algorithm above actually works for all languages as long as the language is finite, since we can simply iterate over our dictionary and check for its membership given an input. We can therefore say that _all finite languages are decidable._ 
+
+There are lot of infinite languages which are decidable as well. An example would be a language of words ending with a symbol 1 over a binary alphabet:
+
+```ts
+const endsWithOne: boolean = (word: string) => word.endsWith("1");
+```
+
+On the other hand, a classic example of an undecidable language is the __Halting Problem__: _Given a program and an input, does the program terminate on the input?_
+
+> Can't we just call the function with its input and return $$\texttt{true}$$ whenever the call is terminated? 
+
+```ts
+function haltingProblem(func, input: string): boolean | never {
+    func(input);
+    return true;
+}
+```
+
+This will surely work for all positive instances of the halting problem, but as soon as the function encounters a negative instance, it will be stuck in an endless loop just like the input function. A crucial property of a _decider_ is the ability to not only decide all positive instances, but also to decide all negative instances as well. Programs like above which classify all positive instances of a language $$L$$ correctly and do not falsely mark any negative instances as positive are called __semi-deciders__ of $$L$$. $$L$$ is further called [__semi-decidable__](https://www.cs.ox.ac.uk/people/paul.goldberg/FCS/slides3.pdf).
+
+> So what does the program look like that solves the halting problem?
+
+That's exactly our point; Such program simply does not exist! For an undecidable language $$L_1$$, it is impossible to generate a program that correctly determines the membership for every input. So, in order to prove a $$L_1$$'s indecidibility, you need to prove the non-existence of its decider.
+
+This is where the proof of contradiction comes in. Our argument works as the following: _"Let's just suppose $$L_1$$ is decidable. Then a decider for $$L_1$$ must exist, but I can show you that I can construct a decider for an indecidable language $$L_2$$ using $$L_1$$'s decider as a helper function. The existence of $$L_2$$'s decider must mean $$L_2$$ is decidable. But it isn't, which must mean $$L_1$$ is undecidable!_
+
+### 2. The $$\varepsilon$$-Halting Problem
+
+Let's try our method on another well-known indecidable problem known as the __$$\bm{\varepsilon}$$-halting problem__: _Given a program, does the program terminate on empty input?_
+
+> Alright, so suppose our $$\varepsilon$$-halting problem is decidable. Then there must be a program deciding the $$\varepsilon$$-halting problem:
+
+```ts
+/**
+ * @input A program.
+ * @returns true if the program halts on empty input, otherwise false
+*/
+declare function isWordInEpsilonHaltingProblem(func): boolean;
+```
+
+And now, we need to build a program deciding an undecidable problem: Let's take the halting problem.
+
+```ts
+function isWordInHaltingProblem(func, input: string): boolean {
+    // use inWordInEpsilonHaltingProblem somehow?
+}
+```
+
+Here, the trick is to create a new function `func1`. `func1` calls `func(input)` on empty input and goes into an endless loop otherwise. An interesting observation is that `func1` here is _never being called explicitly_; Instead, we only pass it over to the decider of the $$\varepsilon$$-halting problem as an argument.
+
+```ts
+function isWordInHaltingProblem(func, input: string): boolean {
+
+    function func1(input1: string) {
+        if (!input1) return func(input);
+        else while (true);
+    }
+    return isWordInEpsilonHaltingProblem(func1);
+}
+```
+
+If `func` and `input` are a positive instance of the halting problem, this would mean the function call `func(input)` will terminate eventually. As a result, `func1` will terminate on empty input. `func1` is therefore a positive instance of the $$\varepsilon$$-halting problem and `isWordInEpsilonHaltingProblem(func1)` should return `true`, meaning `isWordInHaltingProblem(func, input)` returns `true` as well! 
+
+Analogously, if `func` and `input` are a negative instance of the halting problem, the function call `func(input)` will not terminate. As a result, `func1` will not halt on empty input, therefore being a negative instance of the $$\varepsilon$$-halting problem. Thus, `isWordInEpsilonHaltingProblem(func1)` as well as `isWordInHaltingProblem(func, input)` returns `false`.
+
+> We built a program that decides the halting problem, which is indecidable... There's our contradiction! The $$\varepsilon$$-halting problem is therefore indecidable.
+
+As a side note: The $$\varepsilon$$-halting problem is semi-decidable. The implementation is identical to the halting problem's semi-decider. 

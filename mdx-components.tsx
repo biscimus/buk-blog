@@ -28,14 +28,15 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         ),
         blockquote: ({ children }) => (
             <blockquote
-                className={`italic border-l-4 border-l-orange-500 px-6 py-1 my-4 *:my-2`}>
+                className={`italic border-l-4 border-l-orange-500 px-6 py-0 my-6 *:my-2`}>
                 {children}
             </blockquote>
         ),
         pre: ({ children }) => (
             <pre
-                className={`${mono.className} bg-[#2e3440] rounded-lg p-6 overflow-scroll`}>
-                {children}
+                className={`${mono.className} flex flex-col bg-[#2e3440] rounded-lg overflow-scroll`}>
+                <div className="bg-gray-800 px-4 py-2 text-sm text-[#9198a1]">TypeScript</div>
+                <div className="p-4">{children}</div>
             </pre>
         ),
         p: ({ children }) => <p className="my-4">{children}</p>,

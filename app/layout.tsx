@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { mono, serif } from "@/app/fonts";
 import "../globals.css";
 import Link from "next/link";
+import Logo from "./components/Logo";
 
 // TODO: Make Logo component a client component for dynamic width calculation
 // import Logo from "./components/Logo";
@@ -35,18 +36,6 @@ export default function RootLayout({
                 {children}
             </body>
         </html>
-    );
-}
-
-function Logo() {
-    return (
-        <Link href="/" className={`text-3xl font-bold ${mono.className} group flex`}>
-            <span className="animate-bounceSlow group-hover:animate-none">b</span>
-            <span className="animate-slideOut group-hover:animate-slideIn overflow-clip">uk</span>
-            <span>_</span>
-            <span className="animate-bounceSlow group-hover:animate-none">b</span>
-            <span className="animate-slideOut group-hover:animate-slideIn overflow-clip">log</span>
-        </Link>
     );
 }
 
