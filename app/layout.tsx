@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { mono, serif } from "@/app/fonts";
+import { serif } from "@/app/fonts";
 import "../globals.css";
 import Link from "next/link";
 import Logo from "./components/Logo";
