@@ -102,7 +102,7 @@ export default function TuringMachine() {
                     <label>Input: </label>
                     <input
                         className="rounded-sm bg-black text-center border-[1px] border-slate-200"
-                        placeholder="Input: 01-string"
+                        placeholder="01-string"
                         value={input}
                         onInput={(e) => onInput((e.target as HTMLInputElement).value)}
                     />

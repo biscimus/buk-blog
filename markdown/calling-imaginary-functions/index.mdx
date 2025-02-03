@@ -29,9 +29,9 @@ function isWordInEnglishLanguage(word: string): boolean {
 }
 ```
 
-Right. Genereally speaking, if there is a program $$M$$ able to give a yes-or-no answer whether the word is in a certain language $$L$$ or not for every word in $$L$$, we say the program $$M$$ __decides__ $$L$$ or $$M$$ is a __decider__ of $$L$$. Furthermore, we say that the language $$L$$ is __decidable__. In the computer science context, we typically work with the binary alphabet $$\{0, 1\}$$.
+Right. Genereally speaking, if there is a program $$M$$ able to give a yes-or-no answer whether the word is in a certain language $$L$$ or not for every word over the alphabet, we say the program $$M$$ __decides__ $$L$$ or $$M$$ is a __decider__ of $$L$$. Furthermore, we say that the language $$L$$ is __decidable__. In the computer science context, we typically work with the binary alphabet $$\{0, 1\}$$.
 
-The algorithm above actually works for all languages as long as the language is finite, since we can simply iterate over our dictionary and check for its membership given an input. We can therefore say that _all finite languages are decidable._ 
+The algorithm above actually works for all languages as long as the language is finite. We can simply iterate over our dictionary and check for its membership given an input. It can therefore be said that _all finite languages are decidable._ 
 
 There are lot of infinite languages which are decidable as well. An example would be a language of words ending with a symbol 1 over a binary alphabet:
 
