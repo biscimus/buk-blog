@@ -76,7 +76,7 @@ And now, we need to build a program deciding an undecidable problem: Let's take 
 
 ```ts
 function isWordInHaltingProblem(func, input: string): boolean {
-    // use inWordInEpsilonHaltingProblem somehow?
+    // Use inWordInEpsilonHaltingProblem somehow?
 }
 ```
 
@@ -93,10 +93,145 @@ function isWordInHaltingProblem(func, input: string): boolean {
 }
 ```
 
+Now, we just need to check whether our `isWordInHaltingProblem` actually decides the halting problem: If fed a positive instance, our program has to return `true`; if fed a negative instance, our program has to return `false`. Our program cannot be stuck in an infinite loop on any input. This part is called __proving algorithm correctness (_Korrektheitsbeweis_)__.
+
 If `func` and `input` are a positive instance of the halting problem, this would mean the function call `func(input)` will terminate eventually. As a result, `func1` will terminate on empty input. `func1` is therefore a positive instance of the $$\varepsilon$$-halting problem and `isWordInEpsilonHaltingProblem(func1)` should return `true`, meaning `isWordInHaltingProblem(func, input)` returns `true` as well! 
 
 Analogously, if `func` and `input` are a negative instance of the halting problem, the function call `func(input)` will not terminate. As a result, `func1` will not halt on empty input, therefore being a negative instance of the $$\varepsilon$$-halting problem. Thus, `isWordInEpsilonHaltingProblem(func1)` as well as `isWordInHaltingProblem(func, input)` returns `false`.
 
 > We built a program that decides the halting problem, which is indecidable... There's our contradiction! The $$\varepsilon$$-halting problem is therefore indecidable.
 
-As a side note: The $$\varepsilon$$-halting problem is semi-decidable. The implementation is identical to the halting problem's semi-decider. 
+As a side note: The $$\varepsilon$$-halting problem is semi-decidable. The implementation is identical to the halting problem's semi-decider. Try to imagine what the semi-decider looks like.
+
+### 3. Further Examples
+
+All examples below leverage the halting problem to prove its undecidibility.
+
+
+###### __$$H_{never}$$:__ _Given a program as input, does the program halt on no input at all?_
+
+```ts
+/**
+ * @input A program.
+ * @returns true if the program halts on no input, otherwise false
+*/
+declare function haltsOnNoInput(func): boolean;
+
+function isWordInHaltingProblem(func, input: string): boolean {
+
+    function func1(input1: string) {
+        return func(input);
+    }
+    // Flip the return value
+    return !haltsOnNoInput(func1);
+}
+```
+
+###### __$$H_{all}$$:__ _Given a program as input, does the program halt on every input?_
+
+```ts
+/**
+ * @input A program.
+ * @returns true if the program halts on every input, otherwise false
+*/
+declare function haltsOnEveryInput(func): boolean;
+
+function isWordInHaltingProblem(func, input: string): boolean {
+
+    function func1(input1: string) {
+        // Ignore input1
+        return func(input);
+    }
+    return haltsOnEveryInput(func1);
+}
+```
+
+
+###### __$$A_{all}$$:__ _Given a program as input, does the program return `true` on every input?_
+
+```ts
+/**
+ * @input A program.
+ * @returns true if the program returns true on every input, otherwise false
+*/
+declare function acceptsEveryInput(func): boolean;
+
+function isWordInHaltingProblem(func, input: string): boolean {
+
+    function func1(input1: string) {
+        // Ignore input1
+        func(input);
+        return true;
+    }
+    return acceptsEveryInput(func1);
+}
+```
+
+###### __$$H_{42}$$:__ _Given a program as input, does the program halt on the input 42?_
+
+```ts
+/**
+ * @input A program.
+ * @returns true if the program halts on input 11, otherwise false
+*/
+declare function haltsOn11(func): boolean;
+
+function isWordInHaltingProblem(func, input: string): boolean {
+
+    function func1(input1: string) {
+        if (input1 === "42") return func(input);
+        else while (true);
+    }
+    return haltsOn11(func1);
+}
+```
+
+###### __$$H_{special}$$:__ _Given a program `func` as input, does `func(func)` return `true`?_
+
+```ts
+/**
+ * @input A program.
+ * @returns true if the program returns true when called upon itself, otherwise false
+*/
+declare function isWordInSpecialHaltingProblem(func): boolean;
+
+function isWordInHaltingProblem(func, input: string): boolean {
+
+    function func1(input1) {
+        // Ignore input1
+        func(input);
+        return true;
+    }
+    return isWordInSpecialHaltingProblem(func1);
+}
+```
+
+###### __$$A_{\lvert 7 \rvert}$$:__ _Given a program as input, does the program return `true` for exactly 7 different inputs?_
+
+```ts
+/**
+ * @input A program.
+ * @returns true if the program returns true for exactly 7 different inputs, otherwise false
+*/
+declare function acceptsExactly7(func): boolean;
+
+function isWordInHaltingProblem(func, input: string): boolean {
+
+    const acceptingWords = Array(6).fill(input).map((value, index) => value + index);
+
+    function func1(input1) {
+        if acceptingWords.includes(input1) return true;
+        if (input === input1) {
+            func(input);
+            return true;
+        }
+        return false;
+    }
+    return isWordInSpecialHaltingProblem(func1);
+}
+```
+
+
+
+
+

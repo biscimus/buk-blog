@@ -14,6 +14,11 @@ type Transition = Record<Alphabet, {
 }>
 type Transitions = Record<number, Transition>
 
+const bandLength = 100;
+
+const foo = "a"
+const acceptingWords = Array(6).map((value, index) => foo + index);
+
 // q0 is starting state, q0 is ending state
 export default function TuringMachine() {
 
@@ -27,16 +32,16 @@ export default function TuringMachine() {
         }
     });
 
-    const [band, setBand] = useState(Array<Alphabet>(100).fill("B"))
+    const [band, setBand] = useState(Array<Alphabet>(bandLength).fill("B"))
     const [head, setHead] = useState(50);
     const [input, setInput] = useState("");
 
     const onPlayOneStep = () => {
         if (head === 0 || head === states.length - 1) return;
-        const input = band[head];
-        const { state, alphabet, direction } = transitions[currentState][input];
+        const { state, alphabet, direction } = transitions[currentState][band[head]];
         if (state === 1) {
-            alert("Computation terminated. Output: " + band.reduce((prev, curr) => prev += curr, "").replaceAll('B', ''));
+            setIsPlaying(false);
+            alert("Computation terminated. Output: " + band.slice(head).reduce((prev, curr) => prev += curr, "").replaceAll('B', ''));
             return;
         }
 
@@ -54,16 +59,14 @@ export default function TuringMachine() {
 
     useEffect(() => {
         if (isPlaying) {
-            const interval = setInterval(() => {
-                onPlayOneStep();
-            }, 500);
+            const interval = setInterval(onPlayOneStep, 500);
             return () => clearInterval(interval);
         }
-    }, [isPlaying, currentState, states, band, onPlayOneStep]);
+    }, [isPlaying, onPlayOneStep]);
 
     const onReset = () => {
         setHead(50);
-        setBand(Array<Alphabet>(100).fill("B"));
+        setBand(Array<Alphabet>(bandLength).fill("B"));
         setCurrentState(0);
     }
 
@@ -71,7 +74,7 @@ export default function TuringMachine() {
         if (/^[01]*$/.test(newInput)) {
             setInput(newInput);
             setBand(() => {
-                const newBand = Array<Alphabet>(100).fill("B");
+                const newBand = Array<Alphabet>(bandLength).fill("B");
                 newInput.split("").forEach((char, index) => {
                     newBand[50 + index] = char as Alphabet; // Start inserting characters at the 50th index
                 });
