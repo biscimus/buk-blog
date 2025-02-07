@@ -1,6 +1,7 @@
 "use client";
 
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { mono } from "@/app/fonts";
 
 const directions = ["L", "N", "R"] as const;
 const alphabet = ["0", "1", "B"] as const;
@@ -86,7 +87,7 @@ export default function TuringMachine() {
     }
 
     return (
-        <div className="flex flex-col gap-4 justify-stretch sm:flex-row">
+        <div className={`${mono.className} flex flex-col gap-4 justify-stretch sm:flex-row`} >
             <div className="flex flex-col p-4 justify-center items-center border-2 rounded-md border-slate-300 w-[50%]">
                 <div>Current state: q{currentState}</div>
                 <div className="flex mb-8 mt-2 w-full overflow-auto">

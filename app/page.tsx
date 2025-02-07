@@ -6,6 +6,7 @@ type Metadata = {
     date: string;
     description: string;
     link: string;
+    order: number;
 };
 
 async function getPosts() {
@@ -20,7 +21,7 @@ async function getPosts() {
     );
 
     // sort the metadata by date
-    return metadata.sort((a, b) => (a.date > b.date ? 1 : -1));
+    return metadata.sort((a, b) => (a.order > b.order ? 1 : -1));
 }
 
 function Post({ post }: { post: Metadata }) {
@@ -40,7 +41,7 @@ export default async function Page() {
 
     return (
         <div className="grid grid-rows-[20px_1fr_20px] min-h-screen pb-16 gap-12">
-            <main className="flex flex-col gap-8 row-start-2">
+            <main className="flex flex-col gap-10 row-start-2">
                 {posts.map((post, index) => (
                     <Post key={index} post={post} />
                 ))}
