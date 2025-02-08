@@ -40,7 +40,10 @@ There are lot of infinite languages which are decidable as well. An example woul
 const endsWithOne: boolean = (word: string) => word.endsWith("1");
 ```
 
-On the other hand, a classic example of an undecidable language is the __Halting Problem__: _Given a program and an input, does the program terminate on the input?_
+On the other hand, a classic example of an undecidable language is the __Halting Problem__: 
+
+
+###### __$$H$$:__ _Given a program and an input, does the program terminate on the input?_
 
 > Can't we just call the function with its input and return $$\texttt{true}$$ whenever the call is terminated? 
 
@@ -234,9 +237,14 @@ function isWordInHaltingProblem(func, input: string): boolean {
 
 ### 4. How Real Ones Work
 
-Although the logical structure stays identical the real "exam"ples, notationwise, work a bit differently. The notation I used cannot acurrately map all cases of the _Unterprogrammtechnik_, since it is an abstraction of how it's actually done. In actual Turing reductions, you would work with Turing machines and their corresponding Gödel numbers.
+Although the logical structure stays identical, the real examples, notationwise, work a bit differently. The notation I used cannot acurrately map all cases of the _Unterprogrammtechnik_, since it is an abstraction of how it's actually done <span className="group relative">[1]<span className="invisible group-hover:visible absolute bottom-full left-1/2 mb-2 z-[1] bg-black border-2 p-4 w-[400px] text-center rounded-md">(I _could_ acurrately map all cases using the TypeScript notation since it is a [Turing-complete language](https://en.wikipedia.org/wiki/Turing_completeness), but I could not do it in the ways I introduced without making it complicated, which destroys my purpose of introducing it in the first place)</span></span>. In actual Turing reductions, you would work with Turing machines and their corresponding __Gödel numbers__.
 
+Looking back at the definition of the halting problem, the same problem applied for Turing machines would be something like the following:
 
+###### __$$H$$:__ _Given a Turing machine $$M$$ and an input $$w$$, does $$M$$ halt on $$w$$?_
 
+> A decider of this problem would be a Turing machine... taking a Turing machine as input... which again taking some input. My head hurts.
 
+Nicely put! But remember, our definition of Turing machines can only take inputs over the input alphabet $$\Sigma$$, which is the binary alphabet $$\{0, 1\}$$ in our case. This could be a problem, since Turing machines are a mathematical tuple, not a 0-1-string. Gödel numbers are just a way of encoding Turing machines into a binary string format. The halting problem therefore formally looks like this:
 
+###### __$$H$$:__ _Given an encoding of a Turing machine $$\langle M \rangle$$ and an input $$w$$, does $$M$$ halt on $$w$$?_
