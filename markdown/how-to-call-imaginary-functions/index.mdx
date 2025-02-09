@@ -1,3 +1,5 @@
+import GoedelNumber from "./GoedelNumber.tsx";
+
 export const metadata = {
     order: 2,
     title: "How to Call Imaginary Functions",
@@ -235,9 +237,11 @@ function isWordInHaltingProblem(func, input: string): boolean {
 }
 ```
 
-### 4. How Real Ones Work
+### 4. Gödel Numbers
 
-Although the logical structure stays identical, the real examples, notationwise, work a bit differently. The notation I used cannot acurrately map all cases of the _Unterprogrammtechnik_, since it is an abstraction of how it's actually done <span className="group relative">[1]<span className="invisible group-hover:visible absolute bottom-full left-1/2 mb-2 z-[1] bg-black border-2 p-4 w-[400px] text-center rounded-md">(I _could_ acurrately map all cases using the TypeScript notation since it is a [Turing-complete language](https://en.wikipedia.org/wiki/Turing_completeness), but I could not do it in the ways I introduced without making it complicated, which destroys my purpose of introducing it in the first place)</span></span>. In actual Turing reductions, you would work with Turing machines and their corresponding __Gödel numbers__.
+Although the logical structure stays identical, the real examples, notationwise, work a bit differently. The notation I used cannot acurrately map all cases of the _Unterprogrammtechnik_, since it is an abstraction of how it's actually done <span className="group relative">[1]<span className="invisible group-hover:visible absolute bottom-full left-1/2 mb-2 z-[1] bg-black border-[1px] p-4 w-[360px] rounded-md">I _could_ acurrately map all cases using the TypeScript notation since it is a [Turing-complete language](https://en.wikipedia.org/wiki/Turing_completeness), but I could not do it in the ways I introduced without making it complicated, which destroys my purpose of introducing it in the first place.</span></span>. In actual Turing reductions, you would work with Turing machines and their corresponding [__Gödel numbers__](https://en.wikipedia.org/wiki/G%C3%B6del_numbering). I won't explain the encodings in great detail here, but you can try out my Gödel number converter below.
+
+<GoedelNumber/>
 
 Looking back at the definition of the halting problem, the same problem applied for Turing machines would be something like the following:
 

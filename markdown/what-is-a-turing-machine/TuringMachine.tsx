@@ -3,8 +3,8 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { mono } from "@/app/fonts";
 
-const directions = ["L", "N", "R"] as const;
-const alphabet = ["0", "1", "B"] as const;
+export const directions = ["L", "N", "R"] as const;
+export const alphabet = ["0", "1", "B"] as const;
 type Direction = typeof directions[number];
 type Alphabet = typeof alphabet[number];
 
@@ -13,12 +13,9 @@ type Transition = Record<Alphabet, {
     alphabet: Alphabet;
     direction: Direction;
 }>
-type Transitions = Record<number, Transition>
+export type Transitions = Record<number, Transition>
 
 const bandLength = 100;
-
-const foo = "a"
-const acceptingWords = Array(6).map((value, index) => foo + index);
 
 // q0 is starting state, q0 is ending state
 export default function TuringMachine() {
@@ -135,7 +132,7 @@ export default function TuringMachine() {
     )
 }
 
-function TransitionTable({
+export function TransitionTable({
     states,
     transitions,
     setStates,
