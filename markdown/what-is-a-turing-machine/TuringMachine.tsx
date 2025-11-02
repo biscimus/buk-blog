@@ -181,7 +181,7 @@ export function TransitionTable({
                         <span className={`${Number(state) !== 0 ? "group-hover:hidden" : ""} inline-block`}>q{state}</span>
                         <span className={`${Number(state) !== 0 ? "group-hover:inline-block" : ""} hidden`}>✖</span>
                     </button>
-                    {alphabet.map(letter => <div className="flex">
+                    {alphabet.map(letter => <div key={letter} className="flex">
                         <select className="flex-1 bg-slate-600 p-1 text-center [&>option]:text-center" defaultValue={transition[letter].state} onChange={(e) => {
                             setTransitions((prev) =>
                                 Object.entries(prev).map(([prevState, transition], index) =>

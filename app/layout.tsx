@@ -4,12 +4,9 @@ import "../globals.css";
 import Link from "next/link";
 import Logo from "./components/Logo";
 
-// TODO: Make Logo component a client component for dynamic width calculation
-// import Logo from "./components/Logo";
-
 export const metadata: Metadata = {
     title: "BuK Blog",
-    description: "A collection of my tiny attempts to salvage RWTH students from depression & exmatriculation.",
+    description: "A collection of my miniscule attempts to salvage RWTH students from depression & exmatriculation.",
 };
 
 export default function RootLayout({
@@ -18,7 +15,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning={true}>
             <head>
                 <link rel="icon" href="/favicon.ico" sizes="any" />
                 <link

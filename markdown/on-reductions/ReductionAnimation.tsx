@@ -10,12 +10,11 @@ export default function ReductionAnimation() {
         // TODO: finish button
         <div className="flex flex-col m-4 justify-center">
             <svg
-                width="400"
-                className="block"
+                className="block w-full max-w-md mx-auto"
                 height="300"
                 viewBox="0 0 400 300"
                 xmlns="http://www.w3.org/2000/svg"
-                style={{ backgroundColor: "lightblue", margin: "auto" }}
+                style={{ backgroundColor: "lightblue" }}
             >
                 {/* Frame */}
                 <rect

@@ -3,7 +3,6 @@ import Link from "next/link";
 
 type Metadata = {
     title: string;
-    date: string;
     description: string;
     link: string;
     order: number;
@@ -27,9 +26,8 @@ async function getPosts() {
 function Post({ post }: { post: Metadata }) {
     return (
         <Link prefetch={true} href={post.link}>
-            <article className="flex flex-col gap-2 border-2 rounded-md p-6">
-                <p className="text-sm text-gray-500">{post.date}</p>
-                <h2 className="text-2xl font-bold">{post.title}</h2>
+            <article className="flex flex-col gap-4 border rounded-md p-6 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:border-orange-400">
+                <h2 className="text-2xl font-bold">{post.order}. {post.title}</h2>
                 <p>{post.description}</p>
             </article>
         </Link>

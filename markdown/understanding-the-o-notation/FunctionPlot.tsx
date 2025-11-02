@@ -5,8 +5,6 @@ import functionPlot from "function-plot";
 import nerdamer from "nerdamer";
 import "nerdamer/Solve";
 
-// @ts-ignore
-nerdamer.set("SOLUTIONS_AS_OBJECT", false);
 
 export default function FunctionPlot() {
     const [k, setK] = useState(1);
@@ -33,9 +31,9 @@ export default function FunctionPlot() {
                 },
             ],
         });
-    }, [k]);
+    }, [intersection, k]);
 
-    const onCChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         const newK = parseFloat(e.target.value);
         setK(newK);
         // @ts-ignore
@@ -49,15 +47,15 @@ export default function FunctionPlot() {
     };
 
     return (
-        <div className="flex justify-center w-full items-stretch gap-8 my-4">
-            <div id="multiple" />
+        <div className="flex flex-col md:flex-row justify-center items-center md:items-stretch gap-4 md:gap-8 mx-2 my-4">
+            <div id="multiple" className="p-4" />
             <div className="flex flex-col items-center gap-4">
                 <input
                     type="range"
                     min="1"
                     max="10"
                     value={k}
-                    onChange={onCChange}
+                    onChange={onChange}
                     placeholder="Set value of k"
                     style={{
                         width: "4rem",

@@ -4,7 +4,6 @@ export const metadata = {
     order: 0,
     title: "Understanding the O-Notation",
     description: "n = O(n²) and n² = O(n²). So, uh... n = n²?",
-    date: "2024-11-07",
 }
  
 > During the lectures, O-notations appear everywhere, but I never got the hang of it.
@@ -18,7 +17,7 @@ It sounds like you didn't review your *Data Structures and Algorithms* lecture.
 Imagine you wrote a piece of code:
 
 ```ts
-function hellO() {
+function hello() {
     console.log("Hello World!");
 }
 ```
@@ -32,7 +31,7 @@ Exactly. We therefore need a unit independent from seconds in order to measure t
 Another issue occurs when the function has an input:
 
 ```ts
-function hellO(n: number) {
+function hello(n: number) {
     for (let i = 0; i < n; i++) {
         console.log("Hello World!");
     }
