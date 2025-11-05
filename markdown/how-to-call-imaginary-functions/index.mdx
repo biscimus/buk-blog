@@ -4,9 +4,9 @@ export const metadata = {
     order: 2,
     title: "How to Call Imaginary Functions",
     description: "Unterprogrammtechnik 101.",
-}
+};
 
-The concept of [__Turing Reductions__](https://en.wikipedia.org/wiki/Turing_reduction) _(Unterprogrammtechnik)_ make up a huge part of the lecture's chapter on computability. In the lectures, it is used to prove that a certain language is undecidable by creating a Turing machine deciding an undecidable problem while using the Turing machine of our target language as a subprocedure. Let's look at a couple examples now to get a feeling.
+The concept of [**Turing Reductions**](https://en.wikipedia.org/wiki/Turing_reduction) _(Unterprogrammtechnik)_ make up a huge part of the lecture's chapter on computability. In the lectures, it is used to prove that a certain language is undecidable by creating a Turing machine deciding an undecidable problem while using the Turing machine of our target language as a subprocedure. Let's look at a couple examples now to get a feeling.
 
 > Waitwaitwait, what do you mean a Turing machine deciding an undecidable problem? How can an undecidable problem can be decided?
 
@@ -18,7 +18,7 @@ There are lots of real-life examples of proofs by contradiction. An example woul
 
 ### 1. Undecidable Languages
 
-A language is a set of words. A word is a finite sequence of symbols from a finite set, also known as an [alphabet](https://en.wikipedia.org/wiki/Alphabet_(formal_languages)). Using the English alphabet, $$\texttt{power}$$ would be an element of the English language, whereas words like $$\texttt{Macht}$$ or $$\texttt{asifj}$$ would not.
+A language is a set of words. A word is a finite sequence of symbols from a finite set, also known as an [alphabet](<https://en.wikipedia.org/wiki/Alphabet_(formal_languages)>). Using the English alphabet, $$\texttt{power}$$ would be an element of the English language, whereas words like $$\texttt{Macht}$$ or $$\texttt{asifj}$$ would not.
 
 Now, think of a program which takes any word over the English alphabet and returns a truth value whether the input is part of the English language. If the language contains the input, the program returns `true`; otherwise it returns `false`. Do you think you can implement it?
 
@@ -31,9 +31,9 @@ function isWordInEnglishLanguage(word: string): boolean {
 }
 ```
 
-Right. Genereally speaking, if there is a program $$M$$ able to give a yes-or-no answer whether the word is in a certain language $$L$$ or not for every word over the alphabet, we say the program $$M$$ __decides__ $$L$$ or $$M$$ is a __decider__ of $$L$$. Furthermore, we say that the language $$L$$ is __decidable__. In the computer science context, we typically work with the binary alphabet $$\{0, 1\}$$.
+Right. Genereally speaking, if there is a program $$M$$ able to give a yes-or-no answer whether the word is in a certain language $$L$$ or not for every word over the alphabet, we say the program $$M$$ **decides** $$L$$ or $$M$$ is a **decider** of $$L$$. Furthermore, we say that the language $$L$$ is **decidable**. In the computer science context, we typically work with the binary alphabet $$\{0, 1\}$$.
 
-The algorithm above actually works for all languages as long as the language is finite. We can simply iterate over our dictionary and check for its membership given an input. It can therefore be said that _all finite languages are decidable._ 
+The algorithm above actually works for all languages as long as the language is finite. We can simply iterate over our dictionary and check for its membership given an input. It can therefore be said that _all finite languages are decidable._
 
 There are lot of infinite languages which are decidable as well. An example would be a language of words ending with a symbol 1 over a binary alphabet:
 
@@ -41,12 +41,11 @@ There are lot of infinite languages which are decidable as well. An example woul
 const endsWithOne: boolean = (word: string) => word.endsWith("1");
 ```
 
-On the other hand, a classic example of an undecidable language is the __Halting Problem__: 
+On the other hand, a classic example of an undecidable language is the **Halting Problem**:
 
+###### **$$H$$:** _Given a program and an input, does the program terminate on the input?_
 
-###### __$$H$$:__ _Given a program and an input, does the program terminate on the input?_
-
-> Can't we just call the function with its input and return $$\texttt{true}$$ whenever the call is terminated? 
+> Can't we just call the function with its input and return $$\texttt{true}$$ whenever the call is terminated?
 
 ```ts
 function haltingProblem(func, input: string): boolean | never {
@@ -55,7 +54,7 @@ function haltingProblem(func, input: string): boolean | never {
 }
 ```
 
-This will surely work for all positive instances of the halting problem, but as soon as the function encounters a negative instance, it will be stuck in an endless loop just like the input function. A crucial property of a _decider_ is the ability to not only decide all positive instances, but also to decide all negative instances as well. Programs like above which classify all positive instances of a language $$L$$ correctly and do not falsely mark any negative instances as positive are called __semi-deciders__ of $$L$$. $$L$$ is further called [__semi-decidable__](https://www.cs.ox.ac.uk/people/paul.goldberg/FCS/slides3.pdf).
+This will surely work for all positive instances of the halting problem, but as soon as the function encounters a negative instance, it will be stuck in an endless loop just like the input function. A crucial property of a _decider_ is the ability to not only decide all positive instances, but also to decide all negative instances as well. Programs like above which classify all positive instances of a language $$L$$ correctly and do not falsely mark any negative instances as positive are called **semi-deciders** of $$L$$. $$L$$ is further called [**semi-decidable**](https://www.cs.ox.ac.uk/people/paul.goldberg/FCS/slides3.pdf).
 
 > So what does the program look like that solves the halting problem?
 
@@ -65,7 +64,7 @@ This is where the proof of contradiction comes in. Our argument works as the fol
 
 ### 2. The $$\varepsilon$$-Halting Problem
 
-Let's try our method on another well-known indecidable problem known as the __$$\bm{\varepsilon}$$-halting problem__: _Given a program, does the program terminate on empty input?_
+Let's try our method on another well-known indecidable problem known as the **$$\bm{\varepsilon}$$-halting problem**: _Given a program, does the program terminate on empty input?_
 
 > Alright, so suppose our $$\varepsilon$$-halting problem is decidable. Then there must be a program deciding the $$\varepsilon$$-halting problem:
 
@@ -73,7 +72,7 @@ Let's try our method on another well-known indecidable problem known as the __$$
 /**
  * @input A program.
  * @returns true if the program halts on empty input, otherwise false
-*/
+ */
 declare function isWordInEpsilonHaltingProblem(func): boolean;
 ```
 
@@ -89,7 +88,6 @@ Here, the trick is to create a new function `func1`. `func1` calls `func(input)`
 
 ```ts
 function isWordInHaltingProblem(func, input: string): boolean {
-
     function func1(input1: string) {
         if (!input1) return func(input);
         else while (true);
@@ -98,9 +96,9 @@ function isWordInHaltingProblem(func, input: string): boolean {
 }
 ```
 
-Now, we just need to check whether our `isWordInHaltingProblem` actually decides the halting problem: If fed a positive instance, our program has to return `true`; if fed a negative instance, our program has to return `false`. Our program cannot be stuck in an infinite loop on any input. This part is called __proving algorithm correctness (_Korrektheitsbeweis_)__.
+Now, we just need to check whether our `isWordInHaltingProblem` actually decides the halting problem: If fed a positive instance, our program has to return `true`; if fed a negative instance, our program has to return `false`. Our program cannot be stuck in an infinite loop on any input. This part is called **proving algorithm correctness (_Korrektheitsbeweis_)**.
 
-If `func` and `input` are a positive instance of the halting problem, this would mean the function call `func(input)` will terminate eventually. As a result, `func1` will terminate on empty input. `func1` is therefore a positive instance of the $$\varepsilon$$-halting problem and `isWordInEpsilonHaltingProblem(func1)` should return `true`, meaning `isWordInHaltingProblem(func, input)` returns `true` as well! 
+If `func` and `input` are a positive instance of the halting problem, this would mean the function call `func(input)` will terminate eventually. As a result, `func1` will terminate on empty input. `func1` is therefore a positive instance of the $$\varepsilon$$-halting problem and `isWordInEpsilonHaltingProblem(func1)` should return `true`, meaning `isWordInHaltingProblem(func, input)` returns `true` as well!
 
 Analogously, if `func` and `input` are a negative instance of the halting problem, the function call `func(input)` will not terminate. As a result, `func1` will not halt on empty input, therefore being a negative instance of the $$\varepsilon$$-halting problem. Thus, `isWordInEpsilonHaltingProblem(func1)` as well as `isWordInHaltingProblem(func, input)` returns `false`.
 
@@ -112,18 +110,16 @@ As a side note: The $$\varepsilon$$-halting problem is semi-decidable. The imple
 
 All examples below leverage the halting problem to prove its undecidibility.
 
-
-###### __$$H_{never}$$:__ _Given a program as input, does the program halt on no input at all?_
+###### **$$H_{never}$$:** _Given a program as input, does the program halt on no input at all?_
 
 ```ts
 /**
  * @input A program.
  * @returns true if the program halts on no input, otherwise false
-*/
+ */
 declare function haltsOnNoInput(func): boolean;
 
 function isWordInHaltingProblem(func, input: string): boolean {
-
     function func1(input1: string) {
         return func(input);
     }
@@ -132,17 +128,16 @@ function isWordInHaltingProblem(func, input: string): boolean {
 }
 ```
 
-###### __$$H_{all}$$:__ _Given a program as input, does the program halt on every input?_
+###### **$$H_{all}$$:** _Given a program as input, does the program halt on every input?_
 
 ```ts
 /**
  * @input A program.
  * @returns true if the program halts on every input, otherwise false
-*/
+ */
 declare function haltsOnEveryInput(func): boolean;
 
 function isWordInHaltingProblem(func, input: string): boolean {
-
     function func1(input1: string) {
         // Ignore input1
         return func(input);
@@ -151,18 +146,16 @@ function isWordInHaltingProblem(func, input: string): boolean {
 }
 ```
 
-
-###### __$$A_{all}$$:__ _Given a program as input, does the program return `true` on every input?_
+###### **$$A_{all}$$:** _Given a program as input, does the program return `true` on every input?_
 
 ```ts
 /**
  * @input A program.
  * @returns true if the program returns true on every input, otherwise false
-*/
+ */
 declare function acceptsEveryInput(func): boolean;
 
 function isWordInHaltingProblem(func, input: string): boolean {
-
     function func1(input1: string) {
         // Ignore input1
         func(input);
@@ -172,17 +165,16 @@ function isWordInHaltingProblem(func, input: string): boolean {
 }
 ```
 
-###### __$$H_{42}$$:__ _Given a program as input, does the program halt on the input 42?_
+###### **$$H_{42}$$:** _Given a program as input, does the program halt on the input 42?_
 
 ```ts
 /**
  * @input A program.
  * @returns true if the program halts on input 11, otherwise false
-*/
+ */
 declare function haltsOn11(func): boolean;
 
 function isWordInHaltingProblem(func, input: string): boolean {
-
     function func1(input1: string) {
         if (input1 === "42") return func(input);
         else while (true);
@@ -191,17 +183,16 @@ function isWordInHaltingProblem(func, input: string): boolean {
 }
 ```
 
-###### __$$H_{special}$$:__ _Given a program `func` as input, does `func(func)` return `true`?_
+###### **$$H_{special}$$:** _Given a program `func` as input, does `func(func)` return `true`?_
 
 ```ts
 /**
  * @input A program.
  * @returns true if the program returns true when called upon itself, otherwise false
-*/
+ */
 declare function isWordInSpecialHaltingProblem(func): boolean;
 
 function isWordInHaltingProblem(func, input: string): boolean {
-
     function func1(input1) {
         // Ignore input1
         func(input);
@@ -211,7 +202,7 @@ function isWordInHaltingProblem(func, input: string): boolean {
 }
 ```
 
-###### __$$A_{\lvert 7 \rvert}$$:__ _Given a program as input, does the program return `true` for exactly 7 different inputs?_
+###### **$$A_{\lvert 7 \rvert}$$:** _Given a program as input, does the program return `true` for exactly 7 different inputs?_
 
 ```ts
 /**
@@ -238,16 +229,16 @@ function isWordInHaltingProblem(func, input: string): boolean {
 
 ### 4. Gödel Numbers
 
-Although the logical structure stays identical, the real examples, notationwise, work a bit differently. The notation I used cannot acurrately map all cases of the _Unterprogrammtechnik_, since it is an abstraction of how it's actually done <span className="group relative">[1]<span className="invisible group-hover:visible absolute bottom-full left-1/2 mb-2 z-[1] bg-black border-[1px] p-4 w-[360px] rounded-md">I _could_ acurrately map all cases using the TypeScript notation since it is a [Turing-complete language](https://en.wikipedia.org/wiki/Turing_completeness), but I could not do it in the ways I introduced without making it complicated, which destroys my purpose of introducing it in the first place.</span></span>. In actual Turing reductions, you would work with Turing machines and their corresponding [__Gödel numbers__](https://en.wikipedia.org/wiki/G%C3%B6del_numbering). I won't explain the encodings in great detail here, but you can try out my Gödel number converter below.
+Although the logical structure stays identical, the real examples, notationwise, work a bit differently. The notation I used cannot acurrately map all cases of the _Unterprogrammtechnik_, since it is an abstraction of how it's actually done <span className="group relative">[1]<span className="invisible group-hover:visible absolute bottom-full left-1/2 mb-2 z-[1] bg-black border-[1px] p-4 w-[360px] rounded-md">I _could_ acurrately map all cases using the TypeScript notation since it is a [Turing-complete language](https://en.wikipedia.org/wiki/Turing_completeness), but I could not do it in the ways I introduced without making it complicated, which destroys my purpose of introducing it in the first place.</span></span>. In actual Turing reductions, you would work with Turing machines and their corresponding [**Gödel numbers**](https://en.wikipedia.org/wiki/G%C3%B6del_numbering). I won't explain the encodings in great detail here, but you can try out the Gödel number converter below. We assume $$q_1$$ to be the start state and $$q_2$$ to be the end state.
 
-<GoedelNumber/>
+<GoedelNumber />
 
 Looking back at the definition of the halting problem, the same problem applied for Turing machines would be something like the following:
 
-###### __$$H$$:__ _Given a Turing machine $$M$$ and an input $$w$$, does $$M$$ halt on $$w$$?_
+###### **$$H$$:** _Given a Turing machine $$M$$ and an input $$w$$, does $$M$$ halt on $$w$$?_
 
 > A decider of this problem would be a Turing machine... taking a Turing machine as input... which again taking some input. My head hurts.
 
 Nicely put! But remember, our definition of Turing machines can only take inputs over the input alphabet $$\Sigma$$, which is the binary alphabet $$\{0, 1\}$$ in our case. This could be a problem, since Turing machines are a mathematical tuple, not a 0-1-string. Gödel numbers are just a way of encoding Turing machines into a binary string format. The halting problem therefore formally looks like this:
 
-###### __$$H$$:__ _Given an encoding of a Turing machine $$\langle M \rangle$$ and an input $$w$$, does $$M$$ halt on $$w$$?_
+###### **$$H$$:** _Given an encoding of a Turing machine $$\langle M \rangle$$ and an input $$w$$, does $$M$$ halt on $$w$$?_

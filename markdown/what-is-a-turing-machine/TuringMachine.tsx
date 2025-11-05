@@ -2,6 +2,7 @@
 
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { mono } from "@/app/fonts";
+import PreviousMap_ from "postcss/lib/previous-map";
 
 export const directions = ["L", "N", "R"] as const;
 export const alphabet = ["0", "1", "B"] as const;
@@ -13,7 +14,7 @@ type Transition = Record<Alphabet, {
     alphabet: Alphabet;
     direction: Direction;
 }>
-export type Transitions = Record<number, Transition>
+export type Transitions = Record<string, Transition>
 
 const bandLength = 100;
 
@@ -90,7 +91,7 @@ export default function TuringMachine() {
                 <div className="flex mb-8 mt-2 w-full overflow-auto">
                     {band.map((element, index) => (
                         <div key={index} className="flex flex-col">
-                            <div className="text-xs text-center pb-1">{index}</div>
+                            <div className="text-sm text-center pb-1">{index}</div>
                             <div
                                 className={`w-12 h-12 bg-slate-300 p-2 text-center text-black ${index === head ? 'border-4 border-green-500' : 'border-4 border-black'}`}
                             >
@@ -136,17 +137,19 @@ export function TransitionTable({
     states,
     transitions,
     setStates,
-    setTransitions
+    setTransitions,
+    highlightedTransition
 }: {
     states: number[];
     transitions: Transitions;
     setStates: Dispatch<SetStateAction<number[]>>
     setTransitions: Dispatch<SetStateAction<Transitions>>
+    highlightedTransition?: { state: string; symbol: string } | null;
 }) {
 
     const onAddState = () => {
         const newState = states[states.length - 1] + 1;
-        setStates((prevStates) => [...prevStates, newState]);
+        setStates(prevStates => [...prevStates, newState]);
         setTransitions(prev => ({
             ...prev,
             [newState]: {
@@ -158,7 +161,6 @@ export function TransitionTable({
     }
 
     const onRemoveState = (state: number) => {
-        if (state < 2) return;
         setTransitions(prev => {
             const newTransitions = { ...prev }; // Create a shallow copy
             delete newTransitions[state]; // Remove the key
@@ -168,84 +170,123 @@ export function TransitionTable({
     }
 
     return (
-        <div className="text-xs grid grid-cols-[25px_1fr_1fr_1fr] justify-items-center max-h-72 gap-1 overflow-auto">
+        <div className="bg-slate-800 rounded-lg p-4 border border-slate-600">
+            {/* Header Row */}
+            <div className="grid grid-cols-[60px_1fr_1fr_1fr] gap-2 mb-4 text-sm font-medium">
+                <div className="text-slate-400 text-center">State</div>
+                <div className="bg-slate-700 text-slate-200 text-center py-2 px-3 rounded border border-slate-600">0</div>
+                <div className="bg-slate-700 text-slate-200 text-center py-2 px-3 rounded border border-slate-600">1</div>
+                <div className="bg-slate-700 text-slate-200 text-center py-2 px-3 rounded border border-slate-600">B</div>
+            </div>
 
-            <div />
-            <div>0</div>
-            <div>1</div>
-            <div>B</div>
+            {/* Transition Rows */}
+            <div className="grid grid-cols-[60px_1fr_1fr_1fr] gap-2 max-h-80 overflow-auto">
+                {Object.entries(transitions).map(([state, transition]) => (
+                    <React.Fragment key={state}>
+                        {/* State Button */}
+                        <button
+                            className={`relative group bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded py-2 px-3 text-sm transition-colors duration-200 ${Number(state) === 1 ? 'cursor-not-allowed opacity-60' : ''}`}
+                            disabled={Number(state) === 1}
+                            onClick={() => onRemoveState(Number(state))}
+                        >
+                            <span className={`${Number(state) !== 1 ? "group-hover:hidden" : ""} text-slate-200`}>q{state}</span>
+                            <span className={`${Number(state) !== 1 ? "group-hover:inline-block" : ""} hidden text-slate-400`}>✖</span>
+                        </button>
 
-            {Object.entries(transitions).map(([state, transition]) => (
-                <React.Fragment key={state}>
-                    <button className="relative group inline-block m-auto" disabled={Number(state) === 0} onClick={() => onRemoveState(Number(state))}>
-                        <span className={`${Number(state) !== 0 ? "group-hover:hidden" : ""} inline-block`}>q{state}</span>
-                        <span className={`${Number(state) !== 0 ? "group-hover:inline-block" : ""} hidden`}>✖</span>
-                    </button>
-                    {alphabet.map(letter => <div key={letter} className="flex">
-                        <select className="flex-1 bg-slate-600 p-1 text-center [&>option]:text-center" defaultValue={transition[letter].state} onChange={(e) => {
-                            setTransitions((prev) =>
-                                Object.entries(prev).map(([prevState, transition], index) =>
-                                    prevState === state
-                                        ? {
-                                            ...transition,
-                                            [letter]: {
-                                                ...transition[letter],
-                                                state: parseInt(e.target.value),
-                                            },
-                                        }
-                                        : transition
-                                )
+                        {/* Transition Cells */}
+                        {alphabet.map(letter => {
+                            const isHighlighted = highlightedTransition &&
+                                highlightedTransition.state === state &&
+                                highlightedTransition.symbol === letter;
+
+                            return (
+                                <div
+                                    key={letter}
+                                    className={`rounded border p-2 space-y-1 transition-all duration-200 ${isHighlighted
+                                            ? 'bg-green-700 border-green-500 shadow-lg shadow-green-500/20'
+                                            : 'bg-slate-700 border-slate-600'
+                                        }`}
+                                >
+                                    {/* State Select */}
+                                    <select
+                                        className="w-full bg-slate-600 border border-slate-500 text-center text-slate-200 text-xs py-1 hover:bg-slate-500 focus:ring-1 focus:ring-slate-400 focus:border-slate-400 transition-colors duration-200"
+                                        value={transition[letter].state}
+                                        onChange={(e) => {
+                                            setTransitions(prev => ({
+                                                ...prev,
+                                                [state]: {
+                                                    ...prev[state],
+                                                    [letter]: {
+                                                        ...prev[state][letter],
+                                                        state: parseInt(e.target.value),
+                                                    }
+                                                }
+                                            }));
+                                        }}
+                                    >
+                                        {states.map(stateOption => <option key={stateOption} value={stateOption} className="bg-slate-600 rounded-none">q{stateOption}</option>)}
+                                    </select>
+
+                                    {/* Alphabet Select */}
+                                    <select
+                                        className="w-full bg-slate-600 border border-slate-500 text-center text-slate-200 text-xs py-1 hover:bg-slate-500 focus:ring-1 focus:ring-slate-400 focus:border-slate-400 transition-colors duration-200"
+                                        value={transition[letter].alphabet}
+                                        onChange={(e) => {
+                                            setTransitions(prev => ({
+                                                ...prev,
+                                                [state]: {
+                                                    ...prev[state],
+                                                    [letter]: {
+                                                        ...prev[state][letter],
+                                                        alphabet: e.target.value,
+                                                    }
+                                                }
+                                            }));
+                                        }}
+                                    >
+                                        <option value="0" className="bg-slate-600 rounded-none">0</option>
+                                        <option value="1" className="bg-slate-600 rounded-none">1</option>
+                                        <option value="B" className="bg-slate-600 rounded-none">B</option>
+                                    </select>
+
+                                    {/* Direction Select */}
+                                    <select
+                                        className="w-full bg-slate-600 border border-slate-500 text-center text-slate-200 text-xs py-1 hover:bg-slate-500 focus:ring-1 focus:ring-slate-400 focus:border-slate-400 transition-colors duration-200"
+                                        value={transition[letter].direction}
+                                        onChange={(e) => {
+                                            setTransitions(prev => ({
+                                                ...prev,
+                                                [state]: {
+                                                    ...prev[state],
+                                                    [letter]: {
+                                                        ...prev[state][letter],
+                                                        direction: e.target.value,
+                                                    }
+                                                }
+                                            }));
+                                        }}
+                                    >
+                                        <option value="L" className="bg-slate-600 rounded-none">L</option>
+                                        <option value="N" className="bg-slate-600 rounded-none">N</option>
+                                        <option value="R" className="bg-slate-600 rounded-none">R</option>
+                                    </select>
+                                </div>
                             );
-                        }}>
-                            {states.map((value, index) => (
-                                <option key={value} value={value}>
-                                    {index !== 1 ? "q" + value : `q\u0305`}
-                                </option>
-                            ))}
-                        </select>
-                        <select className="flex-1 bg-slate-600 p-1 text-center" defaultValue={transition[letter].alphabet} onChange={(e) => {
-                            setTransitions((prev) =>
-                                Object.entries(prev).map(([prevState, transition], index) =>
-                                    prevState === state
-                                        ? {
-                                            ...transition,
-                                            [letter]: {
-                                                ...transition[letter],
-                                                alphabet: e.target.value as Alphabet,
-                                            },
-                                        }
-                                        : transition
-                                )
-                            );
-                        }}>
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="B">B</option>
-                        </select>
-                        <select className="flex-1 bg-slate-600 p-1 text-center" defaultValue={transition[letter].direction} onChange={(e) => {
-                            setTransitions((prev) =>
-                                Object.entries(prev).map(([prevState, transition], index) =>
-                                    prevState === state
-                                        ? {
-                                            ...transition,
-                                            [letter]: {
-                                                ...transition[letter],
-                                                direction: e.target.value as Direction,
-                                            },
-                                        }
-                                        : transition
-                                )
-                            );
-                        }}>
-                            <option value="L">L</option>
-                            <option value="N">N</option>
-                            <option value="R">R</option>
-                        </select>
-                    </div>
-                    )}
-                </React.Fragment>
-            ))}
-            <button onClick={onAddState}>+</button>
+                        })}
+                    </React.Fragment>
+                ))}
+            </div>
+
+            {/* Add State Button */}
+            <div className="mt-4 flex justify-center">
+                <button
+                    onClick={onAddState}
+                    className="bg-slate-700 hover:bg-slate-600 text-slate-200 border border-slate-600 py-2 px-4 rounded transition-colors duration-200 flex items-center gap-2"
+                >
+                    <span className="text-lg">+</span>
+                    <span className="text-sm">Add State</span>
+                </button>
+            </div>
         </div>
     );
 }
