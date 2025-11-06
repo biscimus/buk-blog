@@ -173,19 +173,19 @@ export function TransitionTable({
         <div className="bg-slate-800 rounded-lg p-4 border border-slate-600">
             {/* Header Row */}
             <div className="grid grid-cols-[60px_1fr_1fr_1fr] gap-2 mb-4 text-sm font-medium">
-                <div className="text-slate-400 text-center">State</div>
+                <div className="text-slate-400 text-center my-auto">State</div>
                 <div className="bg-slate-700 text-slate-200 text-center py-2 px-3 rounded border border-slate-600">0</div>
                 <div className="bg-slate-700 text-slate-200 text-center py-2 px-3 rounded border border-slate-600">1</div>
                 <div className="bg-slate-700 text-slate-200 text-center py-2 px-3 rounded border border-slate-600">B</div>
             </div>
 
             {/* Transition Rows */}
-            <div className="grid grid-cols-[60px_1fr_1fr_1fr] gap-2 max-h-80 overflow-auto">
+            <div className="grid grid-cols-[60px_1fr_1fr_1fr] gap-2 max-h-[348px] overflow-auto">
                 {Object.entries(transitions).map(([state, transition]) => (
                     <React.Fragment key={state}>
                         {/* State Button */}
                         <button
-                            className={`relative group bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded py-2 px-3 text-sm transition-colors duration-200 ${Number(state) === 1 ? 'cursor-not-allowed opacity-60' : ''}`}
+                            className={`relative group bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded py-2 px-3 text-sm transition-colors duration-200 ${Number(state) === 1 ? 'cursor-not-allowed' : ''}`}
                             disabled={Number(state) === 1}
                             onClick={() => onRemoveState(Number(state))}
                         >
@@ -202,14 +202,14 @@ export function TransitionTable({
                             return (
                                 <div
                                     key={letter}
-                                    className={`rounded border p-2 space-y-1 transition-all duration-200 ${isHighlighted
+                                    className={`rounded border p-1 space-y-1 transition-all duration-200 ${isHighlighted
                                             ? 'bg-green-700 border-green-500 shadow-lg shadow-green-500/20'
                                             : 'bg-slate-700 border-slate-600'
                                         }`}
                                 >
                                     {/* State Select */}
                                     <select
-                                        className="w-full bg-slate-600 border border-slate-500 text-center text-slate-200 text-xs py-1 hover:bg-slate-500 focus:ring-1 focus:ring-slate-400 focus:border-slate-400 transition-colors duration-200"
+                                        className="w-full bg-slate-600 border border-slate-500 rounded text-center text-slate-200 text-xs py-1 hover:bg-slate-500 focus:ring-1 focus:ring-slate-400 focus:border-slate-400 transition-colors duration-200"
                                         value={transition[letter].state}
                                         onChange={(e) => {
                                             setTransitions(prev => ({
@@ -229,7 +229,7 @@ export function TransitionTable({
 
                                     {/* Alphabet Select */}
                                     <select
-                                        className="w-full bg-slate-600 border border-slate-500 text-center text-slate-200 text-xs py-1 hover:bg-slate-500 focus:ring-1 focus:ring-slate-400 focus:border-slate-400 transition-colors duration-200"
+                                        className="w-full bg-slate-600 border border-slate-500 rounded text-center text-slate-200 text-xs py-1 hover:bg-slate-500 focus:ring-1 focus:ring-slate-400 focus:border-slate-400 transition-colors duration-200"
                                         value={transition[letter].alphabet}
                                         onChange={(e) => {
                                             setTransitions(prev => ({
@@ -251,7 +251,7 @@ export function TransitionTable({
 
                                     {/* Direction Select */}
                                     <select
-                                        className="w-full bg-slate-600 border border-slate-500 text-center text-slate-200 text-xs py-1 hover:bg-slate-500 focus:ring-1 focus:ring-slate-400 focus:border-slate-400 transition-colors duration-200"
+                                        className="w-full bg-slate-600 border border-slate-500 rounded text-center text-slate-200 text-xs py-1 hover:bg-slate-500 focus:ring-1 focus:ring-slate-400 focus:border-slate-400 transition-colors duration-200"
                                         value={transition[letter].direction}
                                         onChange={(e) => {
                                             setTransitions(prev => ({

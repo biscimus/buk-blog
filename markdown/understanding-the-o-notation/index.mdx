@@ -8,12 +8,6 @@ export const metadata = {
  
 > During the lectures, O-notations appear everywhere, but I never got the hang of it.
 
-It sounds like you didn't review your *Data Structures and Algorithms* lecture.
-
-> Yeah, but I wouldn't be asking you if I wanted to, would I?
-
-...Fair enough.
-
 Imagine you wrote a piece of code:
 
 ```ts
@@ -24,9 +18,9 @@ function hello() {
 
  and you want to see how fast it is. You could let it run multiple times and measure the average time it took in miliseconds, but would your piece of code take the same amount of time in another computer?
 
-> Well, that depends. If it has a much better processor, then it'd probably take much less time to run it.
+> Well, that depends. Computers with better processors would take less time to run the same code. Plus, JS is much slower compared to C. I'm pretty sure I could do that same thing in C but faster.
 
-Exactly. We therefore need a unit independent from seconds in order to measure the runtime.
+Exactly. As you stated, the execution of an algorithm measured in time depends on multiple factors. We therefore need a unit for the runtime which is ***independent from time*** in the physical sense.  
 
 Another issue occurs when the function has an input:
 
@@ -38,11 +32,11 @@ function hello(n: number) {
 }
 ```
 
-Unlike the first example, the runtime of this function depends on the input number. If we assume the `console.log("Hello World!")` part takes a constant time of $$c$$, then the runtime of the function would be around $$c \cdot n$$. In this case, we say the function above has a *linear* runtime.
+Unlike the first example, the runtime of this function depends on the input number. If we assume the `console.log("Hello World!")` part takes a constant runtime of $$c$$, then the runtime of the function would be around $$c \cdot n$$. In this case, we say the function above has a *linear* runtime.
 
 > Okay, but I still don't get why we need the O-notation. 
 
-Well, the O-notation helps us to formally group programs with similar runtime behavior into the same box, known as *complexity classes*. Suppose we want to group all programs with a linear runtime in the same group. How would you describe the runtime of the function below?
+Well, the O-notation helps us to formally group functions with similar runtime behavior into the same box, known as *complexity classes*. Suppose we want to group all programs with linear runtime in the same group. How would you describe the runtime of the function below?
 
 ```ts
 function hello3(n: number) {
@@ -56,7 +50,7 @@ function hello3(n: number) {
 ```
 > Using the same assumptions as above, it'd be something like $$2cn + 2c$$, right?
 
-Exactly. Both $$2cn + 2c$$ and $$cn$$ are linear functions, identical apart from the principal coefficient and a constant term. The O-notation helps us to ignore these factors focus on the most significant part of the runtime.
+Exactly. Both $$2cn + 2c$$ and $$cn$$ are linear functions, identical apart from the principal coefficient and a constant term. The O-notation helps us to ignore these factors and focus on the most significant part of the runtime.
 
 > And how does that work?
 

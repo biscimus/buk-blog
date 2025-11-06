@@ -63,11 +63,11 @@ export default function GoedelNumber() {
 
     // Generate Gödel number with metadata for tooltips
     const goedelNumberWithMetadata = Object.entries(transitions).flatMap(([stateKey, transition]) =>
-        Object.entries(transition).map(([letter, val], letterIndex) => {
+        Object.entries(transition).map(([letter, val]) => {
             const encoding = [
-                parseInt(stateKey),
+                parseInt(stateKey) - 1,
                 alphabet.indexOf(letter as any),
-                val.state,
+                val.state - 1,
                 alphabet.indexOf(val.alphabet),
                 directions.indexOf(val.direction)
             ];
@@ -81,18 +81,14 @@ export default function GoedelNumber() {
                     toState: `q${val.state}`,
                     writeSymbol: val.alphabet,
                     direction: val.direction === "L" ? "Left" : val.direction === "R" ? "Right" : "Stay",
-                    encoding: encoding
                 }
             };
         })
     );
 
-    const handleMouseEnter = (metadata: any, event: React.MouseEvent) => {
+    const handleMouseEnter = ({ fromState, onSymbol, toState, writeSymbol, direction}: typeof goedelNumberWithMetadata[0]["metadata"], event: React.MouseEvent) => {
         const rect = event.currentTarget.getBoundingClientRect();
-        setHighlightedTransition({
-            state: metadata.fromState.replace('q', ''),
-            symbol: metadata.onSymbol
-        });
+        setHighlightedTransition({ state: fromState.replace('q', ''), symbol: onSymbol});
         setTooltip({
             isVisible: true,
             position: { x: event.clientX, y: event.clientY },
@@ -102,11 +98,11 @@ export default function GoedelNumber() {
                         Transition Rule
                     </div>
                     <div className="space-y-1">
-                        <div><span className="text-slate-400">From state:</span> {metadata.fromState}</div>
-                        <div><span className="text-slate-400">Reading:</span> {metadata.onSymbol}</div>
-                        <div><span className="text-slate-400">To state:</span> {metadata.toState}</div>
-                        <div><span className="text-slate-400">Write:</span> {metadata.writeSymbol}</div>
-                        <div><span className="text-slate-400">Move:</span> {metadata.direction}</div>
+                        <div><span className="text-slate-400">From State:</span> {fromState}</div>
+                        <div><span className="text-slate-400">Reading:</span> {onSymbol}</div>
+                        <div><span className="text-slate-400">To State:</span> {toState}</div>
+                        <div><span className="text-slate-400">Write:</span> {writeSymbol}</div>
+                        <div><span className="text-slate-400">Move:</span> {direction}</div>
                     </div>
                 </div>
             )
@@ -119,28 +115,26 @@ export default function GoedelNumber() {
     };
 
     return (
-        <div className="flex flex-col lg:flex-row overflow-auto justify-center items-center lg:items-stretch px-6 sm:px-8 lg:px-12 xl:px-16 py-10 bg-slate-900 border border-slate-700 rounded-lg shadow-lg gap-8 min-h-[600px]">
+        <div className="flex flex-col lg:flex-row overflow-auto justify-center items-center lg:items-stretch py-10 lg:px-6 rounded-lg shadow-lg gap-8 min-h-[600px]">
             {/* Transition Table Section */}
-            <div className="w-full lg:flex-1 bg-slate-800 border border-slate-600 rounded-lg p-6">
-                <h3 className="text-slate-300 text-center mb-4 font-medium">Transition Table</h3>
-                <div className="flex justify-center">
-                    <TransitionTable
-                        states={states}
-                        transitions={transitions}
-                        setStates={setStates}
-                        setTransitions={setTransitions}
-                        highlightedTransition={highlightedTransition}
-                    />
-                </div>
+            <div className="w-full lg:flex-1 p-6">
+                <h3 className="text-slate-300 text-center mb-4">Transition Table</h3>
+                <TransitionTable
+                    states={states}
+                    transitions={transitions}
+                    setStates={setStates}
+                    setTransitions={setTransitions}
+                    highlightedTransition={highlightedTransition}
+                />
             </div>
 
             {/* Gödel Number Display */}
-            <div className="w-full lg:flex-1 bg-slate-800 border border-slate-600 rounded-lg p-6">
-                <h3 className="text-slate-300 text-center mb-6 font-medium">Generated Gödel Number</h3>
-                <div className="bg-slate-700 rounded-lg p-6 border border-slate-600 overflow-y-auto max-h-96">
+            <div className="w-full lg:flex-1 p-6">
+                <h3 className="text-slate-300 text-center mb-4">Generated Gödel Number</h3>
+                <div className="bg-slate-800 rounded-lg p-6 border border-slate-600 overflow-y-auto max-h-[500px]">
                     <div className="text-slate-200 leading-relaxed text-lg font-mono [&>span]:text-slate-400 [&>span]:font-normal break-all">
                         <span>111</span>
-                        {goedelNumberWithMetadata.map((item, index) => (
+                        {goedelNumberWithMetadata.map(({ encodedString, metadata }, index) => (
                             <React.Fragment key={index}>
                                 <GoedelTooltip
                                     content={tooltip.content}
@@ -148,8 +142,8 @@ export default function GoedelNumber() {
                                     position={tooltip.position}
                                 >
                                     <span
-                                        className="text-slate-300 hover:text-white hover:bg-slate-600 transition-all duration-200 cursor-help px-1 rounded-sm"
-                                        onMouseEnter={(e) => handleMouseEnter(item.metadata, e)}
+                                        className="text-slate-300 hover:text-green-600 hover:bg-slate-600 transition-all duration-200 cursor-help px-1 rounded-sm"
+                                        onMouseEnter={(e) => handleMouseEnter(metadata, e)}
                                         onMouseLeave={handleMouseLeave}
                                         onMouseMove={(e) => {
                                             if (tooltip.isVisible) {
@@ -160,7 +154,7 @@ export default function GoedelNumber() {
                                             }
                                         }}
                                     >
-                                        {item.encodedString}
+                                        {encodedString}
                                     </span>
                                 </GoedelTooltip>
                                 {index < goedelNumberWithMetadata.length - 1 && <span>11</span>}
