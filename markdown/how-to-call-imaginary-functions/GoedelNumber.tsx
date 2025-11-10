@@ -93,7 +93,7 @@ export default function GoedelNumber() {
             isVisible: true,
             position: { x: event.clientX, y: event.clientY },
             content: (
-                <div className="text-sm text-slate-200 space-y-2 min-w-64">
+                <div className="text-sm text-slate-200 space-y-2">
                     <div className="font-semibold text-slate-100 border-b border-slate-600 pb-1">
                         Transition Rule
                     </div>
@@ -115,7 +115,7 @@ export default function GoedelNumber() {
     };
 
     return (
-        <div className="flex flex-col lg:flex-row overflow-auto justify-center items-center lg:items-stretch py-10 lg:px-6 rounded-lg shadow-lg gap-8 min-h-[600px]">
+        <div className="flex flex-col lg:flex-row overflow-auto justify-center items-center lg:items-stretch py-10 lg:px-6 rounded-lg shadow-lg gap-8">
             {/* Transition Table Section */}
             <div className="w-full lg:flex-1 p-6">
                 <h3 className="text-slate-300 text-center mb-4">Transition Table</h3>

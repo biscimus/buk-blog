@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState, useCallback } from "react";
 import { mono } from "@/app/fonts";
 import PreviousMap_ from "postcss/lib/previous-map";
 
@@ -16,45 +16,76 @@ type Transition = Record<Alphabet, {
 }>
 export type Transitions = Record<string, Transition>
 
-const bandLength = 100;
+const initialBandLength = 20;
+const expansionSize = 10;
 
 // q0 is starting state, q0 is ending state
 export default function TuringMachine() {
 
-    const [states, setStates] = useState([0, 1]);
-    const [currentState, setCurrentState] = useState(0);
+    const [states, setStates] = useState([1, 2]);
+    const [currentState, setCurrentState] = useState(1);
     const [transitions, setTransitions] = useState<Transitions>({
-        0: {
+        1: {
             "0": { state: 1, alphabet: "0", direction: "R" },
             "1": { state: 1, alphabet: "0", direction: "N" },
             "B": { state: 1, alphabet: "0", direction: "R" }
         }
     });
 
-    const [band, setBand] = useState(Array<Alphabet>(bandLength).fill("B"))
-    const [head, setHead] = useState(50);
+    const [band, setBand] = useState(Array<Alphabet>(initialBandLength).fill("B"))
+    const [head, setHead] = useState(Math.floor(initialBandLength / 2));
     const [input, setInput] = useState("");
+    const [isPlaying, setIsPlaying] = useState(false);
+    const bandRef = React.useRef<HTMLDivElement>(null);
 
-    const onPlayOneStep = () => {
-        if (head === 0 || head === states.length - 1) return;
+    const expandBandIfNeeded = useCallback((currentHead: number, currentBand: Alphabet[], direction: Direction) => {
+        let newBand = [...currentBand];
+        let newHead = currentHead;
+        
+        // Expand left if head is too close to left edge
+        if (direction === "L" && currentHead <= 2) {
+            const leftExpansion = Array<Alphabet>(expansionSize).fill("B");
+            newBand = [...leftExpansion, ...newBand];
+            newHead = currentHead + expansionSize;
+        }
+        
+        // Expand right if head is too close to right edge
+        if (direction === "R" && currentHead >= currentBand.length - 3) {
+            const rightExpansion = Array<Alphabet>(expansionSize).fill("B");
+            newBand = [...newBand, ...rightExpansion];
+        }
+        
+        return { newBand, newHead };
+    }, []);
+
+    const onPlayOneStep = useCallback(() => {
         const { state, alphabet, direction } = transitions[currentState][band[head]];
-        if (state === 1) {
+        if (state === 2) {
             setIsPlaying(false);
             alert("Computation terminated. Output: " + band.slice(head).reduce((prev, curr) => prev += curr, "").replaceAll('B', ''));
             return;
         }
 
-        setBand(prevBand => prevBand.map((element, index) => (index !== head) ? element : alphabet));
+        // Update the band with the new symbol and expand if needed
+        setBand(prevBand => {
+            const updatedBand = prevBand.map((element, index) => (index !== head) ? element : alphabet);
+            const { newBand } = expandBandIfNeeded(head, updatedBand, direction);
+            return newBand;
+        });
+
         setCurrentState(state);
 
+        // Calculate new head position considering potential band expansion
+        const { newHead } = expandBandIfNeeded(head, band, direction);
+        
         if (direction === "L") {
-            setHead(Math.max(0, head - 1));
+            setHead(Math.max(0, newHead - 1));
         } else if (direction === "R") {
-            setHead(Math.min(head + 1, band.length - 1));
+            setHead(newHead + 1);
+        } else {
+            setHead(newHead);
         }
-    }
-
-    const [isPlaying, setIsPlaying] = useState(false);
+    }, [band, head, currentState, transitions, setIsPlaying, expandBandIfNeeded]);
 
     useEffect(() => {
         if (isPlaying) {
@@ -63,70 +94,106 @@ export default function TuringMachine() {
         }
     }, [isPlaying, onPlayOneStep]);
 
+    // Center the head in view whenever head position changes
+    useEffect(() => {
+        if (bandRef.current) {
+            const headElement = bandRef.current.children[head] as HTMLElement;
+            if (headElement) {
+                headElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'center'
+                });
+            }
+        }
+    }, [head]);
+
     const onReset = () => {
-        setHead(50);
-        setBand(Array<Alphabet>(bandLength).fill("B"));
-        setCurrentState(0);
+        setHead(Math.floor(initialBandLength / 2));
+        setBand(Array<Alphabet>(initialBandLength).fill("B"));
+        setCurrentState(1);
     }
 
     const onInput = (newInput: string) => {
-        if (/^[01]*$/.test(newInput)) {
-            setInput(newInput);
-            setBand(() => {
-                const newBand = Array<Alphabet>(bandLength).fill("B");
-                newInput.split("").forEach((char, index) => {
-                    newBand[50 + index] = char as Alphabet; // Start inserting characters at the 50th index
-                });
-                return newBand;
-            });
-        } else {
+        if (!/^[01]*$/.test(newInput)) {
             alert("Invalid input: Only 0 and 1 are allowed.");
+            return;
         }
+
+        setInput(newInput);
+        setBand(() => {
+            // Create a band large enough for the input plus some padding
+            const requiredLength = Math.max(initialBandLength, newInput.length + 20);
+            const newBand = Array<Alphabet>(requiredLength).fill("B");
+            const startIndex = Math.floor(requiredLength / 2) - Math.floor(newInput.length / 2);
+            newInput.split("").forEach((char, index) => {
+                newBand[startIndex + index] = char as Alphabet;
+            });
+            return newBand;
+        });
+        // Update head position to start of input
+        const requiredLength = Math.max(initialBandLength, newInput.length + 20);
+        const startIndex = Math.floor(requiredLength / 2) - Math.floor(newInput.length / 2);
+        setHead(startIndex);
     }
 
     return (
-        <div className={`${mono.className} flex flex-col gap-4 justify-stretch sm:flex-row`} >
-            <div className="flex flex-col p-4 justify-center items-center border-2 rounded-md border-slate-300 w-[50%]">
-                <div>Current state: q{currentState}</div>
-                <div className="flex mb-8 mt-2 w-full overflow-auto">
+        <div className={`${mono.className} flex flex-col md:flex-row gap-4 justify-stretch`} >
+            <div className="flex flex-col p-6 justify-center items-center bg-slate-800 rounded-lg border border-slate-600 md:w-[50%]">
+                <div className="text-slate-200 font-medium mb-4 text-lg">Current state: <span className="text-green-400 font-bold">q{currentState}</span></div>
+                <div ref={bandRef} className="flex mb-8 mt-2 w-full overflow-auto bg-slate-700 rounded-lg p-4 border border-slate-600">
                     {band.map((element, index) => (
                         <div key={index} className="flex flex-col">
-                            <div className="text-sm text-center pb-1">{index}</div>
+                            <div className="text-xs text-slate-400 text-center pb-1">{index}</div>
                             <div
-                                className={`w-12 h-12 bg-slate-300 p-2 text-center text-black ${index === head ? 'border-4 border-green-500' : 'border-4 border-black'}`}
+                                className={`w-12 h-12 p-2 text-center font-medium transition-all duration-200 ${
+                                    index === head 
+                                        ? 'bg-green-600 border-2 border-green-400 text-white shadow-lg shadow-green-500/20' 
+                                        : 'bg-slate-600 border-2 border-slate-500 text-slate-200 hover:bg-slate-500'
+                                }`}
                             >
                                 {element !== "B" ? element : ""}
                             </div>
                         </div>
                     ))}
                 </div>
-                <div className="flex justify-center items-center mb-4 gap-2 w-[50%]">
-                    <label>Input: </label>
+                <div className="flex justify-center items-center mb-6 gap-3 w-full max-w-xs">
+                    <label className="text-slate-200 font-medium">Input:</label>
                     <input
-                        className="rounded-sm bg-black text-center border-[1px] border-slate-200"
+                        className="flex-1 bg-slate-600 border border-slate-500 rounded text-center text-slate-200 py-2 px-3 hover:bg-slate-500 focus:ring-1 focus:ring-slate-400 focus:border-slate-400 transition-colors duration-200"
                         placeholder="01-string"
                         value={input}
                         onInput={(e) => onInput((e.target as HTMLInputElement).value)}
                     />
                 </div>
-                <div className="flex gap-2">
-                    <button className="text-black bg-green-600 px-2 py-1 rounded-sm" onClick={onPlayOneStep}>
+                <div className="flex gap-3 flex-wrap justify-center">
+                    <button 
+                        className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded border border-green-500 transition-colors duration-200 font-medium shadow-lg"
+                        onClick={onPlayOneStep}
+                    >
                         Play one step
                     </button>
                     <button
                         onClick={() => setIsPlaying((prev) => !prev)}
-                        className={`px-2 py-1 rounded-sm text-black ${isPlaying ? 'bg-red-500' : 'bg-green-600'}`}
+                        className={`px-4 py-2 rounded font-medium transition-colors duration-200 shadow-lg ${
+                            isPlaying 
+                                ? 'bg-red-600 hover:bg-red-500 text-white border border-red-500' 
+                                : 'bg-green-600 hover:bg-green-500 text-white border border-green-500'
+                        }`}
                     >
                         {isPlaying ? 'Stop' : 'Start'}
                     </button>
-                    <button className="text-black bg-red-500 px-2 py-1 rounded-sm" onClick={onReset}>
+                    <button 
+                        className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded border border-red-500 transition-colors duration-200 font-medium shadow-lg"
+                        onClick={onReset}
+                    >
                         Reset
                     </button>
                 </div>
             </div>
 
-            <div className="flex flex-col justify-center items-center p-4 border-2 rounded-md border-slate-300 gap-4 overflow-auto">
-                <div className="text-center">Transition Table</div>
+            <div className="flex flex-col justify-center items-center p-6 bg-slate-800 rounded-lg border border-slate-600 gap-4 overflow-auto">
+                <div className="text-center text-slate-200 font-medium text-lg">Transition Table</div>
                 <TransitionTable states={states} setStates={setStates} transitions={transitions} setTransitions={setTransitions} />
             </div>
         </div >
