@@ -1,6 +1,7 @@
 import type { MDXComponents } from "mdx/types";
 import Image, { ImageProps } from "next/image";
 import { mono } from "@/app/fonts";
+import AnimatedBlockquote from "@/app/components/AnimatedBlockquote";
 
 // This file allows you to provide custom React components
 // to be used in MDX files. You can import and use any
@@ -27,10 +28,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             />
         ),
         blockquote: ({ children }) => (
-            <blockquote
-                className={`italic border-l-4 border-l-orange-400 px-6 py-0 my-6 *:my-2`}>
+            <AnimatedBlockquote>
                 {children}
-            </blockquote>
+            </AnimatedBlockquote>
         ),
         pre: ({ children }) => (
             <pre

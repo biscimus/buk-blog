@@ -6,17 +6,21 @@ export const metadata = {
     description: "What these fuckers have to do with your computer science degree.",
 }
 
-Around a century ago, when World Wars did not yet bear the necessity of enumeration and where the discipline of computer science was yet to be conceived, a great question known as the _Entscheidungsproblem_ in the realm of mathematics was whether every mathematically formulated problem could be answered using a system of formally defined steps. In other words: ___Is there a problem impossible to solve with any algorithm?___
+Around a century ago, before world wars needed to be numbered and the field of computer science was conceived, a big question in the realm of mathematics emerged known as the [__Entscheidungsproblem__](https://en.wikipedia.org/wiki/Entscheidungsproblem). Posed by David Hilbert in 1928, the problem asked:
 
-During his attempt to solve the _Entscheidungsproblem_, Alan Turing designed a rather machine: Not a machine in the physical sense, but a mathmatical automaton, named the _Turing Machine_ in the present day. It is defined as follows:
+__Can every mathematically formulated problem be answered using a system of formally defined steps?__
+
+In other words: __Is there a problem impossible to solve with any algorithm?__
+
+During his attempt to solve the it, Alan Turing designed a special machine: Not a machine in the physical sense, but a mathmatical automaton, named the __Turing Machine__ in the present day. It is defined as follows:
 
 <div className="flex flex-col sm:flex-row justify-center items-center bg-[#2e3440] rounded-sm p-12 sm:p-4">
-    <div className="flex flex-col gap-4 items-start sm:w-[40%] sm:items-end">
-        <div>$$M = (Q, \Sigma, \Gamma, B, q_0, \overline{q}, \delta),$$</div>
+    <div className="flex flex-col gap-4 items-start sm:w-[50%] sm:items-end">
+        <div className="text-xl">$$M = (Q, \Sigma, \Gamma, B, q_0, \overline{q}, \delta),$$</div>
         <div>where</div>
     </div>
      
-    <div className="ml-16">
+    <div className="ml-12">
     - $$Q$$ is the state space,
     - $$\Sigma$$ is the input alphabet,
     - $$\Gamma$$ is the band alphabet,

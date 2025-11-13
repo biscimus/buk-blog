@@ -4,7 +4,7 @@ export const metadata = {
     description: "What the fuck is a semantic property?",
 }
 
-Let us first look at two functions. How are they different?
+Let us first look at two functions below. How are they different?
 
 <div className="flex flex-col gap-8">
     <div>
@@ -31,7 +31,7 @@ Right. What we want to focus on is the following: Even though the two functions 
 
 In order to formalize this, we take a look at what kind of mathematical function each of these functions would represent. Be careful that mathematical functions are different from the functions in the programming sense. What would this function look like for our example functions?
 
-> It would be something like $$f: x \mapsto 1 \forall x$$, depending on which domain we define our function on.
+> It would be something like $$f: x \mapsto 1$$ $$\forall x$$, depending on which domain we define our function on.
 
 Great. Now, if we would want to map the set of all functions (in the programming sense) to the set of all mathematical functions, do you see that every function (in the programming sense) will have a corresponding mathematical function, and that some functions (in the programming sense) would map to the same mathematical function?
 
@@ -47,11 +47,25 @@ For Turing Machines, the output for an input string in $$\{0, 1\}^*$$ is either 
 
 > What the heck is a partial function?
 
-In a partial function, not every domain element needs to be mapped; We denote $$f(w) = \bot$$ if the input $$w$$ doesn't have a corresponding mapping. In the context of Turing Machines, $$f(w) = \bot$$ means that the Turing Machine does not halt on the input $$w$$. Note that partial functions are a superset of total functions and that all total function is partial.
+In a partial function, not every domain element needs to be mapped; We denote $$f(w) = \bot$$ if the input $$w$$ doesn't have a corresponding mapping. The opposite of a partial function is a total function, where every domain element has a corresponding mapping.
 
-Anyways, we have Turing Machines and partial functions computed by Turing Machines. Now take any non-empty real subset $$\mathcal{S}$$ of computable partial functions. Then, there has to be a set of Turing Machines, all computing a function in $$\mathcal{S}$$. Rice's Theorem states that this set of Turing Machines is undecidable.
+> Aren't total functions just regular functions then?
 
-Take our previous functions as an example, which were all functions returing 1 for every input. Since the set $$\{ \langle M \rangle \mid M \text{returns 1 for every input} \}$$ is undecidable according to Rice's Theorem, it is impossible to program a function which looks like this:
+Yes, exactly. For example, $$f_{total} \colon \mathbb{R} \setminus \{0\} \longrightarrow \mathbb{R}, x \mapsto \frac{1}{x}$$ is total, while $$f_{total} \colon \mathbb{R} \longrightarrow \mathbb{R}, x \mapsto \frac{1}{x}$$ is partial, where $$f_{partial}(0) = \bot$$.
+
+In the context of Turing Machines, $$f(w) = \bot$$ means that the Turing Machine does not halt on the input $$w$$. Note that partial functions are a superset of total functions and that all total function is partial.
+
+Anyways, we have Turing Machines and partial functions computed by Turing Machines. We call a partial function computable if there exists a Turing Machine computing it.
+
+> Aren't all partial functions computable?
+
+No, not at all. We need to be very careful not to confuse partial functions with partial computable functions. The second is a strict subset of the first, and much, ***much*** smaller!
+
+Now take any non-empty strict subset $$\mathcal{S}$$ of computable partial functions. Then, there has to be a set of all Turing Machines which compute a function inside $$\mathcal{S}$$. Rice's Theorem states that this set of Turing Machines is undecidable.
+
+###### **Rice's Theorem.** Let $$\mathcal{S}$$ be any non-trivial set of partial computable functions (i.e., $$\mathcal{S}$$ is neither empty nor the set of all partial computable functions). Then the set $$L(\mathcal{S}) = \{ \langle M \rangle \mid M$$ is a Turing Machine that computes a function in $$\mathcal{S} \}$$ is undecidable.*
+
+Take our previous functions as an example, which were all functions returing 1 for every input. Since the set $$\{ \langle M \rangle \mid M$$ returns 1 for every input $$\}$$ is undecidable according to Rice's Theorem, it is impossible to program a function which looks like this:
 
 ```ts
 function oneDecider(func): boolean {
@@ -72,3 +86,36 @@ function oneDecider2(func): boolean {
 
 Do you see why? We're checking whether an input program `func` returns 1 on input 1, therefore effectively checking whether the partial function computed by `func` is in $$\mathcal{S} = \{ f \mid f(1) = 1 \}$$. While the program may work for certain input functions, we can certainly argue that there will be an input function where `oneDecider2` will crash. 
 
+> Why the "non-trivial" condition though?
+
+Not checking the triviality of $$\mathcal{S}$$ is a classic pitfall for many students while solving assignments on Rice's Theorem. Let's look at both scenarios. What would $$L(\mathcal{S})$$ look it if $$\mathcal{S}$$ were empty?
+
+> Then, $$L(\mathcal{S}) = \{ \langle M \rangle \mid M$$ is a Turing Machine that computes a function in $$\varnothing \} = \varnothing$$, right? So the language is empty?
+
+Exactly. An empty language is decidable since we can simply construct a Turing Machine which rejects every input.
+
+```ts
+const emptyDecider = () => false;
+```
+
+What about the other case, where $$\mathcal{S}$$ is the set of all partial computable functions?
+
+> That would be $$L(\mathcal{S}) = \{ \langle M \rangle \mid M$$ is a Turing Machine that computes a function in the set of all partial computable functions $$\}$$.
+
+Right. Now the question is: Which Turing Machine doesn't compute a partial computable function?
+
+> I mean, if the function is computed by a Turing Machine, then it is computable by definition. Some of them may not halt on certain inputs, but they still are partially computable... So, $$L(\mathcal{S})$$ is the set of all Turing Machines?
+
+Uhuh. And is the set of all Turing Machines decidable?
+
+> Yes, it is. We can simply construct a Turing Machine which accepts every input.
+
+```ts
+const allTMDecider = () => true;
+```
+
+Not quite! Remember that not all strings are valid encodings of Turing Machines. But yes, we can construct a Turing Machine which accepts every valid encoding of a Turing Machine and rejects every invalid encoding.
+
+```ts
+const allTMDecider = (input: string) => input.match(/^111(0*1){4}0*(11(0*1){4}0*)*111$/);
+```

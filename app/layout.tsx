@@ -3,6 +3,7 @@ import { serif } from "@/app/fonts";
 import "../globals.css";
 import Link from "next/link";
 import Logo from "./components/Logo";
+import BackToTop from "./components/BackToTop";
 
 export const metadata: Metadata = {
     title: "BuK Blog",
@@ -25,12 +26,13 @@ export default function RootLayout({
                     crossOrigin="anonymous"
                 />
             </head>
-            <body className={`mx-auto max-w-4xl py-12 px-12 ${serif.className} antialiased`}>
+            <body className={`mx-auto max-w-4xl py-12 px-12 ${serif.className} antialiased mb-32`}>
                 <header className="flex justify-between mb-16 items-center">
                     <Logo />
                     <Link href="https://geonho.com">Geonho Yun</Link>
                 </header>
                 {children}
+                <BackToTop />
             </body>
         </html>
     );
