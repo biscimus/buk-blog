@@ -139,17 +139,17 @@ export default function TuringMachine() {
 
     return (
         <div className={`${mono.className} flex flex-col md:flex-row gap-4 justify-stretch`} >
-            <div className="flex flex-col p-6 justify-center items-center bg-slate-800 rounded-lg border border-slate-600 md:w-[50%]">
-                <div className="text-slate-200 font-medium mb-4 text-lg">Current state: <span className="text-green-400 font-bold">q{currentState}</span></div>
-                <div ref={bandRef} className="flex mb-8 mt-2 w-full overflow-auto bg-slate-700 rounded-lg p-4 border border-slate-600">
+            <div className="flex flex-col p-6 justify-center items-center bg-gray-100 dark:bg-slate-800 rounded-lg border border-gray-300 dark:border-slate-600 md:w-[50%]">
+                <div className="text-gray-800 dark:text-slate-200 font-medium mb-4 text-lg">Current state: <span className="text-green-600 dark:text-green-400 font-bold">q{currentState}</span></div>
+                <div ref={bandRef} className="flex mb-8 mt-2 w-full overflow-auto bg-gray-200 dark:bg-slate-700 rounded-lg p-4 border border-gray-300 dark:border-slate-600">
                     {band.map((element, index) => (
                         <div key={index} className="flex flex-col">
-                            <div className="text-xs text-slate-400 text-center pb-1">{index}</div>
+                            <div className="text-xs text-gray-500 dark:text-slate-400 text-center pb-1">{index}</div>
                             <div
                                 className={`w-12 h-12 p-2 text-center font-medium transition-all duration-200 ${
                                     index === head 
                                         ? 'bg-green-600 border-2 border-green-400 text-white shadow-lg shadow-green-500/20' 
-                                        : 'bg-slate-600 border-2 border-slate-500 text-slate-200 hover:bg-slate-500'
+                                        : 'bg-gray-300 dark:bg-slate-600 border-2 border-gray-400 dark:border-slate-500 text-gray-800 dark:text-slate-200 hover:bg-gray-400 dark:hover:bg-slate-500'
                                 }`}
                             >
                                 {element !== "B" ? element : ""}
@@ -158,9 +158,9 @@ export default function TuringMachine() {
                     ))}
                 </div>
                 <div className="flex justify-center items-center mb-6 gap-3 w-full max-w-xs">
-                    <label className="text-slate-200 font-medium">Input:</label>
+                    <label className="text-gray-800 dark:text-slate-200 font-medium">Input:</label>
                     <input
-                        className="flex-1 bg-slate-600 border border-slate-500 rounded text-center text-slate-200 py-2 px-3 hover:bg-slate-500 focus:ring-1 focus:ring-slate-400 focus:border-slate-400 transition-colors duration-200"
+                        className="flex-1 bg-gray-200 dark:bg-slate-600 border border-gray-400 dark:border-slate-500 rounded text-center text-gray-800 dark:text-slate-200 py-2 px-3 hover:bg-gray-300 dark:hover:bg-slate-500 focus:ring-1 focus:ring-orange-400 dark:focus:ring-slate-400 focus:border-orange-400 dark:focus:border-slate-400 transition-colors duration-200"
                         placeholder="01-string"
                         value={input}
                         onInput={(e) => onInput((e.target as HTMLInputElement).value)}
@@ -192,8 +192,8 @@ export default function TuringMachine() {
                 </div>
             </div>
 
-            <div className="flex flex-col justify-center items-center p-6 bg-slate-800 rounded-lg border border-slate-600 gap-4 overflow-auto">
-                <div className="text-center text-slate-200 font-medium text-lg">Transition Table</div>
+            <div className="flex flex-col justify-center items-center p-6 bg-gray-100 dark:bg-slate-800 rounded-lg border border-gray-300 dark:border-slate-600 gap-4 overflow-auto">
+                <div className="text-center text-gray-800 dark:text-slate-200 font-medium text-lg">Transition Table</div>
                 <TransitionTable states={states} setStates={setStates} transitions={transitions} setTransitions={setTransitions} />
             </div>
         </div >
@@ -237,13 +237,13 @@ export function TransitionTable({
     }
 
     return (
-        <div className="bg-slate-800 rounded-lg p-4 border border-slate-600">
-            {/* Header Row */}
+        <div className="bg-gray-100 dark:bg-slate-800 rounded-lg p-4 border border-gray-300 dark:border-slate-600">
+            {/* Table header */}
             <div className="grid grid-cols-[60px_1fr_1fr_1fr] gap-2 mb-4 text-sm font-medium">
-                <div className="text-slate-400 text-center my-auto">State</div>
-                <div className="bg-slate-700 text-slate-200 text-center py-2 px-3 rounded border border-slate-600">0</div>
-                <div className="bg-slate-700 text-slate-200 text-center py-2 px-3 rounded border border-slate-600">1</div>
-                <div className="bg-slate-700 text-slate-200 text-center py-2 px-3 rounded border border-slate-600">B</div>
+                <div className="text-gray-600 dark:text-slate-400 text-center my-auto">State</div>
+                <div className="bg-gray-200 dark:bg-slate-700 text-gray-800 dark:text-slate-200 text-center py-2 px-3 rounded border border-gray-300 dark:border-slate-600">0</div>
+                <div className="bg-gray-200 dark:bg-slate-700 text-gray-800 dark:text-slate-200 text-center py-2 px-3 rounded border border-gray-300 dark:border-slate-600">1</div>
+                <div className="bg-gray-200 dark:bg-slate-700 text-gray-800 dark:text-slate-200 text-center py-2 px-3 rounded border border-gray-300 dark:border-slate-600">B</div>
             </div>
 
             {/* Transition Rows */}
@@ -252,12 +252,12 @@ export function TransitionTable({
                     <React.Fragment key={state}>
                         {/* State Button */}
                         <button
-                            className={`relative group bg-slate-700 hover:bg-slate-600 border border-slate-600 rounded py-2 px-3 text-sm transition-colors duration-200 ${Number(state) === 1 ? 'cursor-not-allowed' : ''}`}
+                            className={`relative group bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 dark:hover:bg-slate-600 border border-gray-300 dark:border-slate-600 rounded py-2 px-3 text-sm transition-colors duration-200 ${Number(state) === 1 ? 'cursor-not-allowed' : ''}`}
                             disabled={Number(state) === 1}
                             onClick={() => onRemoveState(Number(state))}
                         >
-                            <span className={`${Number(state) !== 1 ? "group-hover:hidden" : ""} text-slate-200`}>q{state}</span>
-                            <span className={`${Number(state) !== 1 ? "group-hover:inline-block" : ""} hidden text-slate-400`}>✖</span>
+                            <span className={`${Number(state) !== 1 ? "group-hover:hidden" : ""} text-gray-800 dark:text-slate-200`}>q{state}</span>
+                            <span className={`${Number(state) !== 1 ? "group-hover:inline-block" : ""} hidden text-gray-500 dark:text-slate-400`}>✖</span>
                         </button>
 
                         {/* Transition Cells */}
@@ -271,12 +271,12 @@ export function TransitionTable({
                                     key={letter}
                                     className={`rounded border p-1 space-y-1 transition-all duration-200 ${isHighlighted
                                             ? 'bg-green-700 border-green-500 shadow-lg shadow-green-500/20'
-                                            : 'bg-slate-700 border-slate-600'
+                                            : 'bg-gray-200 dark:bg-slate-700 border-gray-300 dark:border-slate-600'
                                         }`}
                                 >
                                     {/* State Select */}
                                     <select
-                                        className="w-full bg-slate-600 border border-slate-500 rounded text-center text-slate-200 text-xs py-1 hover:bg-slate-500 focus:ring-1 focus:ring-slate-400 focus:border-slate-400 transition-colors duration-200"
+                                        className="w-full bg-gray-300 dark:bg-slate-600 border border-gray-400 dark:border-slate-500 rounded text-center text-gray-800 dark:text-slate-200 text-xs py-1 hover:bg-gray-400 dark:hover:bg-slate-500 focus:ring-1 focus:ring-orange-400 dark:focus:ring-slate-400 focus:border-orange-400 dark:focus:border-slate-400 transition-colors duration-200"
                                         value={transition[letter].state}
                                         onChange={(e) => {
                                             setTransitions(prev => ({
@@ -291,12 +291,12 @@ export function TransitionTable({
                                             }));
                                         }}
                                     >
-                                        {states.map(stateOption => <option key={stateOption} value={stateOption} className="bg-slate-600 rounded-none">q{stateOption}</option>)}
+                                        {states.map(stateOption => <option key={stateOption} value={stateOption} className="bg-gray-300 dark:bg-slate-600 rounded-none">q{stateOption}</option>)}
                                     </select>
 
                                     {/* Alphabet Select */}
                                     <select
-                                        className="w-full bg-slate-600 border border-slate-500 rounded text-center text-slate-200 text-xs py-1 hover:bg-slate-500 focus:ring-1 focus:ring-slate-400 focus:border-slate-400 transition-colors duration-200"
+                                        className="w-full bg-gray-300 dark:bg-slate-600 border border-gray-400 dark:border-slate-500 rounded text-center text-gray-800 dark:text-slate-200 text-xs py-1 hover:bg-gray-400 dark:hover:bg-slate-500 focus:ring-1 focus:ring-orange-400 dark:focus:ring-slate-400 focus:border-orange-400 dark:focus:border-slate-400 transition-colors duration-200"
                                         value={transition[letter].alphabet}
                                         onChange={(e) => {
                                             setTransitions(prev => ({
@@ -311,14 +311,14 @@ export function TransitionTable({
                                             }));
                                         }}
                                     >
-                                        <option value="0" className="bg-slate-600 rounded-none">0</option>
-                                        <option value="1" className="bg-slate-600 rounded-none">1</option>
-                                        <option value="B" className="bg-slate-600 rounded-none">B</option>
+                                        <option value="0" className="bg-gray-300 dark:bg-slate-600 rounded-none">0</option>
+                                        <option value="1" className="bg-gray-300 dark:bg-slate-600 rounded-none">1</option>
+                                        <option value="B" className="bg-gray-300 dark:bg-slate-600 rounded-none">B</option>
                                     </select>
 
                                     {/* Direction Select */}
                                     <select
-                                        className="w-full bg-slate-600 border border-slate-500 rounded text-center text-slate-200 text-xs py-1 hover:bg-slate-500 focus:ring-1 focus:ring-slate-400 focus:border-slate-400 transition-colors duration-200"
+                                        className="w-full bg-gray-300 dark:bg-slate-600 border border-gray-400 dark:border-slate-500 rounded text-center text-gray-800 dark:text-slate-200 text-xs py-1 hover:bg-gray-400 dark:hover:bg-slate-500 focus:ring-1 focus:ring-orange-400 dark:focus:ring-slate-400 focus:border-orange-400 dark:focus:border-slate-400 transition-colors duration-200"
                                         value={transition[letter].direction}
                                         onChange={(e) => {
                                             setTransitions(prev => ({
@@ -333,9 +333,9 @@ export function TransitionTable({
                                             }));
                                         }}
                                     >
-                                        <option value="L" className="bg-slate-600 rounded-none">L</option>
-                                        <option value="N" className="bg-slate-600 rounded-none">N</option>
-                                        <option value="R" className="bg-slate-600 rounded-none">R</option>
+                                        <option value="L" className="bg-gray-300 dark:bg-slate-600 rounded-none">L</option>
+                                        <option value="N" className="bg-gray-300 dark:bg-slate-600 rounded-none">N</option>
+                                        <option value="R" className="bg-gray-300 dark:bg-slate-600 rounded-none">R</option>
                                     </select>
                                 </div>
                             );
@@ -348,7 +348,7 @@ export function TransitionTable({
             <div className="mt-4 flex justify-center">
                 <button
                     onClick={onAddState}
-                    className="bg-slate-700 hover:bg-slate-600 text-slate-200 border border-slate-600 py-2 px-4 rounded transition-colors duration-200 flex items-center gap-2"
+                    className="bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 dark:hover:bg-slate-600 text-gray-800 dark:text-slate-200 border border-gray-300 dark:border-slate-600 py-2 px-4 rounded transition-colors duration-200 flex items-center gap-2"
                 >
                     <span className="text-lg">+</span>
                     <span className="text-sm">Add State</span>

@@ -1,6 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import Image, { ImageProps } from "next/image";
-import { mono, heading } from "@/app/fonts";
+import { mono } from "@/app/fonts";
 import AnimatedBlockquote from "@/app/components/AnimatedBlockquote";
 
 // This file allows you to provide custom React components
@@ -35,8 +35,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         pre: ({ children }) => (
             <pre
                 className={`${mono.className} bg-[#f5f1eb] dark:bg-[#2e3440] rounded-md overflow-scroll border border-[#ebe1d2] dark:border-none`}>
-                <div className="bg-[#ebe1d2] dark:bg-gray-800 px-4 py-2 text-sm text-gray-600 dark:text-[#9198a1] sticky left-0 w-full border-b border-[#ddd3c4] dark:border-gray-600">TypeScript</div>
-                <div className="p-4 text-gray-800 dark:text-white">{children}</div>
+                <div className="bg-[#ebe1d2] dark:bg-gray-800 px-4 py-2 text-sm text-gray-700 dark:text-[#9198a1] sticky left-0 w-full border-b border-[#ddd3c4] dark:border-gray-600 font-medium">TypeScript</div>
+                <div className="p-4">{children}</div>
             </pre>
         ),
         p: ({ children }) => <p className="my-4 text-gray-700 dark:text-white">{children}</p>,

@@ -21,7 +21,7 @@ function GoedelTooltip({
             {children}
             {isVisible && (
                 <div
-                    className="fixed z-50 bg-slate-800 border border-slate-600 rounded-lg p-4 shadow-xl pointer-events-none"
+                    className="fixed z-50 bg-gray-100 dark:bg-slate-800 border border-gray-300 dark:border-slate-600 rounded-lg p-4 shadow-xl pointer-events-none"
                     style={{
                         left: position.x + 10,
                         top: position.y - 10,
@@ -93,16 +93,16 @@ export default function GoedelNumber() {
             isVisible: true,
             position: { x: event.clientX, y: event.clientY },
             content: (
-                <div className="text-sm text-slate-200 space-y-2">
-                    <div className="font-semibold text-slate-100 border-b border-slate-600 pb-1">
+                <div className="text-sm text-gray-800 dark:text-slate-200 space-y-2">
+                    <div className="font-semibold text-gray-900 dark:text-slate-100 border-b border-gray-300 dark:border-slate-600 pb-1">
                         Transition Rule
                     </div>
                     <div className="space-y-1">
-                        <div><span className="text-slate-400">From State:</span> {fromState}</div>
-                        <div><span className="text-slate-400">Reading:</span> {onSymbol}</div>
-                        <div><span className="text-slate-400">To State:</span> {toState}</div>
-                        <div><span className="text-slate-400">Write:</span> {writeSymbol}</div>
-                        <div><span className="text-slate-400">Move:</span> {direction}</div>
+                        <div><span className="text-gray-600 dark:text-slate-400">From State:</span> {fromState}</div>
+                        <div><span className="text-gray-600 dark:text-slate-400">Reading:</span> {onSymbol}</div>
+                        <div><span className="text-gray-600 dark:text-slate-400">To State:</span> {toState}</div>
+                        <div><span className="text-gray-600 dark:text-slate-400">Write:</span> {writeSymbol}</div>
+                        <div><span className="text-gray-600 dark:text-slate-400">Move:</span> {direction}</div>
                     </div>
                 </div>
             )
@@ -118,7 +118,7 @@ export default function GoedelNumber() {
         <div className="flex flex-col lg:flex-row overflow-auto justify-center items-center lg:items-stretch py-10 lg:px-6 rounded-lg shadow-lg gap-8">
             {/* Transition Table Section */}
             <div className="w-full lg:flex-1 p-6">
-                <h3 className="text-slate-300 text-center mb-4">Transition Table</h3>
+                <h3 className="text-gray-700 dark:text-slate-300 text-center mb-4">Transition Table</h3>
                 <TransitionTable
                     states={states}
                     transitions={transitions}
@@ -130,9 +130,9 @@ export default function GoedelNumber() {
 
             {/* Gödel Number Display */}
             <div className="w-full lg:flex-1 p-6">
-                <h3 className="text-slate-300 text-center mb-4">Generated Gödel Number</h3>
-                <div className="bg-slate-800 rounded-lg p-6 border border-slate-600 overflow-y-auto max-h-[500px]">
-                    <div className="text-slate-200 leading-relaxed text-lg font-mono [&>span]:text-slate-400 [&>span]:font-normal break-all">
+                <h3 className="text-gray-700 dark:text-slate-300 text-center mb-4">Generated Gödel Number</h3>
+                <div className="bg-gray-100 dark:bg-slate-800 rounded-lg p-6 border border-gray-300 dark:border-slate-600 overflow-y-auto max-h-[500px]">
+                    <div className="text-gray-800 dark:text-slate-200 leading-relaxed text-lg font-mono [&>span]:text-gray-500 [&>span]:dark:text-slate-400 [&>span]:font-normal break-all">
                         <span>111</span>
                         {goedelNumberWithMetadata.map(({ encodedString, metadata }, index) => (
                             <React.Fragment key={index}>
@@ -142,7 +142,7 @@ export default function GoedelNumber() {
                                     position={tooltip.position}
                                 >
                                     <span
-                                        className="text-slate-300 hover:text-green-600 hover:bg-slate-600 transition-all duration-200 cursor-help px-1 rounded-sm"
+                                        className="text-gray-700 dark:text-slate-300 hover:text-green-600 hover:bg-gray-200 dark:hover:bg-slate-600 transition-all duration-200 cursor-help px-1 rounded-sm"
                                         onMouseEnter={(e) => handleMouseEnter(metadata, e)}
                                         onMouseLeave={handleMouseLeave}
                                         onMouseMove={(e) => {
