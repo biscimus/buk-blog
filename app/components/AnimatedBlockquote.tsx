@@ -35,20 +35,28 @@ export default function AnimatedBlockquote({ children }: AnimatedBlockquoteProps
   return (
     <blockquote
       ref={ref}
-      className={`italic border-l-4 border-l-orange-500 dark:border-l-orange-400 px-6 py-0 my-6 *:my-2 
-        relative overflow-hidden
+      className={`
+        not-italic my-8 px-6 py-4 rounded-2xl
+        relative
         transform transition-all duration-700 ease-out
-        bg-[#f8f4ed] dark:bg-transparent
-        text-gray-700 dark:text-white
-        before:absolute before:left-0 before:top-0 before:h-full before:w-1 
-        before:bg-gradient-to-b before:from-orange-400 before:via-orange-500 before:to-orange-600
-        dark:before:from-orange-300 dark:before:via-orange-400 dark:before:to-orange-500
-        before:transform before:-translate-x-full before:transition-transform before:duration-700 before:ease-out
+        bg-gradient-to-br from-orange-50 to-orange-100/50 
+        dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-800/50
+        text-gray-800 dark:text-gray-200
+        border-2 border-orange-200 dark:border-orange-900/30
+        shadow-md shadow-orange-100/50 dark:shadow-orange-900/10
+        hover:shadow-lg hover:shadow-orange-200/60 dark:hover:shadow-orange-900/20
+        hover:scale-[1.01]
+        before:content-['"'] before:absolute before:text-5xl before:font-serif 
+        before:text-orange-500/40 dark:before:text-orange-400/30 
+        before:left-4 before:top-1 before:leading-none
+        after:content-['"'] after:absolute after:text-5xl after:font-serif 
+        after:text-orange-500/40 dark:after:text-orange-400/30 
+        after:right-4 after:bottom-1 after:leading-none
         ${isVisible 
           ? 'opacity-100 translate-y-0 animate-slideInFromBottom' 
           : 'opacity-0 translate-y-8'
         }`}>
-      <div className="relative z-10">
+      <div className="relative z-10 pl-6 pr-6 *:my-2">
         {children}
       </div>
     </blockquote>
