@@ -8,6 +8,7 @@ const config: Config = {
         "./markdown/**/*.{js,ts,jsx,tsx,mdx}",
         "./mdx-components.tsx"
     ],
+    darkMode: 'class',
     theme: {
         extend: {
             colors: {

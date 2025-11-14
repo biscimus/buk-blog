@@ -35,14 +35,15 @@ export default function AnimatedBlockquote({ children }: AnimatedBlockquoteProps
   return (
     <blockquote
       ref={ref}
-      className={`italic border-l-4 border-l-orange-400 px-6 py-0 my-6 *:my-2 
+      className={`italic border-l-4 border-l-orange-500 dark:border-l-orange-400 px-6 py-0 my-6 *:my-2 
         relative overflow-hidden
         transform transition-all duration-700 ease-out
-        hover:scale-[1.02] hover:shadow-lg hover:shadow-orange-400/20
+        bg-[#f8f4ed] dark:bg-transparent
+        text-gray-700 dark:text-white
         before:absolute before:left-0 before:top-0 before:h-full before:w-1 
-        before:bg-gradient-to-b before:from-orange-300 before:via-orange-400 before:to-orange-500
+        before:bg-gradient-to-b before:from-orange-400 before:via-orange-500 before:to-orange-600
+        dark:before:from-orange-300 dark:before:via-orange-400 dark:before:to-orange-500
         before:transform before:-translate-x-full before:transition-transform before:duration-700 before:ease-out
-        hover:before:translate-x-0
         ${isVisible 
           ? 'opacity-100 translate-y-0 animate-slideInFromBottom' 
           : 'opacity-0 translate-y-8'

@@ -4,6 +4,9 @@ import "../globals.css";
 import Link from "next/link";
 import Logo from "./components/Logo";
 import BackToTop from "./components/BackToTop";
+import { ThemeProvider } from "./components/ThemeProvider";
+import ThemeToggle from "./components/ThemeToggle";
+import ThemeWrapper from "./components/ThemeWrapper";
 
 export const metadata: Metadata = {
     title: "BuK Blog",
@@ -26,13 +29,20 @@ export default function RootLayout({
                     crossOrigin="anonymous"
                 />
             </head>
-            <body className={`mx-auto max-w-4xl py-12 px-12 ${serif.className} antialiased mb-32`}>
-                <header className="flex justify-between mb-16 items-center">
-                    <Logo />
-                    <Link href="https://geonho.com">Geonho Yun</Link>
-                </header>
-                {children}
-                <BackToTop />
+            <body className={`${serif.className} antialiased bg-[#fcf8f0] dark:bg-black transition-colors duration-300`}>
+                <ThemeProvider>
+                    <ThemeWrapper>
+                        <ThemeToggle />
+                        <header className="flex justify-between mb-16 items-center">
+                            <Logo />
+                            <Link href="https://geonho.com">
+                                Geonho Yun
+                            </Link>
+                        </header>
+                        {children}
+                        <BackToTop />
+                    </ThemeWrapper>
+                </ThemeProvider>
             </body>
         </html>
     );

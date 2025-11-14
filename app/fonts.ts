@@ -1,5 +1,6 @@
-import { IBM_Plex_Mono, IBM_Plex_Serif, IBM_Plex_Sans_KR } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Serif, IBM_Plex_Sans_KR, Playfair_Display } from "next/font/google";
 
 export const mono = IBM_Plex_Mono({ weight: "500", subsets: ["latin"], display: "swap" });
 export const serif = IBM_Plex_Serif({ weight: "300", subsets: ["latin", "cyrillic"], display: "swap" });
 export const korean = IBM_Plex_Sans_KR({ weight: "400", subsets: ["latin"], display: "swap" });
+export const title = Playfair_Display({ weight: ["400", "700"], subsets: ["latin"], display: "swap" });
