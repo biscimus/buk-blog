@@ -28,12 +28,12 @@ export default function BackToTop() {
 
   return (
     <button
-      className={`fixed bottom-8 right-8 p-3 rounded-full 
-        bg-[#fcf8f0] dark:bg-slate-800 
-        text-gray-700 dark:text-white 
+      className={`fixed bottom-8 right-6 p-3 rounded-2xl
+        bg-white/10 dark:bg-gray-800/90
+        backdrop-blur-xs hover:backdrop-blur-sm
+        text-gray-700 dark:text-white
         shadow-lg hover:shadow-xl
-        hover:bg-[#f8f4ed] dark:hover:bg-slate-700 
-        border border-[#ebe1d2] dark:border-gray-600
+        border border-gray-200/50 dark:border-gray-700/50
         transition-all duration-300 z-40 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'
       }`}

@@ -34,8 +34,8 @@ export default function ThemeToggle() {
       className={`
         fixed top-6 right-6 z-50
         w-12 h-12 rounded-2xl
-        bg-white/90 dark:bg-gray-800/90
-        backdrop-blur-sm
+        bg-white/10 dark:bg-gray-800/90
+        backdrop-blur-xs hover:backdrop-blur-sm
         border border-gray-200/50 dark:border-gray-700/50
         shadow-lg hover:shadow-xl
         transform transition-all duration-300 ease-out
