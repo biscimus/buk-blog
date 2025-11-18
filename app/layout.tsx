@@ -29,7 +29,7 @@ export default function RootLayout({
                     crossOrigin="anonymous"
                 />
             </head>
-            <body className={`${serif.className} antialiased bg-[#fcf8f0] dark:bg-black transition-colors duration-300`}>
+            <body className={`${serif.className} antialiased bg-[#f0ead6d3] dark:bg-black transition-colors duration-300`}>
                 <ThemeProvider>
                     <ThemeWrapper>
                         <ThemeToggle />
