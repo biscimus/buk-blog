@@ -15,7 +15,7 @@
     "@types/mdx": "^2.0.13",
     "function-plot": "^1.25.1",
     "nerdamer": "^1.1.13",
-    "next": "16.0.1",
+    "next": "16.0.10",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "rehype-katex": "^7.0.1",
