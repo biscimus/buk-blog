@@ -21,7 +21,7 @@ function GoedelTooltip({
             {children}
             {isVisible && (
                 <div
-                    className="fixed z-50 bg-gray-100 dark:bg-slate-800 border border-gray-300 dark:border-slate-600 rounded-lg p-4 shadow-xl pointer-events-none"
+                    className="fixed z-50 dark:bg-slate-800 border border-gray-300 dark:border-slate-600 rounded-lg p-4 shadow-xl pointer-events-none"
                     style={{
                         left: position.x + 10,
                         top: position.y - 10,
@@ -131,7 +131,7 @@ export default function GoedelNumber() {
             {/* Gödel Number Display */}
             <div className="w-full lg:flex-1 p-6">
                 <h3 className="text-gray-700 dark:text-slate-300 text-center mb-4">Generated Gödel Number</h3>
-                <div className="bg-gray-100 dark:bg-slate-800 rounded-lg p-6 border border-gray-300 dark:border-slate-600 overflow-y-auto max-h-[500px]">
+                <div className="dark:bg-slate-800 rounded-lg p-6 border border-gray-300 dark:border-slate-600 overflow-y-auto max-h-[500px]">
                     <div className="text-gray-800 dark:text-slate-200 leading-relaxed text-lg font-mono [&>span]:text-gray-500 [&>span]:dark:text-slate-400 [&>span]:font-normal break-all">
                         <span>111</span>
                         {goedelNumberWithMetadata.map(({ encodedString, metadata }, index) => (

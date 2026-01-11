@@ -35,7 +35,7 @@ export default function ThemeToggle() {
         fixed top-6 right-6 z-50
         w-12 h-12 rounded-2xl
         bg-white/10 dark:bg-gray-800/90
-        backdrop-blur-xs hover:backdrop-blur-sm
+        backdrop-blur-xs
         border border-gray-200/50 dark:border-gray-700/50
         shadow-lg hover:shadow-xl
         transform transition-all duration-300 ease-out

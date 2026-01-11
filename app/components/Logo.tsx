@@ -6,7 +6,7 @@ import { mono } from "@/app/fonts";
 export default function Logo() {
 
     return (
-        <Link href="/" className={`text-3xl font-bold ${mono.className} group flex`}>
+        <Link href="/" className={`text-3xl font-bold ${mono.className} group flex items-end`}>
             <span className="animate-bounceSlow group-hover:animate-none">b</span>
             <span className="animate-slideOut group-hover:animate-slideIn overflow-clip">uk</span>
             <span>_</span>

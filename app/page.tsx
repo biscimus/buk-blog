@@ -26,15 +26,14 @@ async function getPosts() {
 function Post({ post }: { post: Metadata }) {
     return (
         <Link prefetch={true} href={post.link}>
-            <article className="flex flex-col gap-4 
-                border-2 border-[#d4c5af] dark:border-gray-700 
-                rounded-md p-6 
-                transition-all duration-300 
-                hover:shadow-lg hover:shadow-orange-300/20 dark:hover:shadow-orange-500/20
-                hover:scale-[1.02] 
-                hover:border-orange-400/80 dark:hover:border-orange-400/60">
+            <article className="
+                flex flex-col gap-4 rounded-md p-6
+                border border-zinc-400 dark:border-gray-700 
+                transition-all duration-600 ease-in
+                shadow-lg hover:shadow-xl dark:hover:shadow-orange-500/20
+                hover:scale-[1.03] dark:hover:border-orange-400/60">
                 <h2 className="text-2xl font-bold text-gray-800 dark:text-white">{post.order}. {post.title}</h2>
-                <p className="text-gray-600 dark:text-gray-300">{post.description}</p>
+                <p className="text-zinc-700 dark:text-gray-300">{post.description}</p>
             </article>
         </Link>
     );

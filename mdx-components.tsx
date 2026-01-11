@@ -16,7 +16,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         h3: ({ children }) => <h3 className="text-2xl mt-16 text-gray-700 dark:text-white">{children}</h3>,
         // h6 for definitions
         h6: ({ children }) => (
-            <h6 className="bg-[#f5f1eb] dark:bg-[#2e3440] rounded-md p-6 my-4 border border-[#ebe1d2] dark:border-none">
+            <h6 className="dark:bg-[#2e3440] rounded-md p-6 my-4 border-2 border-[#ebe1d2] dark:border-none">
                 {children}
             </h6>
         ),
@@ -34,7 +34,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         ),
         pre: ({ children }) => (
             <pre
-                className={`${mono.className} bg-[#f5f1eb] dark:bg-[#2e3440] rounded-md overflow-scroll border border-[#ebe1d2] dark:border-none`}>
+                className={`${mono.className} dark:bg-[#2e3440] rounded-md overflow-scroll border border-[#ebe1d2] dark:border-none`}>
                 <div className="bg-[#ebe1d2] dark:bg-gray-800 px-4 py-2 text-sm text-gray-700 dark:text-[#9198a1] sticky left-0 w-full border-b border-[#ddd3c4] dark:border-gray-600 font-medium">TypeScript</div>
                 <div className="p-4">{children}</div>
             </pre>
