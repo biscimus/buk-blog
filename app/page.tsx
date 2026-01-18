@@ -28,11 +28,11 @@ function Post({ post }: { post: Metadata }) {
         <Link prefetch={true} href={post.link}>
             <article className="
                 flex flex-col gap-4 rounded-md p-6
-                border border-zinc-400 dark:border-gray-700 
+                border border-[#A69B8A] dark:border-orange-300/40 
                 transition-all duration-600 ease-in
-                shadow-lg hover:shadow-xl dark:hover:shadow-orange-500/20
-                hover:scale-[1.03] dark:hover:border-orange-400/60">
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">{post.order}. {post.title}</h2>
+                shadow-lg dark:hover:shadow-orange-500/20
+                hover:scale-[1.03] dark:hover:border-orange-300/70">
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-neutral-300">{post.order}. {post.title}</h2>
                 <p className="text-zinc-700 dark:text-gray-300">{post.description}</p>
             </article>
         </Link>

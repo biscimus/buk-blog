@@ -20,8 +20,8 @@ export default function AnimatedBlockquote({ children }: AnimatedBlockquoteProps
         }
       },
       {
-        threshold: 0.1, // Trigger when 10% of the element is visible
-        rootMargin: '50px 0px -50px 0px' // Start animation a bit before it's fully visible
+        threshold: 0.9, // Trigger when 10% of the element is visible
+        rootMargin: '80px 0px -80px 0px' // Start animation a bit before it's fully visible
       }
     );
 
@@ -38,14 +38,13 @@ export default function AnimatedBlockquote({ children }: AnimatedBlockquoteProps
     <blockquote
       ref={ref}
       className={`
-        relative flex justify-center
-        px-2 my-6
+        relative flex justify-center my-6
         transform transition-all duration-700 ease-out
         ${isVisible 
           ? 'opacity-100 translate-y-0 animate-slideInFromBottom' 
           : 'opacity-0 translate-y-8'
         }`}>
-      <span className={`self-top ${quotationMarkStyle}`}>『</span>
+      <span className={`self-top mr-2 ${quotationMarkStyle}`}>『</span>
         {children}
       <span className={`self-end ${quotationMarkStyle}`}>』</span>
     </blockquote>

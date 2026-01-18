@@ -3,7 +3,6 @@
 import { useTheme } from './ThemeProvider';
 import { useState } from 'react';
 
-// Sun Icon Component
 const SunIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="5"/>
@@ -11,7 +10,6 @@ const SunIcon = () => (
   </svg>
 );
 
-// Moon Icon Component
 const MoonIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
@@ -34,12 +32,11 @@ export default function ThemeToggle() {
       className={`
         fixed top-6 right-6 z-50
         w-12 h-12 rounded-2xl
-        bg-white/10 dark:bg-gray-800/90
         backdrop-blur-xs
         border border-gray-200/50 dark:border-gray-700/50
-        shadow-lg hover:shadow-xl
+        dark:shadow-gray-700/30 shadow-lg hover:shadow-xl
         transform transition-all duration-300 ease-out
-        hover:scale-105 active:scale-95
+        hover:scale-105
         flex items-center justify-center
         text-gray-700 dark:text-gray-300
         hover:text-orange-500 dark:hover:text-orange-400

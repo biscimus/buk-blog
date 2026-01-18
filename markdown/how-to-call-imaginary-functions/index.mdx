@@ -108,9 +108,80 @@ Analogously, if `func` and `input` are a negative instance of the halting proble
 
 As a side note: The $$\varepsilon$$-halting problem is semi-decidable. The implementation is identical to the halting problem's semi-decider. Try to imagine what the semi-decider looks like.
 
-### 3. Further Examples
+### 3. Gödel Numbers
 
-All examples below leverage the halting problem to prove its undecidibility.
+Although the logical structure stays identical, the real examples, notationwise, work a bit differently. The notation I used cannot acurrately map all cases of the _Unterprogrammtechnik_, since it is an abstraction of how it's actually done <span className="group relative">[1]<span className="invisible group-hover:visible absolute bottom-full left-1/2 mb-2 z-[1] bg-black border-[1px] p-4 w-[360px] rounded-md">I _could_ acurrately map all cases using the TypeScript notation since it is a [Turing-complete language](https://en.wikipedia.org/wiki/Turing_completeness), but I could not do it in the ways I introduced without making it complicated, which destroys my purpose of introducing it in the first place.</span></span>. In actual Turing reductions, you would work with Turing machines and their corresponding [**Gödel numbers**](https://en.wikipedia.org/wiki/G%C3%B6del_numbering). I won't explain the encodings in great detail here, but you can try out the Gödel number converter below. We assume $$q_1$$ to be the start state and $$q_2$$ to be the end state.
+
+<GoedelNumber />
+
+Looking back at the definition of the halting problem, the same problem applied for Turing machines would be something like the following:
+
+###### **$$H$$:** _Given a Turing machine $$M$$ and an input $$w$$, does $$M$$ halt on $$w$$?_
+
+> A decider of this problem would be a Turing machine... taking a Turing machine as input... which again taking some input. My head hurts.
+
+Nicely put! But remember, our definition of Turing machines can only take inputs over the input alphabet $$\Sigma$$, which is the binary alphabet $$\{0, 1\}$$ in our case. This could be a problem, since Turing machines are a mathematical tuple, not a 0-1-string. Gödel numbers are just a way of encoding Turing machines into a binary string format. The halting problem therefore formally looks like this:
+
+###### **$$H$$:** _Given an encoding of a Turing machine $$\langle M \rangle$$ and an input $$w$$, does $$M$$ halt on $$w$$?_
+
+### 4. Putting It All Together
+
+> I think I got a slight grasp of what you're trying to say. But how does this help me pass my computability test?
+
+We just need to translate our previous examples into the notation used in the lectures. Let's look at the $$\varepsilon$$-halting problem again:
+
+###### **$$H_{\varepsilon}$$:** Given a Turing machine $$M$$'s encoding $$\langle M \rangle$$, does $$M$$ halt on empty input?
+
+The lectures use a set notation to define languages, so what you would usually see is something like this:
+
+###### $$H_{\varepsilon} = \{ \langle M \rangle \mid M \text{ halts on } \varepsilon \}$$.
+
+The steps we took to prove the indecidibility of the $$\varepsilon$$-halting problem can be summarized as follows:
+
+Introduction
+
+Assume $$H_{\varepsilon}$$ is decidable. Then, there must be a Turing machine $$M_{\varepsilon}$$ deciding $$H_{\varepsilon}$$.
+
+```ts
+/**
+ * @input A program.
+ * @returns true if the program halts on empty input, otherwise false
+ */
+declare function isWordInEpsilonHaltingProblem(func): boolean;
+```
+
+Using $$M_{\varepsilon}$$, we construct a Turing machine $$M_{H}$$ deciding the halting problem $$H$$.
+
+Given an encoded input $$w'$$, we check whether $$w'$$ matches the syntax of $$\langle M \rangle w$$ for some Turing machine $$M$$ and input $$w$$. If not, we reject the input. This step is needed since we're dealing with mere binary strings here.
+
+Given a valid input $$\langle M \rangle w$$, we construct the Gödel number of a new Turing machine $$M_1$$, which acts as follows:
+
+- On empty input, $$M_1$$ simulates $$M$$ on input $$w$$.
+- On any other input, $$M_1$$ goes into an infinite loop.
+
+We then feed $$\langle M_1 \rangle$$ into $$M_{\varepsilon}$$. If $$M_{\varepsilon}$$ accepts, we accept; otherwise, we reject.
+
+```ts
+function isWordInHaltingProblem(func, input: string): boolean {
+    function func1(input1: string) {
+        if (!input1) return func(input);
+        else while (true);
+    }
+    return isWordInEpsilonHaltingProblem(func1);
+}
+```
+
+We prove the correctness of our newly built $$M_{H}$$. Invalid encodings are rejected right away. For valid encodings $$\langle M \rangle w$$, we must show that $$M_H$$ halts on every input and $$M \text{ halts on } w \Leftrightarrow M_H \text{ accepts } \langle M \rangle w$$.
+
+$$(\Rightarrow)$$: Let $$M$$ halt on $$w$$. Then, $$M_1$$ halts on empty input, meaning $$\langle M_1 \rangle$$ is a positive instance of $$H_{\varepsilon}$$. As a result, $$M_{\varepsilon}$$ accepts $$\langle M_1 \rangle$$, meaning $$M_H$$ accepts $$\langle M \rangle w$$.
+
+$$(\Leftarrow)$$: Let $$M$$ not halt on $$w$$. Then, $$M_1$$ does not halt on empty input, meaning $$\langle M_1 \rangle$$ is a negative instance of $$H_{\varepsilon}$$. As a result, $$M_{\varepsilon}$$ rejects $$\langle M_1 \rangle$$, meaning $$M_H$$ rejects $$\langle M \rangle w$$.
+
+This shows that $$M_H$$ is a decider for the halting problem $$H$$. This contradicts the fact that $$H$$ is indecidable. Thus, our initial assumption that $$H_{\varepsilon}$$ is decidable must be wrong. $$H_{\varepsilon}$$ is indecidable. $$\square$$
+
+### 5. Further Examples
+
+All examples below leverage the halting problem to prove its undecidibility. Try to understand how each example works and how to construct similar proofs on your own.
 
 ###### **$$H_{never}$$:** _Given a program as input, does the program halt on no input at all?_
 
@@ -228,74 +299,3 @@ function isWordInHaltingProblem(func, input: string): boolean {
     return isWordInSpecialHaltingProblem(func1);
 }
 ```
-
-### 4. Gödel Numbers
-
-Although the logical structure stays identical, the real examples, notationwise, work a bit differently. The notation I used cannot acurrately map all cases of the _Unterprogrammtechnik_, since it is an abstraction of how it's actually done <span className="group relative">[1]<span className="invisible group-hover:visible absolute bottom-full left-1/2 mb-2 z-[1] bg-black border-[1px] p-4 w-[360px] rounded-md">I _could_ acurrately map all cases using the TypeScript notation since it is a [Turing-complete language](https://en.wikipedia.org/wiki/Turing_completeness), but I could not do it in the ways I introduced without making it complicated, which destroys my purpose of introducing it in the first place.</span></span>. In actual Turing reductions, you would work with Turing machines and their corresponding [**Gödel numbers**](https://en.wikipedia.org/wiki/G%C3%B6del_numbering). I won't explain the encodings in great detail here, but you can try out the Gödel number converter below. We assume $$q_1$$ to be the start state and $$q_2$$ to be the end state.
-
-<GoedelNumber />
-
-Looking back at the definition of the halting problem, the same problem applied for Turing machines would be something like the following:
-
-###### **$$H$$:** _Given a Turing machine $$M$$ and an input $$w$$, does $$M$$ halt on $$w$$?_
-
-> A decider of this problem would be a Turing machine... taking a Turing machine as input... which again taking some input. My head hurts.
-
-Nicely put! But remember, our definition of Turing machines can only take inputs over the input alphabet $$\Sigma$$, which is the binary alphabet $$\{0, 1\}$$ in our case. This could be a problem, since Turing machines are a mathematical tuple, not a 0-1-string. Gödel numbers are just a way of encoding Turing machines into a binary string format. The halting problem therefore formally looks like this:
-
-###### **$$H$$:** _Given an encoding of a Turing machine $$\langle M \rangle$$ and an input $$w$$, does $$M$$ halt on $$w$$?_
-
-### 5. Putting It All Together
-
-> I think I got a slight grasp of what you're trying to say. But how does this help me pass my computability test?
-
-We just need to translate our previous examples into the notation used in the lectures. Let's look at the $$\varepsilon$$-halting problem again:
-
-###### **$$H_{\varepsilon}$$:** Given a Turing machine $$M$$'s encoding $$\langle M \rangle$$, does $$M$$ halt on empty input?
-
-The lectures use a set notation to define languages, so what you would usually see is something like this:
-
-###### $$H_{\varepsilon} = \{ \langle M \rangle \mid M \text{ halts on } \varepsilon \}$$.
-
-The steps we took to prove the indecidibility of the $$\varepsilon$$-halting problem can be summarized as follows:
-
-Introduction
-
-Assume $$H_{\varepsilon}$$ is decidable. Then, there must be a Turing machine $$M_{\varepsilon}$$ deciding $$H_{\varepsilon}$$.
-
-```ts
-/**
- * @input A program.
- * @returns true if the program halts on empty input, otherwise false
- */
-declare function isWordInEpsilonHaltingProblem(func): boolean;
-```
-
-Using $$M_{\varepsilon}$$, we construct a Turing machine $$M_{H}$$ deciding the halting problem $$H$$.
-
-Given an encoded input $$w'$$, we check whether $$w'$$ matches the syntax of $$\langle M \rangle w$$ for some Turing machine $$M$$ and input $$w$$. If not, we reject the input. This step is needed since we're dealing with mere binary strings here.
-
-Given a valid input $$\langle M \rangle w$$, we construct the Gödel number of a new Turing machine $$M_1$$, which acts as follows:
-
-- On empty input, $$M_1$$ simulates $$M$$ on input $$w$$.
-- On any other input, $$M_1$$ goes into an infinite loop.
-
-We then feed $$\langle M_1 \rangle$$ into $$M_{\varepsilon}$$. If $$M_{\varepsilon}$$ accepts, we accept; otherwise, we reject.
-
-```ts
-function isWordInHaltingProblem(func, input: string): boolean {
-    function func1(input1: string) {
-        if (!input1) return func(input);
-        else while (true);
-    }
-    return isWordInEpsilonHaltingProblem(func1);
-}
-```
-
-We prove the correctness of our newly built $$M_{H}$$. Invalid encodings are rejected right away. For valid encodings $$\langle M \rangle w$$, we must show that $$M_H$$ halts on every input and $$M \text{ halts on } w \Leftrightarrow M_H \text{ accepts } \langle M \rangle w$$.
-
-$$(\Rightarrow)$$: Let $$M$$ halt on $$w$$. Then, $$M_1$$ halts on empty input, meaning $$\langle M_1 \rangle$$ is a positive instance of $$H_{\varepsilon}$$. As a result, $$M_{\varepsilon}$$ accepts $$\langle M_1 \rangle$$, meaning $$M_H$$ accepts $$\langle M \rangle w$$.
-
-$$(\Leftarrow)$$: Let $$M$$ not halt on $$w$$. Then, $$M_1$$ does not halt on empty input, meaning $$\langle M_1 \rangle$$ is a negative instance of $$H_{\varepsilon}$$. As a result, $$M_{\varepsilon}$$ rejects $$\langle M_1 \rangle$$, meaning $$M_H$$ rejects $$\langle M \rangle w$$.
-
-This shows that $$M_H$$ is a decider for the halting problem $$H$$. This contradicts the fact that $$H$$ is indecidable. Thus, our initial assumption that $$H_{\varepsilon}$$ is decidable must be wrong. $$H_{\varepsilon}$$ is indecidable. $$\square$$
