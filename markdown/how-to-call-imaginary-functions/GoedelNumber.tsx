@@ -21,7 +21,7 @@ function GoedelTooltip({
             {children}
             {isVisible && (
                 <div
-                    className="fixed z-50 dark:bg-slate-800 border border-gray-300 dark:border-slate-600 rounded-lg p-4 shadow-xl pointer-events-none"
+                    className="fixed z-50 bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 rounded-lg p-4 shadow-xl pointer-events-none"
                     style={{
                         left: position.x + 10,
                         top: position.y - 10,

@@ -33,7 +33,7 @@ function isWordInEnglishLanguage(word: string): boolean {
 
 Right. Genereally speaking, if there is a program $$M$$ able to give a yes-or-no answer whether the word is in a certain language $$L$$ or not for every word over the alphabet, we say the program $$M$$ **decides** $$L$$ or $$M$$ is a **decider** of $$L$$. Furthermore, we say that the language $$L$$ is **decidable**. In the computer science context, we typically work with the binary alphabet $$\{0, 1\}$$.
 
-The algorithm above actually works for all languages as long as the language is finite. We can simply iterate over our dictionary and check for its membership given an input. It can therefore be said that _all finite languages are decidable._
+The algorithm above actually works for all languages as long as the language is finite. We can simply iterate over our dictionary and check for its membership given an input. It can therefore be said that ___all finite languages are decidable.___
 
 There are lot of infinite languages which are decidable as well. An example would be a language of words ending with a symbol 1 over a binary alphabet:
 
@@ -41,7 +41,7 @@ There are lot of infinite languages which are decidable as well. An example woul
 const endsWithOne: boolean = (word: string) => word.endsWith("1");
 ```
 
-On the other hand, a classic example of an undecidable language is the **Halting Problem**:
+On the other hand, a classic example of an undecidable language is the **Halting Problem**.
 
 ###### **$$H$$:** _Given a program and an input, does the program terminate on the input?_
 
@@ -64,9 +64,11 @@ This is where the proof of contradiction comes in. Our argument works as the fol
 
 ### 2. The $$\varepsilon$$-Halting Problem
 
-Let's try our method on another well-known indecidable problem known as the **$$\bm{\varepsilon}$$-halting problem**: _Given a program, does the program terminate on empty input?_
+Let's try our method on another well-known indecidable problem known as the **$$\bm{\varepsilon}$$-Halting Problem**.
 
-> Alright, so suppose our $$\varepsilon$$-halting problem is decidable. Then there must be a program deciding the $$\varepsilon$$-halting problem:
+###### **$$H_{\varepsilon}$$:** Given a program, does the program terminate on an empty input?
+
+> Alright, so suppose our $$\varepsilon$$-halting problem is decidable. Then there must be a program deciding the $$\varepsilon$$-Halting Problem:
 
 ```ts
 /**
@@ -80,7 +82,7 @@ And now, we need to build a program deciding an undecidable problem: Let's take 
 
 ```ts
 function isWordInHaltingProblem(func, input: string): boolean {
-    // Use inWordInEpsilonHaltingProblem somehow?
+    // Uses inWordInEpsilonHaltingProblem somehow
 }
 ```
 
@@ -96,7 +98,7 @@ function isWordInHaltingProblem(func, input: string): boolean {
 }
 ```
 
-Now, we just need to check whether our `isWordInHaltingProblem` actually decides the halting problem: If fed a positive instance, our program has to return `true`; if fed a negative instance, our program has to return `false`. Our program cannot be stuck in an infinite loop on any input. This part is called **proving algorithm correctness (_Korrektheitsbeweis_)**.
+Now, we just need to check whether our `isWordInHaltingProblem` actually decides the halting problem: If fed with a positive instance, our program has to return `true`. If fed with a negative instance, our program has to return `false`. Our program cannot be stuck in an infinite loop on any input. This part is called **proving algorithm correctness (Korrektheitsbeweis)**.
 
 If `func` and `input` are a positive instance of the halting problem, this would mean the function call `func(input)` will terminate eventually. As a result, `func1` will terminate on empty input. `func1` is therefore a positive instance of the $$\varepsilon$$-halting problem and `isWordInEpsilonHaltingProblem(func1)` should return `true`, meaning `isWordInHaltingProblem(func, input)` returns `true` as well!
 
@@ -242,3 +244,58 @@ Looking back at the definition of the halting problem, the same problem applied 
 Nicely put! But remember, our definition of Turing machines can only take inputs over the input alphabet $$\Sigma$$, which is the binary alphabet $$\{0, 1\}$$ in our case. This could be a problem, since Turing machines are a mathematical tuple, not a 0-1-string. Gödel numbers are just a way of encoding Turing machines into a binary string format. The halting problem therefore formally looks like this:
 
 ###### **$$H$$:** _Given an encoding of a Turing machine $$\langle M \rangle$$ and an input $$w$$, does $$M$$ halt on $$w$$?_
+
+### 5. Putting It All Together
+
+> I think I got a slight grasp of what you're trying to say. But how does this help me in passing my computability test?
+
+We just need to translate our previous examples into the notation used in the lectures. Let's look at the $$\varepsilon$$-halting problem again:
+
+###### **$$H_{\varepsilon}$$:** Given a Turing machine $$M$$'s encoding $$\langle M \rangle$$, does $$M$$ halt on empty input?
+
+The lectures use a set notation to define languages, so what you would usually see is something like this:
+
+###### $$H_{\varepsilon} = \{ \langle M \rangle \mid M \text{ halts on } \varepsilon \}$$.
+
+The steps we took to prove the indecidibility of the $$\varepsilon$$-halting problem can be summarized as follows:
+
+Introduction
+
+Assume $$H_{\varepsilon}$$ is decidable. Then, there must be a Turing machine $$M_{\varepsilon}$$ deciding $$H_{\varepsilon}$$.
+
+```ts
+/**
+ * @input A program.
+ * @returns true if the program halts on empty input, otherwise false
+ */
+declare function isWordInEpsilonHaltingProblem(func): boolean;
+```
+
+Using $$M_{\varepsilon}$$, we construct a Turing machine $$M_{H}$$ deciding the halting problem $$H$$.
+
+Given an encoded input $$w'$$, we check whether $$w'$$ matches the syntax of $$\langle M \rangle w$$ for some Turing machine $$M$$ and input $$w$$. If not, we reject the input. This step is needed since we're dealing with mere binary strings here.
+
+Given a valid input $$\langle M \rangle w$$, we construct the Gödel number of a new Turing machine $$M_1$$, which acts as follows:
+
+- On empty input, $$M_1$$ simulates $$M$$ on input $$w$$.
+- On any other input, $$M_1$$ goes into an infinite loop.
+
+We then feed $$\langle M_1 \rangle$$ into $$M_{\varepsilon}$$. If $$M_{\varepsilon}$$ accepts, we accept; otherwise, we reject.
+
+```ts
+function isWordInHaltingProblem(func, input: string): boolean {
+    function func1(input1: string) {
+        if (!input1) return func(input);
+        else while (true);
+    }
+    return isWordInEpsilonHaltingProblem(func1);
+}
+```
+
+We prove the correctness of our newly built $$M_{H}$$. Invalid encodings are rejected right away. For valid encodings $$\langle M \rangle w$$, we must show that $$M_H$$ halts on every input and $$M \text{ halts on } w \Leftrightarrow M_H \text{ accepts } \langle M \rangle w$$.
+
+$$(\Rightarrow)$$: Let $$M$$ halt on $$w$$. Then, $$M_1$$ halts on empty input, meaning $$\langle M_1 \rangle$$ is a positive instance of $$H_{\varepsilon}$$. As a result, $$M_{\varepsilon}$$ accepts $$\langle M_1 \rangle$$, meaning $$M_H$$ accepts $$\langle M \rangle w$$.
+
+$$(\Leftarrow)$$: Let $$M$$ not halt on $$w$$. Then, $$M_1$$ does not halt on empty input, meaning $$\langle M_1 \rangle$$ is a negative instance of $$H_{\varepsilon}$$. As a result, $$M_{\varepsilon}$$ rejects $$\langle M_1 \rangle$$, meaning $$M_H$$ rejects $$\langle M \rangle w$$.
+
+This shows that $$M_H$$ is a decider for the halting problem $$H$$. This contradicts the fact that $$H$$ is indecidable. Thus, our initial assumption that $$H_{\varepsilon}$$ is decidable must be wrong. $$H_{\varepsilon}$$ is indecidable. $$\square$$
