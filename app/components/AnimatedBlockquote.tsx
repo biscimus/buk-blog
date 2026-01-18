@@ -39,7 +39,7 @@ export default function AnimatedBlockquote({ children }: AnimatedBlockquoteProps
       ref={ref}
       className={`
         relative flex justify-center
-        px-4 my-6
+        px-2 my-6
         transform transition-all duration-700 ease-out
         ${isVisible 
           ? 'opacity-100 translate-y-0 animate-slideInFromBottom' 
