@@ -16,9 +16,13 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         h3: ({ children }) => <h3 className="text-2xl mt-16 text-gray-700 dark:text-white">{children}</h3>,
         // h6 for definitions
         h6: ({ children }) => (
-            <h6 className="dark:bg-[#2e3440] rounded-md p-6 my-4 border-2 border-[#ebe1d2] dark:border-none">
-                {children}
-            </h6>
+            <div className="my-4 rounded-md border-2 border-[#ebe1d2] dark:border-orange-300/40 overflow-hidden">
+                <div className="bg-[#A69B8A]/30 dark:bg-transparent px-4 py-2 text-gray-800 dark:text-orange-300 sticky left-0 border-b border-[#ddd3c4] dark:border-orange-300/40 font-bold">Definition</div>
+                <h6 className="px-6 py-6">
+                    {children}
+                </h6>
+            </div>
+            
         ),
         img: (props) => (
             <Image
@@ -34,15 +38,15 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         ),
         pre: ({ children }) => (
             <pre
-                className={`${mono.className} dark:bg-[#2e3440] rounded-md overflow-scroll border border-[#ebe1d2] dark:border-none`}>
-                <div className="bg-[#ebe1d2] dark:bg-gray-800 px-4 py-2 text-sm text-gray-700 dark:text-[#9198a1] sticky left-0 w-full border-b border-[#ddd3c4] dark:border-gray-600 font-medium">TypeScript</div>
+                className={`${mono.className} rounded-md overflow-x-auto overflow-y-visible dark:border-2 border-transparent dark:border-orange-300/40 shadow-lg z-50`}>
+                <div className="bg-[#A69B8A]/30 dark:bg-transparent px-4 py-2 text-sm text-gray-700 dark:text-orange-300 sticky left-0 w-full border-b border-[#ddd3c4] dark:border-orange-300/40">TypeScript</div>
                 <div className="p-4">{children}</div>
             </pre>
         ),
         p: ({ children }) => <p className="my-4 text-gray-700 dark:text-white">{children}</p>,
         ul: ({ children }) => <ul className="list-disc [&>li]:py-2 text-gray-700 dark:text-white"> {children}</ul >,
         ol: ({ children }) => <ol className="list-decimal m-4 text-gray-700 dark:text-white">{children}</ol>,
-        a: ({ href, children }) => <a href={href} target="_blank" className="underline decoration-dashed decoration-orange-500 dark:decoration-[#f6ad55] text-orange-600 dark:text-[#f6ad55] hover:text-orange-700 dark:hover:text-orange-300">{children}</a>,
+        a: ({ href, children }) => <a href={href} target="_blank" className="underline decoration-dashed decoration-[#A69B8A] dark:decoration-[#f6ad55] text-[#A69B8A] dark:text-[#f6ad55] hover:text-[#847A6D] dark:hover:text-orange-300">{children}</a>,
         strong: ({ children }) => <strong className="font-bold text-gray-800 dark:text-white">{children}</strong>,
         ...components,
     };

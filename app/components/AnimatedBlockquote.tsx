@@ -32,31 +32,22 @@ export default function AnimatedBlockquote({ children }: AnimatedBlockquoteProps
     return () => observer.disconnect();
   }, []);
 
+  const quotationMarkStyle = "text-5xl text-[#A69B8A] dark:text-orange-400/50 select-none";
+
   return (
     <blockquote
       ref={ref}
       className={`
-        not-italic my-8 px-6 py-4 rounded-2xl
-        relative
+        relative flex justify-center
+        px-4 my-6
         transform transition-all duration-700 ease-out
-        text-gray-800 dark:text-gray-200
-        border-2 border-orange-200 dark:border-orange-400/50
-        shadow-md dark:shadow-orange-900/10
-        hover:shadow-lg hover:shadow-orange-200/60 dark:hover:shadow-orange-900/20
-        hover:scale-[1.01]
-        before:content-['"'] before:absolute before:text-5xl before:font-serif 
-        before:text-orange-500/40 dark:before:text-orange-400/30 
-        before:left-4 before:top-1 before:leading-none
-        after:content-['"'] after:absolute after:text-5xl after:font-serif 
-        after:text-orange-400/50 dark:after:text-orange-400/30 
-        after:right-4 after:bottom-1 after:leading-none
         ${isVisible 
           ? 'opacity-100 translate-y-0 animate-slideInFromBottom' 
           : 'opacity-0 translate-y-8'
         }`}>
-      <div className="relative z-10 pl-6 pr-6 *:my-2">
+      <span className={`self-top ${quotationMarkStyle}`}>『</span>
         {children}
-      </div>
+      <span className={`self-end ${quotationMarkStyle}`}>』</span>
     </blockquote>
   );
 }
