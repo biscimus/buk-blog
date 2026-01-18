@@ -41,6 +41,11 @@ export default function RootLayout({
                         </header>
                         {children}
                         <BackToTop />
+                        <footer className="mt-40 flex flex-col gap-2 text-right text-sm text-gray-600 dark:text-gray-400">
+                            <div>© {new Date().getFullYear()} BuK Blog. All rights reserved.</div>
+                            <div>The primary purpose of this blog is to help students survive at RWTH Aachen University.</div>
+                            <div>Any suggestions, questions or feedback is welcome! Feel free to open a <Link href="https://github.com/biscimus/buk-blog/issues/new">Github issue</Link>.</div>
+                        </footer>
                     </ThemeWrapper>
                 </ThemeProvider>
             </body>

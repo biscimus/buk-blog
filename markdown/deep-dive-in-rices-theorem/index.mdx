@@ -117,5 +117,12 @@ const allTMDecider = () => true;
 Not quite! Remember that not all strings are valid encodings of Turing Machines. But yes, we can construct a Turing Machine which accepts every valid encoding of a Turing Machine and rejects every invalid encoding.
 
 ```ts
+const allTMDecider = (input: any) => typeof input === "function";
+```
+
+Since Turing Machines are encoded in Gödel numbers in lectures, it would rather look something like this:
+
+```ts
+// Check if input is a valid Gödel number encoding a Turing Machine
 const allTMDecider = (input: string) => input.match(/^111(0*1){4}0*(11(0*1){4}0*)*111$/);
 ```
